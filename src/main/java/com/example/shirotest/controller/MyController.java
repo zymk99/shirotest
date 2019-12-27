@@ -29,29 +29,10 @@ public class MyController {
     {
         return "admin/login";
     }
+
     @RequestMapping("/success")
     public String succe()
     {
         return "admin/index";
-    }
-    @PostMapping("/login" )
-    public String postLog(String name,String id)
-    {
-        Subject currentUser = SecurityUtils.getSubject();
-        if (!currentUser.isAuthenticated()) {
-            // 把用户名和密码封装为 UsernamePasswordToken 对象
-            UsernamePasswordToken token = new UsernamePasswordToken(name, id);
-            // 设置为rememberme
-            token.setRememberMe(true);
-            try {
-                // 执行登录.
-                currentUser.login(token);
-            }
-            // 所有认证时异常的父类
-            catch (AuthenticationException ae) {
-                return "login";
-            }
-        }
-        return "redirect:success";
     }
 }

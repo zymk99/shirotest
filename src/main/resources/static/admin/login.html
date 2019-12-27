@@ -22,7 +22,7 @@
 				<div class="web_login" id="web_login">
 					<div class="login-box">
 						<div class="login_form">
-							<form name="loginform" accept-charset="utf-8" id="login_form" action="/test/login" class="loginForm"  method="post">
+							<form name="loginform" accept-charset="utf-8" id="login_form" action="/data/login" class="loginForm"  method="post">
 								<input type="hidden" name="did" value="0" />
 								<input type="hidden" name="to" value="log" />
 								<div class="uinArea" id="uinArea">
@@ -34,11 +34,11 @@
 								<div class="pwdArea" id="pwdArea">
 									<label class="input-tips" for="p">密码：</label>
 									<div class="inputOuter" id="pArea">
-										<input type="password" id="p" name="id" class="inputstyle" />
+										<input type="password" id="p" name="passwd" class="inputstyle" />
 									</div>
 								</div>
 								<div style="padding-left:50px;margin-top:20px;">
-									<input type="submit" value="登 录" style="width: 208px;" class="button_blue login-btn" />
+									<input type="button" value="登 录" style="width: 208px;" class="button_blue login-btn" />
 								</div>
 							</form>
 						</div>
@@ -69,28 +69,32 @@
 			// var tow_content = '输入账号和密码，点击按钮登录即可';
 			var tow_content = '本页面参考于此模板：<br/> <a href="http://www.jq22.com/demo/jQuery-dl20160111/" target="_blank">http://www.jq22.com/yanshi5518</a>';	
 			
-			// $('.login-btn').click(function() {
-			// 	var p = {
-			// 		key: $('[name=key]').val(),
-			// 		password: $('[name=password]').val()
-			// 	}
-			//
-			// 	if(p.key == '' || p.password == ''){
-			// 		return layer.msg('请输入任意内容即可');
-			// 	}
-			//
-			// 	layer.msg("欢迎你，" + p.key);
-			// 	layer.msg("欢迎你，" + p.key);
-			// 	setTimeout(function () {
-			// 		if(parent == window){
-			// 			location.href = "index.html";
-			// 		}else{
-			// 			parent.layer.closeAll('iframe');
-			// 			parent.location.reload();
-			// 		}
-			// 	},500);
-			//
-			// })
+			$('.login-btn').click(function() {
+				var p = {
+					name: $('[name=name]').val(),
+					passwd: $('[name=passwd]').val()
+				}
+
+				if(p.name == '' || p.passwd == ''){
+					return layer.msg('请输入账号密码');
+				}
+
+				$.ajax({
+					url:"/data/login",
+					type:"post",
+					data:p,
+					dataType:"json",
+					success:function(arg)
+					{
+						debugger
+					},
+					error:function(a,b,c)
+					{
+						return layer.msg('登陆失败');
+					}
+				});
+
+			})
 			
 			// 你所有要改的代码全在这里   ↑↑↑↑↑	
 			
