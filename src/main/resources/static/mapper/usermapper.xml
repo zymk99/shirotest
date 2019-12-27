@@ -2,6 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.example.shirotest.mapper.UserMapper" >
     <select id="selectU" parameterType="String" resultType="com.example.shirotest.dao.TUser">
-        select * from leapusertable limit 1
+        select * from nzzusertable limit 1
+    </select>
+
+    <select id="login" parameterType="com.example.shirotest.dao.TUser" resultType="com.example.shirotest.dao.TUser">
+        select * from nzzusertable where name=#{name} and passwd=#{passwd}
     </select>
 </mapper>

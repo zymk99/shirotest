@@ -26,17 +26,16 @@ public class ShiroConfig {
         // 设置login URL
         shiroFilter.setLoginUrl("/test/login");
         // 登录成功后要跳转的链接
-        shiroFilter.setSuccessUrl("/main");
+        shiroFilter.setSuccessUrl("/test/success");
         filterChainDefinitionMap.put("/webjars/**", "anon");
         filterChainDefinitionMap.put("/druid/**", "anon");
         //静态资源的处理
-        filterChainDefinitionMap.put("/js/**", "anon");
-        filterChainDefinitionMap.put("/css/**", "anon");
         filterChainDefinitionMap.put("/static/**", "anon");
         filterChainDefinitionMap.put("/templates/**", "anon");
-        filterChainDefinitionMap.put("/templates/*", "anon");
-        filterChainDefinitionMap.put("/fonts/**", "anon");
-        filterChainDefinitionMap.put("/images/**", "anon");
+        filterChainDefinitionMap.put("/test/login2", "anon");
+        filterChainDefinitionMap.put("/test/one", "anon");
+        filterChainDefinitionMap.put("/sa-resources/**", "anon");
+        filterChainDefinitionMap.put("/admin/**", "anon");
 
         // 退出系统的过滤器
         filterChainDefinitionMap.put("/logout", "logout");

@@ -22,7 +22,7 @@ public class UserRealm extends AuthorizingRealm {
         TUser user = (TUser) subject.getPrincipal();
         //给资源授权
         SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
-        //simpleAuthorizationInfo.addStringPermission(user.getPerms());
+        simpleAuthorizationInfo.addStringPermission("add");
         return simpleAuthorizationInfo;
     }
     @Autowired
@@ -34,15 +34,16 @@ public class UserRealm extends AuthorizingRealm {
         System.out.println("认证");
         //shiro判断逻辑
         UsernamePasswordToken user = (UsernamePasswordToken) arg0;
-        if(user.getUsername()==null)
+        if(user.getUsername()==null || user.getPassword()==null)
         {
             return null;
         }
-        TUser realUser = new TUser();
-        realUser.setName(user.getUsername());
-        realUser.setId("1");
+        TUser realUser=um.login(new TUser(  user.getUsername(),new String(user.getPassword()) ));
+        if(realUser==null)
+        {
+            return null;
+        }
 
-
-        return new SimpleAuthenticationInfo(realUser,"mmm",getName());
+        return new SimpleAuthenticationInfo(realUser,user.getPassword(),getName());
     }
 }

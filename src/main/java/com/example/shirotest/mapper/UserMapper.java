@@ -8,4 +8,6 @@ import org.springframework.stereotype.Component;
 @Mapper
 public interface UserMapper {
     TUser selectU(String id);
+    TUser login(TUser user);
+
 }

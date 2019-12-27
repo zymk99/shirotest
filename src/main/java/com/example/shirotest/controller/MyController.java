@@ -27,10 +27,15 @@ public class MyController {
     @RequestMapping(value="/login",method = RequestMethod.GET)
     public String login()
     {
-        return "login";
+        return "admin/login";
     }
-    @RequestMapping("/login2")
-    public String postLog(String name , String id, HttpSession session, Map<String, Object> map)
+    @RequestMapping("/success")
+    public String succe()
+    {
+        return "admin/index";
+    }
+    @PostMapping("/login" )
+    public String postLog(String name,String id)
     {
         Subject currentUser = SecurityUtils.getSubject();
         if (!currentUser.isAuthenticated()) {
@@ -44,10 +49,9 @@ public class MyController {
             }
             // 所有认证时异常的父类
             catch (AuthenticationException ae) {
-                map.put("password", "输入的用户名或密码错误");
                 return "login";
             }
         }
-        return "redirect:html/index";
+        return "redirect:success";
     }
 }
