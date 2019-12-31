@@ -6,6 +6,7 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.Subject;
@@ -22,7 +23,8 @@ public class UserRealm extends AuthorizingRealm {
         TUser user = (TUser) subject.getPrincipal();
         //给资源授权
         SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
-        simpleAuthorizationInfo.addStringPermission("add");
+        simpleAuthorizationInfo.addStringPermission("print:see");
+        simpleAuthorizationInfo.addStringPermission("user:ads");
         return simpleAuthorizationInfo;
     }
     @Autowired
@@ -44,6 +46,7 @@ public class UserRealm extends AuthorizingRealm {
             return null;
         }
 
+        
         return new SimpleAuthenticationInfo(realUser,user.getPassword(),getName());
     }
 }

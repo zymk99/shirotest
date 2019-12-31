@@ -5,6 +5,7 @@ import net.sf.json.JSONObject;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.subject.Subject;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -50,11 +51,19 @@ public class DataController {
         return json.toString();
     }
 
+    @RequestMapping("/power")
+    @RequiresPermissions("user:add")
+    public String power()
+    {
+        return "123456";
+    }
 
     @PostMapping("/login" )
     public String postLog(String name,String passwd)
     {
         Subject currentUser = SecurityUtils.getSubject();
+        //注销
+        currentUser.logout();
         if (!currentUser.isAuthenticated()) {
             // 把用户名和密码封装为 UsernamePasswordToken 对象
             UsernamePasswordToken token = new UsernamePasswordToken(name, passwd);
@@ -66,10 +75,10 @@ public class DataController {
             }
             // 所有认证时异常的父类
             catch (AuthenticationException ae) {
-                JSONObject jo=JSONObject.fromObject("{'value':'no'}");
-                return "{'value':'no'}";
+                return "{}";
             }
+            currentUser.hasRole("add");
         }
-        return "{'flag':'yes'}";
+        return "{}";
     }
 }
