@@ -24,7 +24,7 @@ public class UserRealm extends AuthorizingRealm {
         //给资源授权
         SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
         simpleAuthorizationInfo.addStringPermission("print:see");
-        simpleAuthorizationInfo.addStringPermission("user:ads");
+        simpleAuthorizationInfo.addStringPermission("*");
         return simpleAuthorizationInfo;
     }
     @Autowired

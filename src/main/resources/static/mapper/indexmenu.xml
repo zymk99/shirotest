@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.shirotest.mapper.IndexMenuMapper" >
+    <select id="getMenuByAdmin" resultType="com.example.shirotest.dao.IndexMenu">
+        select * from (
+            (select * from nzzindexmenu where isvalid=0 and pmenuid ='') as t1
+            RIGHT JOIN
+            (select pmenuid,row_to_json(nzzindexmenu)as childList from nzzindexmenu where isvalid=0 and pmenuid !='' order by index) as t2
+            on t1.id=t2.pmenuid
+        )
+    </select>
+
+    <insert id="insertMenu" useGeneratedKeys="true" keyProperty="id">
+        insert into nzzindexmenu values(#{id},
+        #{name},#{icon},#{url},#{pmenuid},'',0,#{index});
+    </insert>
+
+</mapper>

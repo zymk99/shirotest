@@ -528,6 +528,10 @@ var sa_admin = new Vue({
             dataType:"json",
             success:function(arg)
             {
+            	for(var i=0;i<arg.length;i++)
+				{
+					arg[i].childList=JSON.parse(arg[i].childlist);
+				}
                 window.menuList=arg;
                 sa_admin.setMenuList(arg);
                 sa_admin.logo_url="/admin/image/doge.jpg";
