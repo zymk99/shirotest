@@ -88,6 +88,7 @@ public class DataController {
     @PostMapping("/insertMenu")
     public String insertMenu(IndexMenu indexMenu)
     {
+        indexMenu.setId(UUID.randomUUID().toString().replaceAll("-",""));
         boolean bool=menu.insertMenu(indexMenu);
         return JSONObject.fromObject("{'value':'ok'}").toString();
     }

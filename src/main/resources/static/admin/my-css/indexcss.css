@@ -1,0 +1,7 @@
+.menuset{
+    list-style:none;
+    padding-left: .5rem;
+}
+.menuset li{
+    padding: .1rem .5rem;
+}
