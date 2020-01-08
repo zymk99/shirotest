@@ -16,6 +16,14 @@ var menuset=new Vue({
                 }
             })
         }
+    },
+    methods:{
+        deleteItem:function (arg) {
+           if(arg && arg.id)
+           {
+
+           }
+        }
     }
 
 });

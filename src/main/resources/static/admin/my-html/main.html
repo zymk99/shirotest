@@ -1,17 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" style="height: 100%;">
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="/admin/my-css/indexcss.css">
     <title>Title</title>
 </head>
-<body>
-    <div>
+<body style="height: 100%;">
+    <div style="margin: 0 40%;">
         <ul class="menuset">
             <li v-for="menuitem in menudata">
-                <div v-bind:id="menuitem.id">
-                    <span>{{menuitem.name}}</span>
-                    <span>修改</span>
+                <div class="index-list"  v-bind:id="menuitem.id">
+                    <a>{{menuitem.name}}</a>
+                    <span v-on:click="deleteItem(menuitem)" style="background:url('/admin/icon/delete.svg')"></span>
+                    <span style="background:url('/admin/icon/setup.svg')"></span>
+                    <span style="background:url('/admin/icon/add.svg')"></span>
                 </div>
                 <ul class="menuset" v-if="menuitem.childList">
                     <li v-for="c_item in menuitem.childList">
