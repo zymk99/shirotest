@@ -50,7 +50,8 @@ var menuset=new Vue({
 
 });
 
-var cPanel=new Vue({
+
+var menuFrom=new Vue({
     el:".c-panel",
     data:{
         m:{
@@ -61,15 +62,14 @@ var cPanel=new Vue({
         }
     },
     methods:{
-        submit:function(){
+        submit:function(arg){
+            debugger
+            if(menuset._data.currentItem)
+            {
 
-        }
-    }
-})
-
-var menuFrom=new Vue({
-    el:"menu_from",
-    data:{},
+            }
+        },
+    },
     created:function(){
     }
 })
