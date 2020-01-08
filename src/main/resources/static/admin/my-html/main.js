@@ -15,15 +15,69 @@ var menuset=new Vue({
                     menuset.menudata=arg;
                 }
             })
-        }
+        },
+        currentItem:null
     },
     methods:{
         deleteItem:function (arg) {
+            //JSON.parse(JSON.stringify(arg))
            if(arg && arg.id)
            {
-
+               this.currentItem=arg;
+               swal({
+                   title: "确定删除该节点?",
+                   text: "确定删除该节点?",
+                   icon: "warning",
+                   buttons: ["否!", "是!"],
+               }).then((willDelete)=>{
+                   if(willDelete) {
+                       swal("删除成功!", {
+                           icon: "success",
+                       });
+                   } else {
+                       swal("no!");
+                    }
+               });
            }
+        },
+        addItem:function(arg)
+        {
+            if(arg && arg.id)
+            {
+            }
         }
     }
 
 });
+
+var cPanel=new Vue({
+    el:".c-panel",
+    data:{
+        m:{
+            url:"",
+            name:'',
+            isvalid:0,
+            icon:''
+        }
+    },
+    methods:{
+        submit:function(){
+
+        }
+    }
+})
+
+var menuFrom=new Vue({
+    el:"menu_from",
+    data:{},
+    created:function(){
+    }
+})
+
+
+
+
+
+
+
+

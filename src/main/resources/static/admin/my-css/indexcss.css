@@ -14,3 +14,19 @@
     margin: .3rem .2rem;
     padding: 7px;
 }
+.float-from-30-40{
+    width: 30%;
+    height: 40%;
+    position: fixed;
+    top: 10%;
+    left: 30%;
+    box-shadow: rgba(0, 0, 0, 0.498039) 1px 1px 1px 1px, rgba(0, 0, 0, 0.498039) 3px 3px 10px 0px;
+    background: #fff;
+    border-radius: 2rem;
+    border: 1px #ccc solid;
+}
+.from-head{
+    text-align: center;
+    font-size: 2rem;
+    padding-bottom: 1rem;
+}

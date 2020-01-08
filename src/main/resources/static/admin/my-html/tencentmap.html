@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" style="height: 100%;">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body style="height: 100%;">
+    <div class="tenmap" style="width:100%;height:100%;">
+    </div>
+    <script charset="utf-8" src="https://map.qq.com/api/js?v=2.exp&key=VQCBZ-FQ2EX-ZEJ4S-TTR47-W67M6-RJB4A&libraries=drawing,geometry,place,convertor,visualization"></script>
+    <script src="https://unpkg.com/jquery@3.4.1/dist/jquery.js"></script>
+    <script src="https://unpkg.com/vue@2.6.10/dist/vue.js"></script>
+    <script type="text/javascript">
+        var tenmap=new Vue({
+            el:".tenmap",
+            created:function()
+            {
+                window.setTimeout(function(){
+
+                    var map = new qq.maps.Map(
+                        document.getElementsByClassName("tenmap")[0],
+                        {
+                            center: new qq.maps.LatLng(39.914850, 116.403765),
+                            zoom: 13,
+                            draggable: true,  //鼠标拖拽
+                            scrollwheel: true,       //滚轮操作进行放大
+                            disableDoubleClickZoom: true      //双击进行放大
+                        }
+                    );
+                },500);
+            }
+        })
+    </script>
+</body>
+</html>
+

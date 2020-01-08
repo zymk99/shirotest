@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="/admin/my-css/indexcss.css">
+    <link rel="stylesheet" href="/admin/static/sa.css">
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
     <title>Title</title>
 </head>
 <body style="height: 100%;">
@@ -28,8 +30,47 @@
         </ul>
     </div>
 
+    <div class="menu_from float-from-30-40 vue-box ">
+        <div class="c-panel" style="padding: 5% 20% 0;">
+            <div class="from-head c-title">编辑节点</div>
+            <el-form ref="form">
+                <div class="c-item">
+                    <label class="c-label">节点名称：</label>
+                    <el-input size="mini" v-model="m.name"></el-input>
+                </div>
+                <br>
+                <div class="c-item">
+                    <label class="c-label">图标：</label>
+                    <el-input size="mini" v-model="m.icon"></el-input>
+                </div>
+
+                <br>
+                <div class="c-item">
+                    <label class="c-label">地址：</label>
+                    <el-input size="mini" v-model="m.url"></el-input>
+                </div>
+                <br>
+                <div class="c-item">
+                    <label class="c-label">是否有效：</label>
+                    <el-radio-group v-model="m.isvalid" size="mini">
+                        <el-radio :label="0">是</el-radio>
+                        <el-radio :label="1">否</el-radio>
+                    </el-radio-group>
+                </div>
+
+                <br>
+                <div class="c-item" style="min-width: 0px;">
+                    <label class="c-label"></label>
+                    <el-button type="primary" icon="el-icon-plus" size="mini" @click="submit">确定</el-button>
+                </div>
+            </el-form>
+        </div>
+    </div>
+
     <script src="https://unpkg.com/jquery@3.4.1/dist/jquery.js"></script>
     <script src="https://unpkg.com/vue@2.6.10/dist/vue.js"></script>
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <script src="/admin/javascript/sweetalert.min.js"></script>
     <script src="/admin/my-html/main.js"></script>
 </body>
 </html>
