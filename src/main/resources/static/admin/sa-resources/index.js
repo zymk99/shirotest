@@ -2,7 +2,10 @@
 var homePage = {
 	id: '-1',	// 唯一标识 
 	name: '首页',
-	url: 'main.html',	// 页面地址 
+	url: new function(){
+		debugger
+		return 'main.html';
+	},	// 页面地址
 	hide_close: true	// 隐藏关闭键 
 }
 
@@ -535,6 +538,7 @@ var sa_admin = new Vue({
                 window.menuList=arg;
                 sa_admin.setMenuList(arg);
                 sa_admin.logo_url="/admin/image/doge.jpg";
+				sa_admin._data.title="nzz";
             }
         })
 

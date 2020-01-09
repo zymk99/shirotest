@@ -29,7 +29,7 @@ var menuset=new Vue({
                    text: "确定删除该节点?",
                    icon: "warning",
                    buttons: ["否!", "是!"],
-               }).then((willDelete)=>{
+               }).then(function(willDelete){
                    if(willDelete) {
                        swal("删除成功!", {
                            icon: "success",
@@ -44,6 +44,22 @@ var menuset=new Vue({
         {
             if(arg && arg.id)
             {
+                var d={};
+                menuFrom._data.m=d;
+                menuFrom.$el.style.display="block";
+            }
+        },
+        updateItem:function(arg)
+        {
+            if(arg)
+            {
+                var d={};
+                d.url=arg.url;
+                d.name=arg.name;
+                d.isvalid=arg.isvalid;
+                d.icon=arg.icon;
+                menuFrom._data.m=d;
+                menuFrom.$el.style.display="block";
             }
         }
     }
@@ -52,7 +68,7 @@ var menuset=new Vue({
 
 
 var menuFrom=new Vue({
-    el:".c-panel",
+    el:".menu_from",
     data:{
         m:{
             url:"",
@@ -63,12 +79,16 @@ var menuFrom=new Vue({
     },
     methods:{
         submit:function(arg){
-            debugger
+
             if(menuset._data.currentItem)
             {
 
             }
         },
+        _close:function(arg){
+
+            this.$el.style.display="none";
+        }
     },
     created:function(){
     }

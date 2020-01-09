@@ -27,9 +27,21 @@ public class DataController {
     {
         return null;
     }
+    @RequestMapping("/getHomePage")
+    public String getHomePage()
+    {
+        Subject sub=SecurityUtils.getSubject();
+        if(sub.hasRole("admin"))
+        {
+            return "main.html";
+        }
+        return "";
+    }
     @RequestMapping(value="/getMenu",produces = "text/plain;charset=utf-8")
     public String getMenu()
     {
+//        Subject sj=SecurityUtils.getSubject();
+//        sj.isPermitted("print");
         IndexMenu[] me=menu.getMenuByAdmin();
         Map menuMap=new HashMap();
         for(IndexMenu m:me)

@@ -6,8 +6,7 @@
     padding: .1rem .5rem;
 }
 .index-list{
-    background: #999;
-    padding: .3rem .5rem;
+    padding: 1rem 1rem;
 }
 .index-list span{
     float: right;
@@ -24,6 +23,12 @@
     background: #fff;
     border-radius: 2rem;
     border: 1px #ccc solid;
+}
+.close_i{
+    right: 3%;
+    position: absolute;
+    top: 3%;
+    font-size: 20px;
 }
 .from-head{
     text-align: center;

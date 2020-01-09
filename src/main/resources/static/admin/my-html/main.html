@@ -8,21 +8,22 @@
     <title>Title</title>
 </head>
 <body style="height: 100%;">
-    <div style="margin: 0 40%;">
+    <div style="margin: 2% 40%;">
         <ul class="menuset">
             <li v-for="menuitem in menudata">
                 <div class="index-list"  v-bind:id="menuitem.id">
                     <a>{{menuitem.name}}</a>
                     <span v-on:click="deleteItem(menuitem)" style="background:url('/admin/icon/delete.svg')"></span>
-                    <span style="background:url('/admin/icon/setup.svg')"></span>
-                    <span style="background:url('/admin/icon/add.svg')"></span>
+                    <span v-on:click="updateItem(menuitem)" style="background:url('/admin/icon/setup.svg')"></span>
+                    <span v-on:click="addItem(menuitem)" style="background:url('/admin/icon/add.svg')"></span>
                 </div>
                 <ul class="menuset" v-if="menuitem.childList">
                     <li v-for="c_item in menuitem.childList">
-                        <div v-bind:id="c_item.id">
-                            <span>
-                                {{c_item.name}}
-                            </span>
+                        <div class="index-list" v-bind:id="c_item.id">
+                            <a>{{c_item.name}}</a>
+                            <span v-on:click="deleteItem(c_item)" style="background:url('/admin/icon/delete.svg')"></span>
+                            <span v-on:click="updateItem(c_item)" style="background:url('/admin/icon/setup.svg')"></span>
+                            <span v-on:click="addItem(c_item)" style="background:url('/admin/icon/add.svg')"></span>
                         </div>
                     </li>
                 </ul>
@@ -30,7 +31,8 @@
         </ul>
     </div>
 
-    <div class="menu_from float-from-30-40 vue-box ">
+    <div class="menu_from float-from-30-40 vue-box" style="display:none;">
+        <i v-on:click="_close()" class="close_i el-icon-close"></i>
         <div class="c-panel" style="padding: 5% 20% 0;">
             <div class="from-head c-title">编辑节点</div>
             <el-form ref="form">

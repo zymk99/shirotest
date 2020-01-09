@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.shirotest.mapper.RolePermMapper" >
+    <select id="getRolePerByUserid" parameterType="String" resultType="java.util.Map">
+       select t_user.name,t_role.rolename,t_per.permisname from nzzusertable t_user
+        LEFT JOIN nzzuserrolemap ur_map on t_user.id=ur_map.userid
+        LEFT JOIN nzzroletable t_role on ur_map.roleid=t_role.id
+        LEFT JOIN nzzrolepermismap rp_map on rp_map.roleid=t_role."id"
+        LEFT JOIN nzzpermistable t_per on t_per.id=rp_map.permisid
+         where t_user.id=#{id}
+    </select>
+
+</mapper>

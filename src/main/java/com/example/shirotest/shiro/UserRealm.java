@@ -1,6 +1,7 @@
 package com.example.shirotest.shiro;
 
 import com.example.shirotest.dao.TUser;
+import com.example.shirotest.mapper.RolePermMapper;
 import com.example.shirotest.mapper.UserMapper;
 import org.apache.ibatis.annotations.MapKey;
 import org.apache.shiro.SecurityUtils;
@@ -13,11 +14,11 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class UserRealm extends AuthorizingRealm {
+    @Autowired
+    RolePermMapper rpm;
     //执行授权
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection arg0) {
@@ -26,10 +27,20 @@ public class UserRealm extends AuthorizingRealm {
         //获取当前登录用户
         Subject subject = SecurityUtils.getSubject();
         TUser user = (TUser) subject.getPrincipal();
+
         //给资源授权
         SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
+        if(user!=null)
+        {
+            LinkedList<Map> role_per=rpm.getRolePerByUserid(user.getId().toString());
+            simpleAuthorizationInfo.addRole(role_per.get(0).get("rolename").toString());
+            for(Map perMap:role_per)
+            {
+                simpleAuthorizationInfo.addStringPermission(perMap.get("permisname").toString());
+            }
+        }
         simpleAuthorizationInfo.addStringPermission("print:see");
-        simpleAuthorizationInfo.addStringPermission("*");
+        //simpleAuthorizationInfo.addStringPermission("*");
         return simpleAuthorizationInfo;
     }
     @Autowired
