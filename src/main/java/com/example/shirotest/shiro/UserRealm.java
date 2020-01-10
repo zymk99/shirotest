@@ -33,10 +33,13 @@ public class UserRealm extends AuthorizingRealm {
         if(user!=null)
         {
             LinkedList<Map> role_per=rpm.getRolePerByUserid(user.getId().toString());
-            simpleAuthorizationInfo.addRole(role_per.get(0).get("rolename").toString());
-            for(Map perMap:role_per)
+            if(role_per.size()!=0)
             {
-                simpleAuthorizationInfo.addStringPermission(perMap.get("permisname").toString());
+                simpleAuthorizationInfo.addRole(role_per.get(0).get("rolename").toString());
+                for(Map perMap:role_per)
+                {
+                    simpleAuthorizationInfo.addStringPermission(perMap.get("permisname").toString());
+                }
             }
         }
         simpleAuthorizationInfo.addStringPermission("print:see");

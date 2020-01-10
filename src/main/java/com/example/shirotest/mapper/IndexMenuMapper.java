@@ -9,4 +9,5 @@ import org.springframework.stereotype.Component;
 public interface IndexMenuMapper {
     public IndexMenu[] getMenuByAdmin();
     boolean insertMenu(IndexMenu im);
+    boolean deleItemById(String id);
 }

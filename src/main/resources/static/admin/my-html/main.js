@@ -44,7 +44,10 @@ var menuset=new Vue({
         {
             if(arg && arg.id)
             {
-                var d={};
+                this.currentItem=arg;
+                var d={
+                    type:"insert"
+                };
                 menuFrom._data.m=d;
                 menuFrom.$el.style.display="block";
             }
@@ -53,11 +56,13 @@ var menuset=new Vue({
         {
             if(arg)
             {
+                this.currentItem=arg;
                 var d={};
                 d.url=arg.url;
                 d.name=arg.name;
                 d.isvalid=arg.isvalid;
                 d.icon=arg.icon;
+                d.type="update";
                 menuFrom._data.m=d;
                 menuFrom.$el.style.display="block";
             }
@@ -65,8 +70,6 @@ var menuset=new Vue({
     }
 
 });
-
-
 var menuFrom=new Vue({
     el:".menu_from",
     data:{
@@ -74,7 +77,8 @@ var menuFrom=new Vue({
             url:"",
             name:'',
             isvalid:0,
-            icon:''
+            icon:'',
+            type:''
         }
     },
     methods:{
@@ -82,7 +86,35 @@ var menuFrom=new Vue({
 
             if(menuset._data.currentItem)
             {
+                var bean={};
+                var path="";
+                if(this.m.type=="insert")
+                {
+                    bean.pmenuid=menuset._data.currentItem.id;
+                    path="/data/insertMenu"
+                }
+                if(this.m.type=="update")
+                {
+                    bean.id=menuset._data.currentItem.id;
+                    path="/data/deleItem"
+                }
+                bean.name=this.m.name;
+                bean.icon=this.m.icon;
+                bean.url=this.m.url;
 
+                $.ajax({
+                    url:path,
+                    type:"post",
+                    dataType:"json",
+                    data:bean,
+                    success:function(arg){
+                        if(arg && arg.flag)
+                        {
+                            swal({text: "新增成功！",});
+                            menuFrom.$el.style.display="none";
+                        }
+                    }
+                })
             }
         },
         _close:function(arg){

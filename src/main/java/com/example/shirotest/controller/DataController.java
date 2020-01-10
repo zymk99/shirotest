@@ -27,16 +27,18 @@ public class DataController {
     {
         return null;
     }
+    //获取首页
     @RequestMapping("/getHomePage")
     public String getHomePage()
     {
         Subject sub=SecurityUtils.getSubject();
         if(sub.hasRole("admin"))
         {
-            return "main.html";
+            return "/admin/my-html/main.html";
         }
-        return "";
+        return "/admin/my-html/main2.html";
     }
+    //获取菜单
     @RequestMapping(value="/getMenu",produces = "text/plain;charset=utf-8")
     public String getMenu()
     {
@@ -66,7 +68,36 @@ public class DataController {
         JSONArray json=JSONArray.fromObject(list);
         return json.toString();
     }
-
+    //删除菜单节点
+    @PostMapping("/deleItem")
+    @RequiresPermissions("menuindex:delete")
+    public String deleItemById(String par)
+    {
+        String val="";
+        if(menu.deleItemById(par))
+        {
+            val="{'flag':true}";
+        }
+        else
+        {
+            val="{'flag':false}";
+        }
+        return val;
+    }
+    //新增菜单节点
+    @PostMapping("/insertMenu")
+    public String insertMenu(IndexMenu indexMenu)
+    {
+        indexMenu.setId(UUID.randomUUID().toString().replaceAll("-",""));
+        boolean bool=menu.insertMenu(indexMenu);
+        return JSONObject.fromObject("{'flag':true}").toString();
+    }
+    //修改菜单节点
+    @PostMapping("/updateMenu")
+    public String updateMenu(IndexMenu indexMenu)
+    {
+        return JSONObject.fromObject("{'flag':true}").toString();
+    }
     @RequestMapping("/power")
     @RequiresPermissions("user:add")
     public String power()
@@ -96,12 +127,5 @@ public class DataController {
             currentUser.hasRole("add");
         }
         return "{}";
-    }
-    @PostMapping("/insertMenu")
-    public String insertMenu(IndexMenu indexMenu)
-    {
-        indexMenu.setId(UUID.randomUUID().toString().replaceAll("-",""));
-        boolean bool=menu.insertMenu(indexMenu);
-        return JSONObject.fromObject("{'value':'ok'}").toString();
     }
 }

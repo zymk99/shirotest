@@ -2,9 +2,15 @@
 var homePage = {
 	id: '-1',	// 唯一标识 
 	name: '首页',
-	url: new function(){
-		debugger
-		return 'main.html';
+	_url: new function(){
+		$.ajax({
+            url:"/data/getHomePage",
+            type:"get",
+            success:function(arg)
+            {
+                homePage.url=arg;
+            }
+        });
 	},	// 页面地址
 	hide_close: true	// 隐藏关闭键 
 }
@@ -549,12 +555,24 @@ var sa_admin = new Vue({
 				console.log('如在使用中发现任何bug或者疑问，请加入QQ群交流：782974737，点击加入：' + 'https://jq.qq.com/?_wv=1027&k=5DHN5Ib');
 			}
 		}.bind(this), 2000)
-		
-		
-
 	}
 });
 var sp = sa_admin;
+
+var mainPage=new Vue({
+    el:'#iframe-1',
+    created:function()
+    {
+        $.ajax({
+            url:"/data/getHomePage",
+            type:"get",
+            success:function(arg)
+            {
+                mainPage.$el.setAttribute("src",arg);
+            }
+        });
+    }
+})
 
 
 

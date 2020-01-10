@@ -7,6 +7,8 @@ public class TUser {
     private String id;
     private String name;
     private String passwd;
+    private String icon;
+    private String emails;
 
     public TUser(String _name,String _pass)
     {

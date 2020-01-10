@@ -15,4 +15,7 @@
         #{name},#{icon},#{url},#{pmenuid},'',0,#{index});
     </insert>
 
+    <delete id="deleItemById" parameterType="String">
+      delete from nzzindexmenu where id=#{id}
+    </delete>
 </mapper>
