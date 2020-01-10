@@ -96,6 +96,7 @@ public class DataController {
     @PostMapping("/updateMenu")
     public String updateMenu(IndexMenu indexMenu)
     {
+
         return JSONObject.fromObject("{'flag':true}").toString();
     }
     @RequestMapping("/power")
