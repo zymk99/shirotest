@@ -1,7 +1,6 @@
 package com.example.shirotest.dao;
 
 import lombok.Data;
-
 @Data
 public class IndexMenu {
     private String id;
@@ -11,4 +10,6 @@ public class IndexMenu {
     private String pmenuid;
     private String childlist;
     private int index ;
+    private int isvalid ;
 }
+

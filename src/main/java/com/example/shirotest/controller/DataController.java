@@ -11,6 +11,7 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -69,12 +70,12 @@ public class DataController {
         return json.toString();
     }
     //删除菜单节点
-    @PostMapping("/deleItem")
+    @PostMapping(value="/deleItem")
     @RequiresPermissions("menuindex:delete")
-    public String deleItemById(String par)
+    public String deleItemById(@RequestBody Map<String,String> par)
     {
         String val="";
-        if(menu.deleItemById(par))
+        if(menu.deleItemById(par.get("id")))
         {
             val="{'flag':true}";
         }
@@ -86,18 +87,26 @@ public class DataController {
     }
     //新增菜单节点
     @PostMapping("/insertMenu")
+    @RequiresPermissions("menuindex:add")
     public String insertMenu(IndexMenu indexMenu)
     {
         indexMenu.setId(UUID.randomUUID().toString().replaceAll("-",""));
-        boolean bool=menu.insertMenu(indexMenu);
-        return JSONObject.fromObject("{'flag':true}").toString();
+        if(menu.insertMenu(indexMenu))
+        {
+            return JSONObject.fromObject("{'flag':true}").toString();
+        }
+        return JSONObject.fromObject("{'flag':false}").toString();
     }
     //修改菜单节点
     @PostMapping("/updateMenu")
+    @RequiresPermissions("menuindex:update")
     public String updateMenu(IndexMenu indexMenu)
     {
-
-        return JSONObject.fromObject("{'flag':true}").toString();
+        if(indexMenu!=null && indexMenu.getId()!=null && menu.updateItemById(indexMenu))
+        {
+            return JSONObject.fromObject("{'flag':true}").toString();
+        }
+        return JSONObject.fromObject("{'flag':false}").toString();
     }
     @RequestMapping("/power")
     @RequiresPermissions("user:add")

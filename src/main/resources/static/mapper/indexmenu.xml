@@ -15,6 +15,25 @@
         #{name},#{icon},#{url},#{pmenuid},'',0,#{index});
     </insert>
 
+    <update id="updateItemById" parameterType="com.example.shirotest.dao.IndexMenu">
+      update nzzindexmenu
+      <set>
+       <if test="name!=null">
+           name=#{name},
+       </if>
+        <if test="icon!=null">
+            icon=#{icon},
+        </if>
+        <if test="url!=null">
+            url=#{url},
+        </if>
+        <if test="isvalid!=null">
+            isvalid=#{isvalid},
+        </if>
+      </set>
+         where id=#{id}
+    </update>
+
     <delete id="deleItemById" parameterType="String">
       delete from nzzindexmenu where id=#{id}
     </delete>

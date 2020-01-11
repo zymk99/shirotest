@@ -31,12 +31,28 @@ var menuset=new Vue({
                    buttons: ["否!", "是!"],
                }).then(function(willDelete){
                    if(willDelete) {
-                       swal("删除成功!", {
-                           icon: "success",
+                       //确认删除
+                       var bean={};
+                       bean.id=arg.id;
+                       $.ajax({
+                           url:"/data/deleItem",
+                           type:"post",
+                           contentType: "application/json;charset=UTF-8",
+                           dataType:"json",
+                           data:JSON.stringify(bean),
+                           success:function(arg)
+                           {
+                               if(arg && arg.flag)
+                               {
+                                   swal({'text':'删除成功！'});
+                               }
+                               else
+                               {
+                                   swal({'text':'删除失败，请检测权限！'});
+                               }
+                           }
                        });
-                   } else {
-                       swal("no!");
-                    }
+                   }
                });
            }
         },
@@ -96,7 +112,7 @@ var menuFrom=new Vue({
                 if(this.m.type=="update")
                 {
                     bean.id=menuset._data.currentItem.id;
-                    path="/data/deleItem"
+                    path="/data/updateMenu"
                 }
                 bean.name=this.m.name;
                 bean.icon=this.m.icon;
@@ -110,7 +126,7 @@ var menuFrom=new Vue({
                     success:function(arg){
                         if(arg && arg.flag)
                         {
-                            swal({text: "新增成功！",});
+                            swal({text: "提交成功！",});
                             menuFrom.$el.style.display="none";
                         }
                     }
