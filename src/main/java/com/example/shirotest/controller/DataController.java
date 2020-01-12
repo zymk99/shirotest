@@ -1,9 +1,12 @@
 package com.example.shirotest.controller;
 
 import com.example.shirotest.dao.IndexMenu;
+import com.example.shirotest.dao.TUser;
 import com.example.shirotest.mapper.IndexMenuMapper;
+import com.example.shirotest.mapper.UserMapper;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
+import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.lang.reflect.Method;
 import java.util.*;
 
 @RestController
@@ -23,6 +27,8 @@ public class DataController {
 
     @Autowired
     IndexMenuMapper menu;
+    @Autowired
+    UserMapper um;
     @RequestMapping(value="/null")
     public String ReruNull()
     {
@@ -97,6 +103,7 @@ public class DataController {
         }
         return JSONObject.fromObject("{'flag':false}").toString();
     }
+
     //修改菜单节点
     @PostMapping("/updateMenu")
     @RequiresPermissions("menuindex:update")
@@ -138,4 +145,19 @@ public class DataController {
         }
         return "{}";
     }
+
+    @PostMapping(value="/getAllUser" , produces = "text/plain;charset=utf-8")
+    public String getAllUser(@RequestBody Map<String,String> map)
+    {
+        if(StringUtils.isBlank(map.get("pagenum")) ||StringUtils.isBlank(map.get("pagesize")) )
+        {
+            return null;
+        }
+        map.put("beginindex", String.valueOf( (Integer.parseInt(map.get("pagenum"))-1)*Integer.parseInt(map.get("pagesize")))  );
+        List<TUser> usetList= um.selectAllUser(map);
+        return (JSONArray.fromObject(usetList) ).toString();
+    }
 }
+
+
+

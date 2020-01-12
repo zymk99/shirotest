@@ -13,4 +13,9 @@
     <select id="login" parameterType="com.example.shirotest.dao.TUser" resultType="com.example.shirotest.dao.TUser">
         select * from nzzusertable where name=#{name} and passwd=#{passwd}
     </select>
+
+    <!--用户列表-->
+    <select id="selectAllUser" parameterType="java.util.Map" resultType="com.example.shirotest.dao.TUser">
+      select * from nzzusertable limit #{pagenum} OFFSET #{beginindex}
+    </select>
 </mapper>
