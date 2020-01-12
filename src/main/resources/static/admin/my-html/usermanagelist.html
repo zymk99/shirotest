@@ -16,6 +16,11 @@
                 border
                 style="width: 100%">
             <el-table-column
+                    prop="index"
+                    label="序号"
+                    width="100">
+            </el-table-column>
+            <el-table-column
                     prop="name"
                     label="姓名"
                     width="300">
@@ -42,9 +47,12 @@
         </el-table>
     </template>
     <el-pagination
+            @prev-click="pagechange"
             background
             layout="prev, pager, next"
-            :total="1000" class="user_pagenum">
+            :total="1"
+            :page-count="pagemax"
+            class="user_pagenum">
     </el-pagination>
 </div>
 

@@ -2,11 +2,15 @@ var userListPage=new Vue({
     el:".userlist_div",
     data:{
         tableData:null,
-        pasize:12,
-        pagenum:1
+        pasize:9,
+        pagenum:1,
+        pagemax:5
     },
     methods:{
-
+        pagechange:function(arg)
+        {
+            debugger
+        }
     },
     created:function(){
         var bean={"pagenum":this.pagenum,"pagesize":this.pasize};

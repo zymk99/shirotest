@@ -36,8 +36,14 @@
     padding-bottom: 1rem;
 }
 .userlist_div{
-    margin: 5% 8%;
+    padding: 5% 8%;
 }
 .user_pagenum{
     margin-top: 1rem;
+}
+.userlist_div td{
+     text-align: center !important;
+ }
+.userlist_div th{
+    text-align: center !important;
 }
