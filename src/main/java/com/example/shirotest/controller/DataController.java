@@ -155,21 +155,14 @@ public class DataController {
         }
         int beginindex=(Integer.parseInt(map.get("pagenum"))-1)*Integer.parseInt(map.get("pagesize"));
         map.put("beginindex", String.valueOf( beginindex )  );
-        List<TUser> userList= um.selectAllUser(map);
+        List<Map> userList= um.selectAllUser(map);
         if(userList.size()>0)
         {
-            for(TUser tmp:userList)
+            for(Map tmp:userList)
             {
-                tmp.setIndex(++beginindex);
+                tmp.put("index",++beginindex);
             }
         }
-//        if(userList.size()<Integer.parseInt(map.get("pagesize")))
-//        {
-//            for(int i=userList.size();i<Integer.parseInt(map.get("pagesize"));i++)
-//            {
-//                userList.add(new TUser());
-//            }
-//        }
         return (JSONArray.fromObject(userList) ).toString();
     }
 }

@@ -16,5 +16,6 @@ public interface UserMapper {
     TUser login(TUser user);
     @MapKey("id")
     List<Map> selectUUU();
-    List<TUser> selectAllUser(Map map);
+    @MapKey("id")
+    List<Map> selectAllUser(Map map);
 }

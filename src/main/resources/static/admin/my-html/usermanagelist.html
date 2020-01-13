@@ -47,11 +47,12 @@
         </el-table>
     </template>
     <el-pagination
-            @prev-click="pagechange"
+            @prev-click="lastPage"
+            @next-click="nextPage"
             background
             layout="prev, pager, next"
-            :total="1"
-            :page-count="pagemax"
+            :total="nummax"
+            :page-size="pagesize"
             class="user_pagenum">
     </el-pagination>
 </div>

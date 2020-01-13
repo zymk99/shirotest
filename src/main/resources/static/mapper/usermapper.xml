@@ -15,7 +15,7 @@
     </select>
 
     <!--用户列表-->
-    <select id="selectAllUser" parameterType="java.util.Map" resultType="com.example.shirotest.dao.TUser">
-      select * from nzzusertable limit #{pagesize} OFFSET #{beginindex}
+    <select id="selectAllUser" parameterType="java.util.Map" resultType="java.util.Map">
+      select *,(select count(*) from nzzusertable) from nzzusertable limit #{pagesize} OFFSET #{beginindex}
     </select>
 </mapper>

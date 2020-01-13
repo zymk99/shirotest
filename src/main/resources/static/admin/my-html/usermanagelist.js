@@ -2,29 +2,44 @@ var userListPage=new Vue({
     el:".userlist_div",
     data:{
         tableData:null,
-        pasize:9,
+        pagesize:9,
         pagenum:1,
-        pagemax:5
+        nummax:50
     },
     methods:{
-        pagechange:function(arg)
+        lastPage:function(arg)
         {
-            debugger
+            //上一页
+            this.pagenum-=1;
+            this.pageSearch();
+        },
+        nextPage:function(arg)
+        {
+            //下一页
+            this.pagenum+=1;
+            this.pageSearch();
+        },
+        pageSearch:function()
+        {
+            var bean={"pagenum":this.pagenum,"pagesize":this.pagesize};
+            $.ajax({
+                url:"/data/getAllUser",
+                type:"post",
+                contentType:"application/json;charset=UTF-8",
+                dataType:"json",
+                data:JSON.stringify(bean),
+                success:function(arg)
+                {
+                    if(arg)
+                    {
+                        userListPage._data.tableData=arg;
+                        userListPage._data.nummax=arg[0].count;
+                    }
+                }
+            })
         }
     },
     created:function(){
-        var bean={"pagenum":this.pagenum,"pagesize":this.pasize};
-        $.ajax({
-            url:"/data/getAllUser",
-            type:"post",
-            contentType:"application/json;charset=UTF-8",
-            dataType:"json",
-            data:JSON.stringify(bean),
-            success:function(arg)
-            {
-
-                userListPage._data.tableData=arg;
-            }
-        })
+        this.pageSearch();
     }
 })
