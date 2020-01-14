@@ -52,6 +52,22 @@
             <version>2.2.3</version>
             <classifier>jdk15</classifier><!-- 指定jdk版本 -->
         </dependency>
+        <dependency>
+            <groupId>io.minio</groupId>
+            <artifactId>minio</artifactId>
+            <version>6.0.2</version>
+        </dependency>
+        <!--接收文件上传包-->
+        <dependency>
+            <groupId>commons-fileupload</groupId>
+            <artifactId>commons-fileupload</artifactId>
+            <version>1.4</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.6</version>
+        </dependency>
 
         <!--                -->
         <dependency>

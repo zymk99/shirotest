@@ -1,11 +1,13 @@
 package com.example.shirotest.controller;
 
+import com.example.shirotest.Utils.MinioUtils;
 import com.example.shirotest.dao.IndexMenu;
 import com.example.shirotest.dao.TUser;
 import com.example.shirotest.mapper.IndexMenuMapper;
 import com.example.shirotest.mapper.UserMapper;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
@@ -13,12 +15,12 @@ import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.lang.reflect.Method;
+import java.net.URL;
 import java.util.*;
 
 @RestController
@@ -29,6 +31,8 @@ public class DataController {
     IndexMenuMapper menu;
     @Autowired
     UserMapper um;
+    @Autowired
+    MinioUtils minio;
     @RequestMapping(value="/null")
     public String ReruNull()
     {
@@ -128,6 +132,7 @@ public class DataController {
         Subject currentUser = SecurityUtils.getSubject();
         //注销
         currentUser.logout();
+        String url=minio.getUrl("icosource","QQ图片20190906103747.jpg");
         if (!currentUser.isAuthenticated()) {
             // 把用户名和密码封装为 UsernamePasswordToken 对象
             UsernamePasswordToken token = new UsernamePasswordToken(name, passwd);
@@ -164,6 +169,30 @@ public class DataController {
             }
         }
         return (JSONArray.fromObject(userList) ).toString();
+    }
+
+    //创建用户
+    @RequestMapping("/addUser")
+    public String addUser(@RequestParam("file") MultipartFile f)
+    {
+        int x=10;
+//        if(map.get("imageUrl")!=null)
+//        {
+//            try
+//            {
+//                String url=map.get("imageUrl").toString();
+//                url=url.indexOf("blob:")>=0?url.split("blob:")[1]:url;
+//                File fi=new File("D:\\eclipseNew\\eclipse\\123.jpg");
+//                URL httpurl = new URL(url);
+//                FileUtils.copyURLToFile(httpurl , fi);
+//                MultipartFile File =minio.getFileByUrl(url,"123");
+//                minio.upload("icosource",File,"jpg");
+//            }catch (Exception e)
+//            {
+//                return " ";
+//            }
+//        }
+        return null;
     }
 }
 

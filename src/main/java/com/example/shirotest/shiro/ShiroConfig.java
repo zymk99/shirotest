@@ -70,7 +70,10 @@ public class ShiroConfig {
     //创建Realm
     @Bean(name="userRealm")
     public UserRealm getUserRealm(){
-        return new UserRealm();
+        UserRealm ur=new UserRealm();
+        //设置缓存权限
+        ur.setAuthorizationCachingEnabled(false);
+        return ur;
     }
 
     /**

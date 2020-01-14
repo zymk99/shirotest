@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" style="height: 100%;">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/admin/my-css/indexcss.css">
+    <link rel="stylesheet" href="/admin/static/sa.css">
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <title>Title</title>
+</head>
+<body style="height: 100%;">
+
+<div class="userlist_div">
+    <div class="c-panel">
+        <div class="c-title">用户添加</div>
+        <el-form ref="form" class="user_addform">
+            <div class="c-item">
+                <label class="c-label">头像：</label>
+                <el-upload
+                        class="avatar-uploader"
+                        action="/data/addUser"
+                        :show-file-list="false"
+                        :on-success="handleAvatarSuccess">
+                    <img v-if="imageUrl" :src="imageUrl" class="avatar">
+                    <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                </el-upload>
+            </div>
+            <br>
+            <div class="c-item">
+                <label class="c-label">用户名：</label>
+                <el-input size="mini" v-model="name"></el-input>
+            </div>
+
+            <br>
+            <div class="c-item">
+                <label class="c-label">密码：</label>
+                <el-input size="mini" v-model="passwd"></el-input>
+            </div>
+
+            <br>
+            <div class="c-item">
+                <label class="c-label">邮箱：</label>
+                <el-input size="mini" v-model="emails"></el-input>
+            </div>
+
+            <br>
+            <div class="c-item" style="min-width: 0px;">
+                <label class="c-label"></label>
+                <el-button type="primary" icon="el-icon-plus" size="mini" @click="submit">确定</el-button>
+            </div>
+
+        </el-form>
+
+    </div>
+</div>
+<script src="https://unpkg.com/jquery@3.4.1/dist/jquery.js"></script>
+<script src="https://unpkg.com/vue@2.6.10/dist/vue.js"></script>
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+<script src="/admin/javascript/sweetalert.min.js"></script>
+<script src="/admin/my-html/userinfo.js"></script>
+</body>
+</html>
+
