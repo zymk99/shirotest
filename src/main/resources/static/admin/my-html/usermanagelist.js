@@ -7,6 +7,15 @@ var userListPage=new Vue({
         nummax:50
     },
     methods:{
+        handleClick:function(arg)     //查看
+        {
+            layer.open({
+                type: 2,
+                content: ['/admin/my-html/userinfo.html', 'no'], //url,no防止出现滚动条
+                area:["500px","500px"],
+                anim:"6"
+            });
+        },
         lastPage:function(arg)
         {
             //上一页
