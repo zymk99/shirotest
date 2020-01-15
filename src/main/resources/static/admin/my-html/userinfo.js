@@ -13,10 +13,11 @@ var userAddForm=new Vue({
             bean.passwd=this.passwd;
             bean.emails=this.emails;
             bean.imageUrl=this.imageUrl;
+            this.$refs.upload.submit();
             $.ajax({
                 url:"/data/addUser",
                 type:"post",
-                contentType:"application/;charset=UTF-8",
+                contentType:"application/json;charset=UTF-8",
                 dataType:"json",
                 data:JSON.stringify(bean),
                 success:function(arg){
@@ -26,7 +27,6 @@ var userAddForm=new Vue({
         },
         handleAvatarSuccess:function(res, file) {
             this.imageUrl = URL.createObjectURL(file.raw);
-            debugger
             this.file=file;
         }
     }

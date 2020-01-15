@@ -17,7 +17,8 @@
                 <label class="c-label">头像：</label>
                 <el-upload
                         class="avatar-uploader"
-                        action="/data/addUser"
+                        action="/updata/headPortrait"
+                        ref="upload"
                         :show-file-list="false"
                         :on-success="handleAvatarSuccess">
                     <img v-if="imageUrl" :src="imageUrl" class="avatar">

@@ -18,6 +18,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.lang.reflect.Method;
 import java.net.URL;
@@ -172,26 +174,26 @@ public class DataController {
     }
 
     //创建用户
-    @RequestMapping("/addUser")
-    public String addUser(@RequestParam("file") MultipartFile f)
+    @PostMapping("/addUser")
+    public String addUser(@RequestBody Map map, HttpServletRequest request)
     {
-        int x=10;
-//        if(map.get("imageUrl")!=null)
-//        {
-//            try
-//            {
-//                String url=map.get("imageUrl").toString();
-//                url=url.indexOf("blob:")>=0?url.split("blob:")[1]:url;
-//                File fi=new File("D:\\eclipseNew\\eclipse\\123.jpg");
-//                URL httpurl = new URL(url);
-//                FileUtils.copyURLToFile(httpurl , fi);
-//                MultipartFile File =minio.getFileByUrl(url,"123");
-//                minio.upload("icosource",File,"jpg");
-//            }catch (Exception e)
-//            {
-//                return " ";
-//            }
-//        }
+        HttpSession session=request.getSession();
+        if(session.getAttribute("userTmpHeadPortrait")!=null)
+        {
+            Map filemap=(Map) session.getAttribute("userTmpHeadPortrait");
+            if( minio.upload("icosource",filemap,null,null)  ){
+                String fileName=filemap.get("fileName").toString();
+                //获取刚才上传图片的路径
+                String url=minio.getUrl("icosource",fileName);
+                map.put("icon",url);
+                String id=UUID.randomUUID().toString().replaceAll("-","");
+                map.put("id",id);
+                if(um.addUser(map)){
+                    return "{value:'yes'}";
+                }
+            }
+
+        }
         return null;
     }
 }

@@ -18,4 +18,10 @@
     <select id="selectAllUser" parameterType="java.util.Map" resultType="java.util.Map">
       select *,(select count(*) from nzzusertable) from nzzusertable limit #{pagesize} OFFSET #{beginindex}
     </select>
+
+    <insert id="addUser" parameterType="java.util.Map">
+      insert into nzzusertable("id","name","passwd","icon","emails","isvalid")
+        values(#{id},#{name},#{passwd},#{icon},#{emails},0);
+    </insert>
+
 </mapper>

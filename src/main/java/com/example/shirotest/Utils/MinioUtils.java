@@ -1,5 +1,6 @@
 package com.example.shirotest.Utils;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import io.minio.MinioClient;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileItemFactory;
@@ -16,23 +17,36 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Map;
 
 @Component
 public class MinioUtils {
     private static String url = "http://203.195.251.136:9000";
     private static String accessKey = "minioadmin";
     private static String secretKey = "minioadmin";
-    //上传
-    public String upload(String bucketName,MultipartFile file,String type )  {
+    //上传  map 和 file 二选一
+    public boolean upload(String bucketName, Map filemap, MultipartFile file, String type )  {
         try {
             MinioClient minioClient = new MinioClient(url, accessKey, secretKey);
-            InputStream is= file.getInputStream(); //得到文件流
-            String fileName = file.getOriginalFilename(); //文件名
-            String contentType = type==null?file.getContentType():type;  //类型
+            InputStream is= null; //得到文件流
+            String fileName = null; //文件名
+            String contentType = null;  //类型
+            if(filemap!=null)
+            {
+                is= (InputStream)filemap.get("is");
+                fileName = filemap.get("fileName").toString();
+                contentType = filemap.get("contentType").toString();
+            }
+            else if(file!=null)
+            {
+                is= file.getInputStream();
+                fileName = file.getOriginalFilename();
+                contentType = type==null?file.getContentType():type;
+            }
             minioClient.putObject(bucketName,fileName,is,contentType); //把文件放置Minio桶(文件夹)
-            return  "上传成功";
+            return  true;
         }catch (Exception e){
-            return "上传失败";
+            return false;
         }
     }
 
