@@ -57,7 +57,7 @@
             <artifactId>minio</artifactId>
             <version>6.0.2</version>
         </dependency>
-        <!--接收文件上传包-->
+        <!--接收文件上传包   实现URL转file-->
         <dependency>
             <groupId>commons-fileupload</groupId>
             <artifactId>commons-fileupload</artifactId>
@@ -68,7 +68,12 @@
             <artifactId>commons-io</artifactId>
             <version>2.6</version>
         </dependency>
-
+        <!--图片压缩工具-->
+        <dependency>
+            <groupId>net.coobird</groupId>
+            <artifactId>thumbnailator</artifactId>
+            <version>0.4.8</version>
+        </dependency>
         <!--                -->
         <dependency>
             <groupId>org.apache.shiro</groupId>
