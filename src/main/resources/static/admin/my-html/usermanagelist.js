@@ -10,10 +10,13 @@ var userListPage=new Vue({
         handleClick:function(arg)     //查看
         {
             layer.open({
+                id:"layer_userinfo",
                 type: 2,
                 content: ['/admin/my-html/userinfo.html', 'no'], //url,no防止出现滚动条
                 area:["500px","500px"],
-                anim:"6"
+                anim:"6",
+                closeBtn:"1",
+                shadeClose:true
             });
         },
         lastPage:function(arg)

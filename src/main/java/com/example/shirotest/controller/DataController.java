@@ -189,6 +189,7 @@ public class DataController {
                 String id=UUID.randomUUID().toString().replaceAll("-","");
                 map.put("id",id);
                 if(um.addUser(map)){
+                    session.removeAttribute("userTmpHeadPortrait");
                     return "{value:'yes'}";
                 }
             }

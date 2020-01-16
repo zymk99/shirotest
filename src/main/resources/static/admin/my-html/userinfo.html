@@ -14,16 +14,22 @@
         <div class="c-title">用户添加</div>
         <el-form ref="form" class="user_addform">
             <div class="c-item">
-                <label class="c-label">头像：</label>
-                <el-upload
-                        class="avatar-uploader"
-                        action="/updata/headPortrait"
-                        ref="upload"
-                        :show-file-list="false"
-                        :on-success="handleAvatarSuccess">
-                    <img v-if="imageUrl" :src="imageUrl" class="avatar">
-                    <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-                </el-upload>
+                <table>
+                    <tr>
+                        <td><label class="c-label">头像：</label></td>
+                        <td>
+                            <el-upload
+                                    class="avatar-uploader"
+                                    action="/updata/headPortrait"
+                                    ref="upload"
+                                    :show-file-list="false"
+                                    :on-success="handleAvatarSuccess">
+                                <img v-if="imageUrl" :src="imageUrl" class="avatar">
+                                <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                            </el-upload>
+                        </td>
+                    </tr>
+                </table>
             </div>
             <br>
             <div class="c-item">
@@ -53,7 +59,7 @@
 
     </div>
 </div>
-<script src="https://unpkg.com/jquery@3.4.1/dist/jquery.js"></script>
+<script src="/js/jquery.min.js"></script>
 <script src="https://unpkg.com/vue@2.6.10/dist/vue.js"></script>
 <script src="https://unpkg.com/element-ui/lib/index.js"></script>
 <script src="/admin/javascript/sweetalert.min.js"></script>
