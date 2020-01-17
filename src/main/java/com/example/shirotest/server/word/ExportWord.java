@@ -1,8 +1,11 @@
 package com.example.shirotest.server.word;
 
+import com.example.shirotest.mapper.UserMapper;
+import org.apache.poi.wp.usermodel.HeaderFooterType;
 import org.apache.poi.xwpf.usermodel.*;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.STJc;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.STVerticalJc;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -20,12 +23,12 @@ public class ExportWord {
     /**
      * 创建好文档的基本 标题，表格  段落等部分
      */
-    public XWPFDocument createXWPFDocument(int x) {
+    public XWPFDocument createXWPFDocument(List<Map> list) {
         XWPFDocument doc = new XWPFDocument();
-        for(int i=0;i<x;i++)
+        for(Map tmp:list)
         {
             createTitleParagraph(doc);
-            createTableParagraph(doc, 2, 5);
+            createTableParagraph(doc, Integer.parseInt(tmp.get("count").toString())+1, 4);
         }
         return doc;
     }
@@ -42,6 +45,9 @@ public class ExportWord {
         titleFun.setFontSize(25);    //字体大小
 //        titleFun.setFontFamily("");//设置字体
         titleFun.addBreak();    //换行
+    }
+    public void createTitleParagraph2(XWPFDocument document) {
+        XWPFParagraph titleParagraph = document.createParagraph();    //新建一个标题段落对象（就是一段文字）
     }
     /**
      * 设置表格
@@ -76,21 +82,24 @@ public class ExportWord {
      */
     @SuppressWarnings("unchecked")
     public void exportCheckWord(Map<String, Object> dataList, XWPFDocument document, String savePath) throws IOException {
-        XWPFParagraph paragraph = document.getParagraphArray(0);
-        XWPFRun titleFun = paragraph.getRuns().get(0);
-        titleFun.setText(String.valueOf(dataList.get("TITLE")));
+        List<Map> count=(List<Map>)dataList.get("TITLE");
+        int x=0;
+        for(Map tmp:count)
+        {
+            int c=Integer.parseInt( tmp.get("count").toString() );
+            XWPFParagraph paragraph = document.getParagraphArray(x++);
+            XWPFRun titleFun = paragraph.getRuns().get(0);
+            titleFun.setText(tmp.get("tablecnname").toString()+"("+tmp.get("tablename").toString()+")");
 
-        XWPFParagraph paragraph1 = document.getParagraphArray(1);
-        XWPFRun titleFun1 = paragraph1.getRuns().get(0);
-        titleFun1.setText("123");
+        }
 
-        List<List<Object>> tableData = (List<List<Object>>) dataList.get("TABLEDATA");
-        XWPFTable table = document.getTableArray(0);
-        fillTableData(table, tableData);
-
-        List<List<Object>> tableData2 = (List<List<Object>>) dataList.get("TABLEDATA");
-        XWPFTable table2 = document.getTableArray(1);
-        fillTableData(table2, tableData2);
+        List< List<List<Object>> > tableData = (List< List<List<Object>> > ) dataList.get("TABLEDATA");
+        x=0;
+        for(List<List<Object>> tmp:tableData)
+        {
+            XWPFTable table = document.getTableArray(x++);
+            fillTableData(table, tmp);
+        }
 
         xwpfHelper.saveDocument(document, savePath);
     }
@@ -116,33 +125,32 @@ public class ExportWord {
 
 
 class TestExportWord {
-
     public static void main(String[] args) throws Exception {
-        ExportWord ew = new ExportWord();
-        XWPFDocument document = ew.createXWPFDocument(20);
-        List<List<Object>> list = new ArrayList<List<Object>>();
-
-        List<Object> tempList = new ArrayList<Object>();
-        tempList.add("姓名");
-        tempList.add("黄xx");
-        tempList.add("性别");
-        tempList.add("男");
-        tempList.add("出生日期");
-        tempList.add("2018-10-10");
-        list.add(tempList);
-        tempList = new ArrayList<Object>();
-        tempList.add("出生地");
-        tempList.add("江西");
-        tempList.add("名族");
-        tempList.add("汉");
-        tempList.add("婚否");
-        tempList.add("否");
-        list.add(tempList);
-
-        Map<String, Object> dataList = new HashMap<String, Object>();
-        dataList.put("TITLE", "个人体检表");
-        dataList.put("TABLEDATA", list);
-        ew.exportCheckWord(dataList, document, "E:/expWordTest.docx");
-        System.out.println("文档生成成功");
+//        ExportWord ew = new ExportWord();
+//        XWPFDocument document = ew.createXWPFDocument(20);
+//        List<List<Object>> list = new ArrayList<List<Object>>();
+//
+//        List<Object> tempList = new ArrayList<Object>();
+//        tempList.add("姓名");
+//        tempList.add("黄xx");
+//        tempList.add("性别");
+//        tempList.add("男");
+//        tempList.add("出生日期");
+//        tempList.add("2018-10-10");
+//        list.add(tempList);
+//        tempList = new ArrayList<Object>();
+//        tempList.add("出生地");
+//        tempList.add("江西");
+//        tempList.add("名族");
+//        tempList.add("汉");
+//        tempList.add("婚否");
+//        tempList.add("否");
+//        list.add(tempList);
+//
+//        Map<String, Object> dataList = new HashMap<String, Object>();
+//        dataList.put("TITLE", "个人体检表");
+//        dataList.put("TABLEDATA", list);
+//        ew.exportCheckWord(dataList, document, "E:/expWordTest.docx");
+//        System.out.println("文档生成成功");
     }
 }

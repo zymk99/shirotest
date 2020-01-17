@@ -19,4 +19,8 @@ public interface UserMapper {
     List<Map> selectUUU();
     @MapKey("id")
     List<Map> selectAllUser(Map map);
+    @MapKey("id")
+    List<Map> selectLeapCount();
+    @MapKey("id")
+    List<Map> selectLeap();
 }

@@ -5,10 +5,12 @@ import com.example.shirotest.dao.IndexMenu;
 import com.example.shirotest.dao.TUser;
 import com.example.shirotest.mapper.IndexMenuMapper;
 import com.example.shirotest.mapper.UserMapper;
+import com.example.shirotest.server.word.ExportWord;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
+import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
@@ -197,6 +199,53 @@ public class DataController {
         }
         return null;
     }
+
+
+    @RequestMapping("/createWord")
+    public String createWord()  //生成字段Word
+    {
+        try{
+            List<Map>  count=um.selectLeapCount();
+            List<Map> data=um.selectLeap();
+            ExportWord ew = new ExportWord();
+            XWPFDocument document = ew.createXWPFDocument(count);
+            List<List<Object>> list =null;
+            List< List<List<Object>> > lastList = new ArrayList< List<List<Object>> >();
+            int data_i=0;
+            for(Map tmp:count)
+            {
+                list = new ArrayList<List<Object>>();
+                List<Object> tempList = new ArrayList<Object>();
+                tempList.add("字段名");
+                tempList.add("中文名");
+                tempList.add("字段类型");
+                tempList.add("代码表");
+                list.add(tempList);
+                for(int i=0;i<Integer.parseInt(tmp.get("count").toString());i++  )
+                {
+                    Map row=data.get(data_i++);
+                    tempList = new ArrayList<Object>();
+                    tempList.add(row.get("name").toString());
+                    tempList.add(row.get("cnname").toString());
+                    tempList.add(row.get("datatype").toString());
+                    tempList.add(row.get("codetype").toString());
+                    list.add(tempList);
+                }
+                lastList.add(list);
+            }
+
+            Map<String, Object> dataList = new HashMap<String, Object>();
+            dataList.put("TITLE", count);
+            dataList.put("TABLEDATA", lastList);
+            ew.exportCheckWord(dataList, document, "E:/expWordTest.docx");
+            System.out.println("文档生成成功");
+        }catch (Exception e)
+        {
+            return null;
+        }
+        return null;
+    }
+
 }
 
 
