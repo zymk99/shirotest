@@ -4,19 +4,24 @@ var userListPage=new Vue({
         tableData:null,
         pagesize:9,
         pagenum:1,
-        nummax:50
+        nummax:50,
+        openFrom:null
     },
     methods:{
         handleClick:function(arg)     //查看
         {
-            layer.open({
+            this.openFrom=layer.open({
                 id:"layer_userinfo",
                 type: 2,
+                title:"用户信息",
                 content: ['/admin/my-html/userinfo.html', 'no'], //url,no防止出现滚动条
                 area:["500px","500px"],
                 anim:"6",
                 closeBtn:"1",
-                shadeClose:true
+                shadeClose:true,
+                success:function(){
+                    debugger
+                }
             });
         },
         lastPage:function(arg)
@@ -53,5 +58,6 @@ var userListPage=new Vue({
     },
     created:function(){
         this.pageSearch();
+        window.userListPage=userListPage;
     }
 })
