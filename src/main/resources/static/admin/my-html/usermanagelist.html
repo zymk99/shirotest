@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" style="height: 100%;">
-<head>
+    <html lang="en" style="height: 100%;">
+    <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="/admin/my-css/indexcss.css">
     <link rel="stylesheet" href="/admin/my-css/layer.css">
@@ -40,9 +40,9 @@
                     label="操作"
                     width="250">
                 <template slot-scope="scope">
-                    <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
-                    <el-button type="text" size="small">编辑</el-button>
-                    <el-button type="text" size="small">删除</el-button>
+                    <el-button @click="handleClick(scope.row,'view')" type="text" size="small">查看</el-button>
+                    <el-button @click="updateClick(scope.row,'update')" type="text" size="small">编辑</el-button>
+                    <el-button @click="deleteClick(scope.row)" type="text" size="small">删除</el-button>
                 </template>
             </el-table-column>
         </el-table>

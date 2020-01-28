@@ -23,7 +23,28 @@
       insert into nzzusertable("id","name","passwd","icon","emails","isvalid")
         values(#{id},#{name},#{passwd},#{icon},#{emails},0);
     </insert>
-
+    <update id="updateItemById" parameterType="com.example.shirotest.dao.TUser">
+      update nzzusertable
+      <set>
+          <if test="icon!=null">
+              icon=#{icon},
+          </if>
+          <if test="name!=null">
+              name=#{name},
+          </if>
+          <if test="passwd!=null">
+              passwd=#{passwd},
+          </if>
+          <if test="emails!=null">
+              emails=#{emails},
+          </if>
+          <if test="isvalid!=null">
+              isvalid=#{isvalid},
+          </if>
+          where id=#{id}
+      </set>
+      where id='master'
+    </update>
 
     <select id="selectLeapCount" resultType="java.util.Map">
         select replace(cast(uuid_generate_v4() as VARCHAR), '-', '') as id,count(tablename),tablecnname,tablename from leapdatafield GROUP BY tablename,tablecnname order by tablename

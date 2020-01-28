@@ -32,6 +32,23 @@ var userAddForm=new Vue({
         handleAvatarSuccess:function(res, file) {
             this.imageUrl = URL.createObjectURL(file.raw);
             this.file=file;
+        },
+        setPageData:function(arg) {
+            this.name=arg.name;
+            this.passwd=arg.passwd;
+            this.emails=arg.emails;
+            this.imageUrl=arg.imageUrl;
+        },
+        setReadOnly:function(flag) {
+            if(flag) {
+            }
+        }
+    },
+    created:function(arg)
+    {
+        if(window.parent)
+        {
+            window.parent.userAddForm=this;
         }
     }
 })

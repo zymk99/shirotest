@@ -8,7 +8,7 @@ var userListPage=new Vue({
         openFrom:null
     },
     methods:{
-        handleClick:function(arg)     //查看
+        handleClick:function(arg,modeType)     //查看/修改
         {
             this.openFrom=layer.open({
                 id:"layer_userinfo",
@@ -20,9 +20,20 @@ var userListPage=new Vue({
                 closeBtn:"1",
                 shadeClose:true,
                 success:function(){
-                    debugger
+                    if(window.userAddForm)
+                    {
+                        window.userAddForm.setPageData(arg);
+                        if(modeType=="update")
+                        {
+                            window.userAddForm.setReadOnly(true);
+                        }
+                    }
                 }
             });
+        },
+        deleteClick:function(arg)
+        {
+            debugger
         },
         lastPage:function(arg)
         {

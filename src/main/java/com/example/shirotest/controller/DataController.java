@@ -186,8 +186,8 @@ public class DataController {
             if( minio.upload("icosource",filemap,null,null)  ){
                 String fileName=filemap.get("fileName").toString();
                 //获取刚才上传图片的路径
-                String url=minio.getUrl("icosource",fileName);
-                map.put("icon",url);
+                //String url=minio.getUrl("icosource",fileName);
+                map.put("icon",fileName);
                 String id=UUID.randomUUID().toString().replaceAll("-","");
                 map.put("id",id);
                 if(um.addUser(map)){
