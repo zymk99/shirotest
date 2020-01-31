@@ -31,13 +31,13 @@ public class UploadController {
             String fileName=file.getOriginalFilename();
             if(fileName.indexOf("\\.")>0)
             {
-                fileName= UUID.randomUUID().toString().replaceAll("-","")+fileName.split("\\.")[1];
+                fileName= UUID.randomUUID().toString().replaceAll("-","")+"."+fileName.split("\\.")[1];
             }
             if(fileName.indexOf(".")>0)
             {
-                fileName= UUID.randomUUID().toString().replaceAll("-","")+fileName.split("\\.")[1];
+                fileName= UUID.randomUUID().toString().replaceAll("-","")+"."+fileName.split("\\.")[1];
             }
-            map.put("fileName",file.getOriginalFilename()  ); //文件名
+            map.put("fileName",fileName  ); //文件名
             map.put("contentType" ,file.getContentType() );  //类型
             map.put("is",is);
             HttpSession session=request.getSession();

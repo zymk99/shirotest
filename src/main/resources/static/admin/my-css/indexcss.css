@@ -78,3 +78,7 @@
 .userlist_div th{
     text-align: center !important;
 }
+.avatar-uploader img{
+    width: 100% !important;
+    height: 100% !important;
+}

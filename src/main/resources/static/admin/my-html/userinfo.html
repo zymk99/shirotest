@@ -10,7 +10,7 @@
 </head>
 <body style="height: 100%;">
 
-<div class="">
+<div style="height: 95%;">
     <div class="c-panel">
         <div class="c-title">用户添加</div>
         <el-form ref="form" class="user_addform">
@@ -35,23 +35,23 @@
             <br>
             <div class="c-item">
                 <label class="c-label">用户名：</label>
-                <el-input size="mini" v-model="name"></el-input>
+                <el-input v-bind:readonly="isReadOnly" size="mini" v-model="name"></el-input>
             </div>
 
             <br>
             <div class="c-item">
                 <label class="c-label">密码：</label>
-                <el-input size="mini" v-model="passwd"></el-input>
+                <el-input v-bind:readonly="isReadOnly" size="mini" v-model="passwd"></el-input>
             </div>
 
             <br>
             <div class="c-item">
                 <label class="c-label">邮箱：</label>
-                <el-input size="mini" v-model="emails"></el-input>
+                <el-input v-bind:readonly="isReadOnly" size="mini" v-model="emails"></el-input>
             </div>
 
             <br>
-            <div class="c-item" style="min-width: 0px;">
+            <div class="c-item" V-IF="type==='update'" style="min-width: 0px;">
                 <label class="c-label"></label>
                 <el-button type="primary" icon="el-icon-plus" size="mini" @click="submit">确定</el-button>
             </div>

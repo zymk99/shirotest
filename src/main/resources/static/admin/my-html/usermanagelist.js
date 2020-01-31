@@ -23,7 +23,7 @@ var userListPage=new Vue({
                     if(window.userAddForm)
                     {
                         window.userAddForm.setPageData(arg);
-                        if(modeType=="update")
+                        if(modeType=="view")
                         {
                             window.userAddForm.setReadOnly(true);
                         }

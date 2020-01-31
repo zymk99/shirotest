@@ -192,14 +192,33 @@ public class DataController {
                 map.put("id",id);
                 if(um.addUser(map)){
                     session.removeAttribute("userTmpHeadPortrait");
-                    return "{value:'yes'}";
+                    return "{\"value\":\"yes\"}";
                 }
             }
 
         }
         return null;
     }
-
+    //修改用户
+    @PostMapping("/updateUser")
+    public String updateUser(@RequestBody Map map, HttpServletRequest request)
+    {
+        HttpSession session=request.getSession();
+        if(session.getAttribute("userTmpHeadPortrait")!=null)
+        {
+            Map filemap=(Map) session.getAttribute("userTmpHeadPortrait");
+            if( minio.upload("icosource",filemap,null,null)  ){
+                String fileName=filemap.get("fileName").toString();
+                map.put("icon",fileName);
+            }
+        }
+        if(um.updateItemById(map))
+        {
+            session.removeAttribute("userTmpHeadPortrait");
+            return "{\"value\":\"yes\"}";
+        }
+        return null;
+    }
 
     @RequestMapping("/createWord")
     public String createWord()  //生成字段Word

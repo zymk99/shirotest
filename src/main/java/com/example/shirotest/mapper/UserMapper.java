@@ -14,6 +14,7 @@ import java.util.Map;
 public interface UserMapper {
     TUser selectU(String id);
     TUser login(TUser user);
+    boolean updateItemById(Map map);
     boolean addUser(Map map);
     @MapKey("id")
     List<Map> selectUUU();
