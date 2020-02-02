@@ -30,7 +30,8 @@ import java.util.*;
 @RestController
 @RequestMapping("/data")
 public class DataController {
-
+    String server_url="http://203.195.251.136:9000";
+    String ico_bucket="icosource";//用户头像桶
     @Autowired
     IndexMenuMapper menu;
     @Autowired
@@ -136,7 +137,7 @@ public class DataController {
         Subject currentUser = SecurityUtils.getSubject();
         //注销
         currentUser.logout();
-        String url=minio.getUrl("icosource","QQ图片20190906103747.jpg");
+        String url=minio.getUrl(ico_bucket,"QQ图片20190906103747.jpg");
         if (!currentUser.isAuthenticated()) {
             // 把用户名和密码封装为 UsernamePasswordToken 对象
             UsernamePasswordToken token = new UsernamePasswordToken(name, passwd);
@@ -183,11 +184,11 @@ public class DataController {
         if(session.getAttribute("userTmpHeadPortrait")!=null)
         {
             Map filemap=(Map) session.getAttribute("userTmpHeadPortrait");
-            if( minio.upload("icosource",filemap,null,null)  ){
+            if( minio.upload(ico_bucket,filemap,null,null)  ){
                 String fileName=filemap.get("fileName").toString();
                 //获取刚才上传图片的路径
                 //String url=minio.getUrl("icosource",fileName);
-                map.put("icon",fileName);
+                map.put("icon",server_url+"/"+ico_bucket+"/"+fileName);
                 String id=UUID.randomUUID().toString().replaceAll("-","");
                 map.put("id",id);
                 if(um.addUser(map)){
@@ -207,9 +208,9 @@ public class DataController {
         if(session.getAttribute("userTmpHeadPortrait")!=null)
         {
             Map filemap=(Map) session.getAttribute("userTmpHeadPortrait");
-            if( minio.upload("icosource",filemap,null,null)  ){
+            if( minio.upload(ico_bucket,filemap,null,null)  ){
                 String fileName=filemap.get("fileName").toString();
-                map.put("icon",fileName);
+                map.put("icon",server_url+"/"+ico_bucket+"/"+fileName);
             }
         }
         if(um.updateItemById(map))

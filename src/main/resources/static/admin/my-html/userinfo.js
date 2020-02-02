@@ -29,7 +29,6 @@ var userAddForm=new Vue({
                 dataType:"json",
                 data:JSON.stringify(bean),
                 success:function(arg){
-                    debugger
                     layer.msg('新增完成！');
                 },
                 error:function(arg)
@@ -48,7 +47,7 @@ var userAddForm=new Vue({
             this.name=arg.name;
             this.passwd=arg.passwd;
             this.emails=arg.emails;
-            this.imageUrl=arg.imageUrl;
+            this.imageUrl=arg.icon;
             this.id=arg.id;
         },
         setReadOnly:function(flag) {
