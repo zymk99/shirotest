@@ -10,26 +10,36 @@ var userListPage=new Vue({
     methods:{
         handleClick:function(arg,modeType)     //查看/修改
         {
-            this.openFrom=layer.open({
-                id:"layer_userinfo",
-                type: 2,
-                title:"用户信息",
-                content: ['/admin/my-html/userinfo.html', 'no'], //url,no防止出现滚动条
-                area:["500px","500px"],
-                anim:"6",
-                closeBtn:"1",
-                shadeClose:true,
-                success:function(){
-                    if(window.userAddForm)
-                    {
-                        window.userAddForm.setPageData(arg);
-                        if(modeType=="view")
-                        {
-                            window.userAddForm.setReadOnly(true);
-                        }
-                    }
+            // this.openFrom=layer.open({
+            //     id:"layer_userinfo",
+            //     type: 2,
+            //     title:"用户信息",
+            //     content: ['/admin/my-html/userinfo.html', 'no'], //url,no防止出现滚动条
+            //     area:["500px","500px"],
+            //     anim:"6",
+            //     closeBtn:"1",
+            //     shadeClose:true,
+            //     success:function(){
+            //         if(window.userAddForm)
+            //         {
+            //             window.userAddForm.setPageData(arg);
+            //             if(modeType=="view")
+            //             {
+            //                 window.userAddForm.setReadOnly(true);
+            //             }
+            //         }
+            //     }
+            // });
+            this.openFrom=Zafkiel.loadPage('/admin/my-html/userinfo.html',"layer_userinfo","用户信息", function(){
+            if(window.userAddForm)
+            {
+                window.userAddForm.setPageData(arg);
+                if(modeType=="view")
+                {
+                    window.userAddForm.setReadOnly(true);
                 }
-            });
+            }
+        })
         },
         deleteClick:function(arg)
         {

@@ -1,5 +1,6 @@
 package com.example.shirotest.controller;
 
+import com.example.shirotest.Utils.CurrUtils;
 import com.example.shirotest.Utils.MinioUtils;
 import com.example.shirotest.dao.IndexMenu;
 import com.example.shirotest.dao.TUser;
@@ -42,6 +43,14 @@ public class DataController {
     public String ReruNull()
     {
         return null;
+    }
+    //获取用户信息
+    @RequestMapping(value="/getUserInfo",produces = "text/plain;charset=utf-8")
+    public String getUserInfo(){
+        Subject sub=SecurityUtils.getSubject();
+        TUser tu=(TUser)sub.getPrincipal();
+        String json =CurrUtils.ClassToJsonstring(tu);
+        return json;
     }
     //获取首页
     @RequestMapping("/getHomePage")
@@ -137,7 +146,6 @@ public class DataController {
         Subject currentUser = SecurityUtils.getSubject();
         //注销
         currentUser.logout();
-        String url=minio.getUrl(ico_bucket,"QQ图片20190906103747.jpg");
         if (!currentUser.isAuthenticated()) {
             // 把用户名和密码封装为 UsernamePasswordToken 对象
             UsernamePasswordToken token = new UsernamePasswordToken(name, passwd);
@@ -219,6 +227,15 @@ public class DataController {
             return "{\"value\":\"yes\"}";
         }
         return null;
+    }
+    @PostMapping("/deleUser")
+    public String deleteUser(String id)
+    {
+        if(!StringUtils.isEmpty(id) && um.deleteUser(id))
+        {
+            return "{\"value\":\"yes\"}";
+        }
+        return "{\"value\":\"error\"}";
     }
 
     @RequestMapping("/createWord")

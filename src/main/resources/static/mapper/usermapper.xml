@@ -48,6 +48,9 @@
     <select id="selectLeapCount" resultType="java.util.Map">
         select replace(cast(uuid_generate_v4() as VARCHAR), '-', '') as id,count(tablename),tablecnname,tablename from leapdatafield GROUP BY tablename,tablecnname order by tablename
     </select>
+    <delete id="deleteUser" parameterType="String">
+        delete from nzzusertable where id=#{id}
+    </delete>
     <select id="selectLeap" resultType="java.util.Map">
         select * from leapdatafield order by tablename
     </select>
