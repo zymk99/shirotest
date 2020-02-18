@@ -15,3 +15,42 @@ Zafkiel.loadPage=function(url,id,title,success){
         success:success
     });
 }
+Zafkiel.request=function(_url,par,success,type,isJsonString,async){  //发送请求 默认get  后台接受参数为map时要传json字符串
+   if(!type)
+   {
+      type="get";
+   }
+   var bean={
+      url:_url,
+      type:type,
+      data:par,
+      success:success
+   }
+   if(isJsonString){
+      bean.contentType="application/json;charset=UTF-8";
+      bean.dataType="json";
+   }
+   var data;
+   if(async==false)//非异步
+   {
+      bean.async=false;
+      if(success==null)
+      {
+         bean.success=function(arg)
+         {
+            data=arg;
+         }
+      }
+   }
+   $.ajax(bean);
+   return data;
+}
+Zafkiel.getUserInfo=function(){
+   if(this.userInfo)
+   {
+      return this.userInfo;
+   }
+   var userInfoStr=Zafkiel.request("/data/getUserInfo",null,null,null,null,false);
+   this.userInfo=JSON.parse(userInfoStr)
+   return this.userInfo;
+}

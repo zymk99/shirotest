@@ -18,19 +18,19 @@ import java.util.Map;
 public class MyController {
     @Autowired
     UserMapper um;
-    @RequestMapping(value = "/one",method = RequestMethod.GET)
+    @RequestMapping(value = "/test/one",method = RequestMethod.GET)
     public String one()
     {
         TUser tu=um.selectU("02601a4e6ae949f3b7bb93a2b2d1b80d");
         return "html/index";
     }
-    @RequestMapping(value="/login",method = RequestMethod.GET)
+    @RequestMapping(value="/test/login",method = RequestMethod.GET)
     public String login()
     {
         return "admin/login";
     }
 
-    @RequestMapping("/success")
+    @RequestMapping("/test/success")
     public String succe()
     {
         return "admin/index";

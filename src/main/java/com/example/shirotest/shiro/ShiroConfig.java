@@ -35,7 +35,6 @@ public class ShiroConfig {
         //静态资源的处理
         filterChainDefinitionMap.put("/static/**", "anon");
         filterChainDefinitionMap.put("/templates/**", "anon");
-        filterChainDefinitionMap.put("/test/login2", "anon");
         filterChainDefinitionMap.put("/test/one", "anon");
         filterChainDefinitionMap.put("/sa-resources/**", "anon");
         filterChainDefinitionMap.put("/admin/**", "anon");

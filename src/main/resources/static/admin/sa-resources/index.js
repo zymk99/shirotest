@@ -18,10 +18,15 @@ var homePage = {
 var sa_admin = new Vue({
 	el: '.app',
 	data: {
+		userInfo:new function(){
+			return Zafkiel.getUserInfo();
+		},
 		version: 'v1.1.3',		// 当前版本
 		update_time: '2019-9-3',		// 更新日期 
 		title: '',//'SA-后台模板',				// 页面标题  
-		logo_url: '',	// logo地址 
+		logo_url: new function(){
+			return Zafkiel.getUserInfo().icon;
+		},	// logo地址
 		icon_url: '',	// icon地址 
 		is_log: true,				// 是否打印日志 
 		github_url: 'https://github.com/click33/sa-admin',	// github地址 
@@ -543,7 +548,7 @@ var sa_admin = new Vue({
 				}
                 window.menuList=arg;
                 sa_admin.setMenuList(arg);
-                sa_admin.logo_url="/admin/image/doge.jpg";
+                sa_admin.logo_url= Zafkiel.getUserInfo().icon;
 				sa_admin._data.title="nzz";
             }
         })

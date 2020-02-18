@@ -49,6 +49,7 @@ public class DataController {
     public String getUserInfo(){
         Subject sub=SecurityUtils.getSubject();
         TUser tu=(TUser)sub.getPrincipal();
+        tu.setPasswd("*");
         String json =CurrUtils.ClassToJsonstring(tu);
         return json;
     }

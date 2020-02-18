@@ -24,7 +24,7 @@ public class UploadController {
     public String upHeadPortrait(@RequestParam("file")MultipartFile file, HttpServletRequest request)
     {
         try {
-            BufferedImage img=imageutils.imageScale(file.getInputStream(),128,128,1.0f);
+            BufferedImage img=imageutils.imageScale(file.getInputStream(),256,256,1.0f);
             //把临时文件的信息存起来
             Map map=new HashMap();
             InputStream is= imageutils.bufferingToInputstream(img); //得到文件流
