@@ -549,7 +549,7 @@ var sa_admin = new Vue({
                 window.menuList=arg;
                 sa_admin.setMenuList(arg);
                 sa_admin.logo_url= Zafkiel.getUserInfo().icon;
-				sa_admin._data.title="nzz";
+				sa_admin._data.title=Zafkiel.getUserInfo().name;
             }
         })
 

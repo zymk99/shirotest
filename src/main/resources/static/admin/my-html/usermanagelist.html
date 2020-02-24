@@ -10,7 +10,10 @@
 </head>
 <body style="height: 100%;">
 
-<div class="userlist_div">
+<div class="userlist_div" h="usermanagelist">
+    <el-button-group>
+        <el-button type="primary" @click="openAddUser()" icon="el-icon-circle-plus-outline"></el-button>
+    </el-button-group>
     <template>
         <el-table
                 :data="tableData"

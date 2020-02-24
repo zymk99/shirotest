@@ -75,6 +75,9 @@ var userListPage=new Vue({
                     }
                 }
             })
+        },
+        openAddUser:function(){
+
         }
     },
     created:function(){
