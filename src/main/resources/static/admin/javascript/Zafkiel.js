@@ -15,7 +15,7 @@ Zafkiel.loadPage=function(url,id,title,success){
         success:success
     });
 }
-Zafkiel.request=function(_url,par,success,type,isJsonString,async){  //发送请求 默认get  后台接受参数为map时要传json字符串
+Zafkiel.request=function(_url,par,type,success_func,error_func,isJsonString,async){  //发送请求 默认get  后台接受参数为map时要传json字符串
    if(!type)
    {
       type="get";
@@ -24,17 +24,19 @@ Zafkiel.request=function(_url,par,success,type,isJsonString,async){  //发送请
       url:_url,
       type:type,
       data:par,
-      success:success
+      success:success_func
    }
-   if(isJsonString){
+   if(isJsonString){           //后台用map接收时需要
       bean.contentType="application/json;charset=UTF-8";
       bean.dataType="json";
+      bean.data=JSON.stringify(par);
    }
    var data;
-   if(async==false)//非异步
+   bean.error=error_func;
+   if(async==false || async==null)//非异步
    {
       bean.async=false;
-      if(success==null)
+      if(success_func==null)
       {
          bean.success=function(arg)
          {
@@ -50,7 +52,7 @@ Zafkiel.getUserInfo=function(){
    {
       return this.userInfo;
    }
-   var userInfoStr=Zafkiel.request("/data/getUserInfo",null,null,null,null,false);
+   var userInfoStr=Zafkiel.request("/data/getUserInfo");
    this.userInfo=JSON.parse(userInfoStr)
    return this.userInfo;
 }

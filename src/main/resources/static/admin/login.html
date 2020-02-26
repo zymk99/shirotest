@@ -22,7 +22,7 @@
 				<div class="web_login" id="web_login">
 					<div class="login-box">
 						<div class="login_form">
-							<form name="loginform" accept-charset="utf-8" id="login_form" action="/data/login" class="loginForm"  method="post">
+							<form name="loginform" accept-charset="utf-8" id="login_form" class="loginForm"  method="post">
 								<input type="hidden" name="did" value="0" />
 								<input type="hidden" name="to" value="log" />
 								<div class="uinArea" id="uinArea">
@@ -48,7 +48,7 @@
 			</div>
 
 			<div class="qlogin" id="qlogin" style="display: none; height: 235px;">
-				<div class="web_login tow-content" id="guanyu" style="padding: 2em 2em; color: #666; font-size: 14px; line-height: 24px;">
+				<div class="web_login tow-content" id="guanyu" >
 					
 				</div>
 			</div>
@@ -61,14 +61,31 @@
 			
 			// 你所有要改的代码全在这里   ↓↓↓↓↓ 
 			
-			var page_title = 'SA-后台模板-登录';		// 页面标题
+			var page_title = '正体不明';		// 页面标题
 			var two_title = '注册';			// 第二个卡片的标题(最好四个字)
 			var key = 'admin';	// 默认的key
 			var password = 'admin';	// 默认的password 
 			// 第二个模板的内容
 			// var tow_content = '输入账号和密码，点击按钮登录即可';
-			var tow_content = '本页面参考于此模板：<br/> <a href="http://www.jq22.com/demo/jQuery-dl20160111/" target="_blank">http://www.jq22.com/yanshi5518</a>';	
-			
+			var tow_content = '<div class="login-box"><div class="login_form">' +
+					'<form name="" accept-charset="utf-8" class="loginForm">' +
+					'<div class="uinArea" >' +
+					'<label class="input-tips" for="u">帐号：</label>' +
+					'<div class="inputOuter" >' +
+					'<input type="text" name="_name" class="inputstyle" />' +
+					'</div>' +
+					'</div>' +
+					'<div class="pwdArea" >' +
+					'<label class="input-tips" for="p">密码：</label>' +
+					'<div class="inputOuter" >' +
+					'<input type="password" name="_passwd" class="inputstyle" />' +
+					'</div>' +
+					'</div>' +
+					'<div style="padding-left:50px;margin-top:20px;">' +
+					'<input type="button" value="注 册" style="width: 208px;" class="button_blue" onclick="LOG_logon()" />' +
+					'</div>' +
+					'</form></div></div>';
+			//登录
 			$('.login-btn').click(function() {
 				var p = {
 					name: $('[name=name]').val(),
@@ -95,11 +112,38 @@
 				});
 
 			})
-			
-			// 你所有要改的代码全在这里   ↑↑↑↑↑	
-			
-			
-			
+			//注册
+			var LOG_logon =function() {
+				var p = {}
+				p.name= $('[name=_name]').val();
+				p.passwd= $('[name=_passwd]').val();
+
+				if(p.name == '' || p.passwd == ''){
+					return layer.msg('请输入账号密码');
+				}
+
+				$.ajax({
+					url:"/data/addUser",
+					type:"post",
+					contentType:"application/json;charset=UTF-8",
+					data:JSON.stringify(p),
+					dataType:"json",
+					success:function(arg)
+					{
+						layer.confirm('注册成功，要跳转至首页吗?', {icon: 3, title:'提示'}, function(index){
+							debugger
+							//window.location.href="/test/success";
+						});
+					},
+					error:function(a,b,c)
+					{
+						return layer.msg('注册失败');
+					}
+				});
+
+			}
+
+			// 你所有要改的代码全在这里   ↑↑↑↑↑
 			
 			// 替换属性
 			$('.page-title').html(page_title);
@@ -111,7 +155,7 @@
 			
 			$('#p').bind('keypress',function(event){
 				if(event.keyCode == "13") {
-					$('.login-btn').click();
+					//$('.login-btn').click();
 				}
 			});
 			

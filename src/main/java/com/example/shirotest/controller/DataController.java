@@ -190,6 +190,8 @@ public class DataController {
     public String addUser(@RequestBody Map map, HttpServletRequest request)
     {
         HttpSession session=request.getSession();
+        String id=UUID.randomUUID().toString().replaceAll("-","");
+        map.put("id",id);
         if(session.getAttribute("userTmpHeadPortrait")!=null)
         {
             Map filemap=(Map) session.getAttribute("userTmpHeadPortrait");
@@ -198,16 +200,14 @@ public class DataController {
                 //获取刚才上传图片的路径
                 //String url=minio.getUrl("icosource",fileName);
                 map.put("icon",server_url+"/"+ico_bucket+"/"+fileName);
-                String id=UUID.randomUUID().toString().replaceAll("-","");
-                map.put("id",id);
-                if(um.addUser(map)){
-                    session.removeAttribute("userTmpHeadPortrait");
-                    return "{\"value\":\"yes\"}";
-                }
             }
-
         }
-        return null;
+        if(um.addUser(map)){
+            session.removeAttribute("userTmpHeadPortrait");
+            return "{\"value\":\"yes\"}";
+        }else{
+            return "{\"value\":\"no\"}";
+        }
     }
     //修改用户
     @PostMapping("/updateUser")
@@ -229,9 +229,11 @@ public class DataController {
         }
         return null;
     }
+    //删除用户
     @PostMapping("/deleUser")
-    public String deleteUser(String id)
+    public String deleteUser(@RequestBody Map user)
     {
+        String id=user.get("id").toString();
         if(!StringUtils.isEmpty(id) && um.deleteUser(id))
         {
             return "{\"value\":\"yes\"}";
