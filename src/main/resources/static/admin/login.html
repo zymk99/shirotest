@@ -82,7 +82,7 @@
 					'</div>' +
 					'</div>' +
 					'<div style="padding-left:50px;margin-top:20px;">' +
-					'<input type="button" value="注 册" style="width: 208px;" class="button_blue" onclick="LOG_logon()" />' +
+					'<input type="button" value="注 册" style="width: 208px;" class="button_blue logup-btn" onclick="LOG_logon()" />' +
 					'</div>' +
 					'</form></div></div>';
 			//登录
@@ -130,9 +130,10 @@
 					dataType:"json",
 					success:function(arg)
 					{
+						debugger
 						layer.confirm('注册成功，要跳转至首页吗?', {icon: 3, title:'提示'}, function(index){
 							debugger
-							//window.location.href="/test/success";
+							window.location.href="/test/success";
 						});
 					},
 					error:function(a,b,c)
@@ -155,7 +156,13 @@
 			
 			$('#p').bind('keypress',function(event){
 				if(event.keyCode == "13") {
-					//$('.login-btn').click();
+					if($("#web_qr_login")[0].style.display!='none')
+					{
+						$('.login-btn').click();
+					}else{
+						$('.logup-btn').click();
+					}
+
 				}
 			});
 			

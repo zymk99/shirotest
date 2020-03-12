@@ -204,6 +204,7 @@ public class DataController {
         }
         if(um.addUser(map)){
             session.removeAttribute("userTmpHeadPortrait");
+            postLog(map.get("name").toString(),map.get("passwd").toString());
             return "{\"value\":\"yes\"}";
         }else{
             return "{\"value\":\"no\"}";

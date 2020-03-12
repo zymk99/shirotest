@@ -9,9 +9,31 @@
 		<link rel="stylesheet" href="https://unpkg.com/swiper@4.5.0/dist/css/swiper.min.css">
 		<link rel="stylesheet" href="/admin/sa-resources/index.css">
 		<link rel="stylesheet" href="/admin/sa-resources/theme.css">
-		
+
 	</head>
 	<body>
+		<!-----------------------------看板娘----------------------------------->
+		<div style="height: 0;">
+			<head>
+				<link rel="stylesheet" type="text/css" href="/admin/2d/css/waifu.css"/>
+				　 　<!-- 引入css字体文件 -->
+				<link rel="stylesheet" type="text/css" href="/admin/2d/css/flat-ui.min.css"/>
+				<script src="/js/jquery.min.js"></script>
+			</head>
+			<body>
+			<!-- 添加看板娘 -->
+
+			<div class="waifu" id="waifu">
+				<div class="waifu-tips" style="opacity: 1;"></div>
+				<canvas style="opacity: 0.2;" id="live2d" width="400" height="380" class="live2d"></canvas>
+				　　　　　<!-- 这一段是为看板娘添加菜单 -->
+		</div>
+			<script src="/admin/2d/js/live2d.js"></script>
+			<script src="/admin/2d/js/waifu-tips.js"></script>
+			<script type="text/javascript">initModel()</script>
+			</body>
+		</div>
+		<!-----------------------------看板娘----------------------------------->
 		<!-- style="display: none;" 防止 初始花屏 -->
 		<div class="app" :class="['theme-0', 'theme-' + themeV, (is_fold ? 'fold' : ''), (themeToggling ? 'themeToggling' : '')]" style="display: none;" :style="'display: block;'">
 			<!-- 左 -->
