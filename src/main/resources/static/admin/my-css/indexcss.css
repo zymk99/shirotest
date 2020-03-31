@@ -1,4 +1,8 @@
 /*  ------------------------------ element-ui 图片上传控件样式 ------------------------------------------ */
+.PTT_main .el-upload{
+    height:auto !important;
+    width:auto !important;
+}
 .avatar-uploader .el-upload {
     border: 1px dashed #d9d9d9;
     border-radius: 6px;

@@ -47,4 +47,31 @@ public class UploadController {
         }
         return "123";
     }
+
+    @RequestMapping("/GeneralPortrait")
+    public Boolean upGeneralPortrait(@RequestParam("file")MultipartFile file, HttpServletRequest request){
+        try {
+            //把临时文件的信息存起来
+            Map map=new HashMap();
+            InputStream is= file.getInputStream(); //得到文件流
+            String fileName=file.getOriginalFilename();
+            if(fileName.indexOf("\\.")>0)
+            {
+                fileName= UUID.randomUUID().toString().replaceAll("-","")+"."+fileName.split("\\.")[1];
+            }
+            if(fileName.indexOf(".")>0)
+            {
+                fileName= UUID.randomUUID().toString().replaceAll("-","")+"."+fileName.split("\\.")[1];
+            }
+            map.put("fileName",fileName  ); //文件名
+            map.put("contentType" ,file.getContentType() );  //类型
+            map.put("is",is);
+            HttpSession session=request.getSession();
+            session.setAttribute("userTmpHeadPortrait",map);
+            return true;
+        }catch (Exception e){
+
+        }
+        return false;
+    }
 }
