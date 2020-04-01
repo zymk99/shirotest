@@ -2,6 +2,7 @@ package com.example.shirotest.controller;
 
 import com.example.shirotest.Utils.CurrUtils;
 import com.example.shirotest.Utils.MinioUtils;
+import com.example.shirotest.Utils.TencentAuth;
 import com.example.shirotest.dao.IndexMenu;
 import com.example.shirotest.dao.TUser;
 import com.example.shirotest.mapper.IndexMenuMapper;
@@ -10,6 +11,7 @@ import com.example.shirotest.server.word.ExportWord;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.shiro.SecurityUtils;
@@ -24,6 +26,8 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.util.*;
@@ -39,6 +43,8 @@ public class DataController {
     UserMapper um;
     @Autowired
     MinioUtils minio;
+    @Autowired
+    TencentAuth tencentAuth;
     @RequestMapping(value="/null")
     public String ReruNull()
     {
@@ -287,6 +293,27 @@ public class DataController {
         return null;
     }
 
+    //图片转文字
+    @PostMapping("/picToText")
+    public String picToText( HttpServletRequest request){
+        HttpSession session=request.getSession();
+        try {
+            if(session.getAttribute("GeneralPortrait")!=null)
+            {
+                Map map=(Map)session.getAttribute("GeneralPortrait");
+                InputStream is=(InputStream)map.get("is");
+                byte[] bytes = IOUtils.toByteArray(is);
+                String encoded = Base64.getEncoder().encodeToString(bytes);
+                Map<String,String> valMap=tencentAuth.getAuthentication(encoded);
+                String json =CurrUtils.ClassToJsonstring(valMap);
+                String value=CurrUtils.sendPost("https://api.ai.qq.com/fcgi-bin/nlp/nlp_imagetranslate",json);
+                int aa=10;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }
 
 

@@ -4,7 +4,7 @@ var picToText_up=new Vue({
         imageUrl:""
     },
     methods:{
-        beforeAvatarUpload(file){
+        beforeAvatarUpload:function(file){
             if(file.size/1024/1024>20)
             {
                 this.$message.error('识别图片不能超过20M!');
@@ -12,8 +12,9 @@ var picToText_up=new Vue({
             }
             return true;
         },
-        handleAvatarSuccess(res, file) {
+        handleAvatarSuccess:function(res, file) {
             this.imageUrl = URL.createObjectURL(file.raw);
+            var value=Zafkiel.request("/data/picToText",null,"post");
         }
     }
 })

@@ -67,7 +67,7 @@ public class UploadController {
             map.put("contentType" ,file.getContentType() );  //类型
             map.put("is",is);
             HttpSession session=request.getSession();
-            session.setAttribute("userTmpHeadPortrait",map);
+            session.setAttribute("GeneralPortrait",map);
             return true;
         }catch (Exception e){
 
