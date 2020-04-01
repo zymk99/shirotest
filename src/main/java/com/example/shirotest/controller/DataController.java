@@ -305,8 +305,14 @@ public class DataController {
                 byte[] bytes = IOUtils.toByteArray(is);
                 String encoded = Base64.getEncoder().encodeToString(bytes);
                 Map<String,String> valMap=tencentAuth.getAuthentication(encoded);
+//                String par="";
+//                for(String tmps: valMap.keySet())
+//                {
+//                    par+= (tmps+"="+valMap.get(tmps).toString() +"&" );
+//                }
+//                par=par.substring(0,par.length()-1);
                 String json =CurrUtils.ClassToJsonstring(valMap);
-                String value=CurrUtils.sendPost("https://api.ai.qq.com/fcgi-bin/nlp/nlp_imagetranslate",json);
+                String value=CurrUtils.sendPostByJsonString("https://api.ai.qq.com/fcgi-bin/nlp/nlp_imagetranslate",json);
                 int aa=10;
             }
         } catch (IOException e) {

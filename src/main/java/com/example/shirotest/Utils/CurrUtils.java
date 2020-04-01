@@ -1,11 +1,16 @@
 package com.example.shirotest.Utils;
 
 import net.sf.json.JSONObject;
+import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.message.BasicHeader;
+import org.apache.http.protocol.HTTP;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.lang.reflect.Field;
 import java.net.URL;
 import java.net.URLConnection;
@@ -44,7 +49,7 @@ public class CurrUtils {
         return s;
     }
 
-    //发送POST请求
+    //发送POST请求      未通
     public static String sendPost(String url, String param) {
         PrintWriter out = null;
         BufferedReader in = null;
@@ -91,6 +96,45 @@ public class CurrUtils {
             catch(IOException ex){
                 ex.printStackTrace();
             }
+        }
+        return result;
+    }
+
+    //发送JSON字符串参数的POST请求   未通
+    public static String sendPostByJsonString(String URL,String json) {              //JSONObject json
+        CloseableHttpClient client = HttpClients.createDefault();
+        HttpPost post = new HttpPost(URL);
+        post.setHeader("Content-Type", "application/json");
+        post.addHeader("Authorization", "Basic YWRtaW46");
+        String result;
+        try {
+//            StringEntity s = new StringEntity(json.toString(), "utf-8");
+//            s.setContentEncoding(new BasicHeader(HTTP.CONTENT_TYPE,
+//                    "application/json"));
+            StringEntity s = new StringEntity(json);
+            s.setContentEncoding(new BasicHeader(HTTP.CONTENT_TYPE,
+                   "application/json"));
+            post.setEntity(s);
+            // 发送请求
+            HttpResponse httpResponse = client.execute(post);
+            // 获取响应输入流
+            InputStream inStream = httpResponse.getEntity().getContent();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(
+                    inStream, "utf-8"));
+            StringBuilder strber = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null)
+                strber.append(line + "\n");
+            inStream.close();
+            result = strber.toString();
+            if (httpResponse.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
+                System.out.println("请求服务器成功，做相应处理");
+            } else {
+                System.out.println("请求服务端失败");
+            }
+        } catch (Exception e) {
+            e.getMessage();
+            throw new RuntimeException(e);
         }
         return result;
     }
