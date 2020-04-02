@@ -294,7 +294,7 @@ public class DataController {
     }
 
     //图片转文字
-    @PostMapping("/picToText")
+    @PostMapping(value="/picToText",produces = "text/plain;charset=utf-8")
     public String picToText( HttpServletRequest request){
         HttpSession session=request.getSession();
         try {
@@ -313,7 +313,7 @@ public class DataController {
 //                par=par.substring(0,par.length()-1);
                 String json =CurrUtils.ClassToJsonstring(valMap);
                 String value=CurrUtils.sendPost("https://api.ai.qq.com/fcgi-bin/nlp/nlp_imagetranslate",valMap);
-                int aa=10;
+                return value;
             }
         } catch (IOException e) {
             e.printStackTrace();

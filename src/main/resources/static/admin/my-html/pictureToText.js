@@ -15,6 +15,17 @@ var picToText_up=new Vue({
         handleAvatarSuccess:function(res, file) {
             this.imageUrl = URL.createObjectURL(file.raw);
             var value=Zafkiel.request("/data/picToText",null,"post");
+            debugger
         }
+    }
+})
+
+var picToText_text=new Vue({
+    el:".picToText_text",
+    data:{
+        textarea1:""
+    },
+    methods:{
+
     }
 })
