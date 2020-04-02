@@ -9,9 +9,11 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicHeader;
 import org.apache.http.protocol.HTTP;
+import org.apache.http.util.TextUtils;
 
 import java.io.*;
 import java.lang.reflect.Field;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.HashMap;
@@ -49,55 +51,78 @@ public class CurrUtils {
         return s;
     }
 
-    //发送POST请求      未通
-    public static String sendPost(String url, String param) {
-        PrintWriter out = null;
-        BufferedReader in = null;
-        String result = "";
+    //发送POST请求
+    public static String sendPost(String actionUrl, Map<String, String> params) {
         try {
-            URL realUrl = new URL(url);
-            // 打开和URL之间的连接
-            URLConnection conn = realUrl.openConnection();
-            // 设置通用的请求属性
-            conn.setRequestProperty("accept", "*/*");
-            conn.setRequestProperty("connection", "Keep-Alive");
-            conn.setRequestProperty("user-agent",
-                    "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)");
-            // 发送POST请求必须设置如下两行
-            conn.setDoOutput(true);
-            conn.setDoInput(true);
-            // 获取URLConnection对象对应的输出流
-            out = new PrintWriter(conn.getOutputStream());
-            // 发送请求参数
-            out.print(param);
-            // flush输出流的缓冲
-            out.flush();
-            // 定义BufferedReader输入流来读取URL的响应
-            in = new BufferedReader(
-                    new InputStreamReader(conn.getInputStream()));
-            String line;
-            while ((line = in.readLine()) != null) {
-                result += line;
-            }
-        } catch (Exception e) {
-            System.out.println("发送 POST 请求出现异常！"+e);
-            e.printStackTrace();
-        }
-        //使用finally块来关闭输出流、输入流
-        finally{
-            try{
-                if(out!=null){
-                    out.close();
+            String BOUNDARY = java.util.UUID.randomUUID().toString();
+            String PREFIX = "--";
+            String LINEND = "\r\n";
+            String MULTIPART_FROM_DATA = "multipart/form-data";
+            String CHARSET = "UTF-8";
+            URL uri = new URL(actionUrl);
+            HttpURLConnection conn = (HttpURLConnection) uri.openConnection();
+            conn.setReadTimeout(30 * 1000); // 缓存的最长时间
+            conn.setDoInput(true);// 允许输入
+            conn.setDoOutput(true);// 允许输出
+            conn.setUseCaches(false); // 不允许使用缓存
+            conn.setRequestMethod("POST");
+            conn.setRequestProperty("connection", "keep-alive");
+            conn.setRequestProperty("Charsert", "UTF-8");
+            conn.setRequestProperty("Content-Type", MULTIPART_FROM_DATA + ";boundary=" + BOUNDARY);
+            StringBuilder sb = new StringBuilder();
+            if (params != null) {
+                // 首先组拼文本类型的参数
+                for (Map.Entry<String, String> entry : params.entrySet()) {
+                    sb.append(PREFIX);
+                    sb.append(BOUNDARY);
+                    sb.append(LINEND);
+                    sb.append("Content-Disposition: form-data; name=\""
+                            + entry.getKey() + "\"" + LINEND);
+                    sb.append("Content-Type: text/plain; charset=" + CHARSET + LINEND);
+                    sb.append("Content-Transfer-Encoding: 8bit" + LINEND);
+                    sb.append(LINEND);
+                    sb.append(entry.getValue());
+                    sb.append(LINEND);
                 }
-                if(in!=null){
-                    in.close();
+
+            }
+
+            DataOutputStream outStream = new DataOutputStream(
+                    conn.getOutputStream());
+            if (!TextUtils.isEmpty(sb.toString())) {
+                outStream.write(sb.toString().getBytes());
+            }
+            // 请求结束标志
+            byte[] end_data = (PREFIX + BOUNDARY + PREFIX + LINEND).getBytes();
+            outStream.write(end_data);
+            outStream.flush();
+
+            // 得到响应码
+            int res = conn.getResponseCode();
+            InputStream in = conn.getInputStream();
+            if (res == 200) {
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(in, "UTF-8"));
+                StringBuffer buffer = new StringBuffer();
+                String line = "";
+                while ((line = bufferedReader.readLine()) != null) {
+                    buffer.append(line);
                 }
+
+//          int ch;
+//          StringBuilder sb2 = new StringBuilder();
+//          while ((ch = in.read()) != -1) {
+//              sb2.append((char) ch);
+//          }
+                return buffer.toString();
             }
-            catch(IOException ex){
-                ex.printStackTrace();
-            }
+            outStream.close();
+            conn.disconnect();
+            return in.toString();
+        }catch(Exception e)
+        {
+            e.getMessage();
         }
-        return result;
+        return null;
     }
 
     //发送JSON字符串参数的POST请求   未通

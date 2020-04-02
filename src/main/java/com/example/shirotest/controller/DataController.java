@@ -312,7 +312,7 @@ public class DataController {
 //                }
 //                par=par.substring(0,par.length()-1);
                 String json =CurrUtils.ClassToJsonstring(valMap);
-                String value=CurrUtils.sendPostByJsonString("https://api.ai.qq.com/fcgi-bin/nlp/nlp_imagetranslate",json);
+                String value=CurrUtils.sendPost("https://api.ai.qq.com/fcgi-bin/nlp/nlp_imagetranslate",valMap);
                 int aa=10;
             }
         } catch (IOException e) {
