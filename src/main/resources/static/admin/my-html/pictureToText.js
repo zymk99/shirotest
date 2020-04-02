@@ -5,6 +5,11 @@ var picToText_up=new Vue({
     },
     methods:{
         beforeAvatarUpload:function(file){
+            if(file.type!="image/jpeg" && file.type!="image/png" )
+            {
+                this.$message.error('只能上传jpg和png格式!');
+                return false;
+            }
             if(file.size/1024/1024>20)
             {
                 this.$message.error('识别图片不能超过20M!');
@@ -17,7 +22,6 @@ var picToText_up=new Vue({
             var value=Zafkiel.request("/data/picToText",null,"post");
             if(value)
             {
-                debugger
                 var text="";
                 var text2="";
                 var data=JSON.parse(value).data.image_records;

@@ -7,24 +7,28 @@
     <title>Title</title>
 </head>
 <body>
-<div class="PTT_main">
-    <el-upload
-            class="avatar-uploader picToText_up "
-            action="/updata/GeneralPortrait"
-            :show-file-list="false"
-            :on-success="handleAvatarSuccess"
-            :before-upload="beforeAvatarUpload"
-            style="width: auto;height: auto;border-radius：5px;">
-        <img v-if="imageUrl" :src="imageUrl" class="avatar">
-        <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-    </el-upload>
-    <el-input
-            class="picToText_text"
-            type="textarea"
-            autosize
-            placeholder="请输入内容"
-            v-model="textarea1">
-    </el-input>
+<div class="PTT_main" style="padding-top: 5rem;">
+    <div class="layout-left-2" align="center">
+        <el-upload
+                class="avatar-uploader picToText_up "
+                action="/updata/GeneralPortrait"
+                :show-file-list="false"
+                :on-success="handleAvatarSuccess"
+                :before-upload="beforeAvatarUpload"
+                style="width: auto;height: auto;border-radius：5px;">
+            <img v-if="imageUrl" :src="imageUrl" class="avatar">
+            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+        </el-upload>
+    </div>
+    <div class="layout-right-2" align="center">
+        <el-input
+                class="picToText_text"
+                type="textarea"
+                autosize
+                placeholder="请输入内容"
+                v-model="textarea1">
+        </el-input>
+    </div>
 </div>
 
 <script src="/js/jquery.min.js"></script>

@@ -9,6 +9,8 @@ import java.util.*;
 
 @Component
 public class TencentAuth {
+    String app_id="2124377230";
+    String app_key="p6XfC6CpDn3HvRNQ";
     //图片转文字鉴权
     public Map<String,String> getAuthentication(String base64){
         UUID uuid = UUID.randomUUID();
@@ -16,7 +18,7 @@ public class TencentAuth {
         String date=String.valueOf((new Date()).getTime());
         date=date.substring(0,date.length()-3);
         Map<String,String> mp=new HashMap();
-        mp.put("app_id","2124377230");
+        mp.put("app_id",app_id);
         mp.put("scene","doc");
         mp.put("source","en");
         mp.put("target","zh");
@@ -25,6 +27,12 @@ public class TencentAuth {
         mp.put("nonce_str",r);
         mp.put("image",base64);   //图片base64
 
+       return Authentication(mp);
+    }
+
+
+    //鉴权
+    public Map<String,String> Authentication(Map<String,String> mp) {
         try {
             Set tmps=mp.keySet();
             Object[] tmpl=tmps.toArray();
@@ -37,7 +45,7 @@ public class TencentAuth {
                 url=url + s.toString()+"="+ URLEncoder.encode(v, "UTF-8") +"&";
 
             }
-            url=url+"app_key=p6XfC6CpDn3HvRNQ";
+            url=url+"app_key="+app_key;
             mp.put("sign",DigestUtils.md5Hex(url).toUpperCase());
             //System.out.println(url+"\n");
             //System.out.println(date+"\n"+r+"\n"+ DigestUtils.md5Hex(url).toUpperCase());

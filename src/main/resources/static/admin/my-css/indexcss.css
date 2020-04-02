@@ -1,7 +1,11 @@
 /*  ------------------------------ element-ui 图片上传控件样式 ------------------------------------------ */
 .PTT_main .el-upload{
+    border: 1px dashed #999 !important;
     height:auto !important;
     width:auto !important;
+}
+.PTT_main .avatar-uploader-icon{
+    line-height: 128px;
 }
 .avatar-uploader .el-upload {
     border: 1px dashed #d9d9d9;
@@ -32,6 +36,19 @@
     display: block;
 }
 /*--------------------------------------------------end-----------------------------------------*/
+
+.layout-left-2{
+    width: 49%;
+    display: inline-block;
+    position: relative;
+    left: 0px;
+}
+.layout-right-2{
+     width: 49%;
+     display: inline-block;
+     position: relative;
+     right: 0px;
+ }
 
 .menuset{
     list-style:none;
