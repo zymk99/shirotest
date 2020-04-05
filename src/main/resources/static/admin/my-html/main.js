@@ -139,7 +139,7 @@ var menuFrom=new Vue({
         },
         relatrole:function()
         {
-            Zafkiel.loadPage("")
+            Zafkiel.loadPage("/admin/my-html/role_menu_set.html","m_r","关联角色");
         }
     },
     created:function(){

@@ -8,7 +8,7 @@ Zafkiel.loadPage=function(url,id,title,success){
         type: 2,
         title:title,
         content: [url, 'no'], //url,no防止出现滚动条
-        area:["500px","500px"],
+        area:["40%","45%"],
         anim:"6",
         closeBtn:"1",
         shadeClose:true,
