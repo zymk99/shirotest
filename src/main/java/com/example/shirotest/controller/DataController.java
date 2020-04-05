@@ -7,6 +7,7 @@ import com.example.shirotest.dao.IndexMenu;
 import com.example.shirotest.dao.TUser;
 import com.example.shirotest.mapper.IndexMenuMapper;
 import com.example.shirotest.mapper.UserMapper;
+import com.example.shirotest.mapper.UtilsMapper;
 import com.example.shirotest.server.word.ExportWord;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -19,6 +20,7 @@ import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.subject.Subject;
+import org.apache.xmlbeans.impl.xb.xsdschema.Public;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -45,6 +47,24 @@ public class DataController {
     MinioUtils minio;
     @Autowired
     TencentAuth tencentAuth;
+
+    //新增角色-目录关联
+    @PostMapping("/setMenuRoleRela")
+    public boolean setMenuRoleRela(@RequestBody Map<String,String> par){
+        if(par.get("menuid")==null || par.get("roleid")==null)
+        {
+            return false;
+        }
+        String menuid=par.get("menuid").toString();
+        String roleid=par.get("roleid").toString();
+
+        return false;
+    }
+    //获取目录绑定的角色
+    @RequestMapping("/getRoleByMenu")
+    public LinkedList<Map> getRoleByMenu(String menuid){
+        return menu.getRoleByMenuid(menuid);
+    }
     @RequestMapping(value="/null")
     public String ReruNull()
     {

@@ -136,6 +136,10 @@ var menuFrom=new Vue({
         _close:function(arg){
 
             this.$el.style.display="none";
+        },
+        relatrole:function()
+        {
+            Zafkiel.loadPage("")
         }
     },
     created:function(){
