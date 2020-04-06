@@ -10,23 +10,33 @@
 </head>
 <body style="height: 100%;">
 
-<div style="height: 90%;padding: 4%;">
-    <div class="_transfer">
-        <template>
-            <el-transfer
-                    filterable
-                    :filter-method="filterMethod"
-                    filter-placeholder="请输入城市拼音"
-                    v-model="value"
-                    :data="data">
-            </el-transfer>
-        </template>
+    <div style="height: 90%;padding: 4%;">
+        <div class="_transfer">
+            <template>
+                <el-transfer
+                        filterable
+                        :filter-method="filterMethod"
+                        :titles="['未选择', '已选择']"
+                        filter-placeholder="请输入城市拼音"
+                        v-model="value"
+                        :data="dataall">
+                </el-transfer>
+            </template>
+            <div  align="center">
+                <el-row>
+                    <el-button type="primary" style="padding: 7px 15px;" @click="submit" plain>关联角色</el-button>
+                </el-row>
+            </div>
+        </div>
+
     </div>
-</div>
-<script src="/js/jquery.min.js"></script>
-<script src="https://unpkg.com/vue@2.6.10/dist/vue.js"></script>
-<script src="https://unpkg.com/element-ui/lib/index.js"></script>
-<script src="/admin/my-html/role_menu_set.js"></script>
+
+    <script src="/js/jquery.min.js"></script>
+    <script src="https://unpkg.com/vue@2.6.10/dist/vue.js"></script>
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <script src="/admin/javascript/layer.js"></script>
+    <script src="/admin/javascript/Zafkiel.js"></script>
+    <script src="/admin/my-html/role_menu_set.js"></script>
 </body>
 </html>
 

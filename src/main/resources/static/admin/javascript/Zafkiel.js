@@ -2,17 +2,21 @@
 
 var Zafkiel={}
 //弹窗打开页面
-Zafkiel.loadPage=function(url,id,title,success){
-     return layer.open({
+Zafkiel.loadPage=function(url,id,title,success,w,h){
+    if(!h){h="50%"}
+    if(!w){w="40%"}
+   return layer.open({
         id:id,
         type: 2,
         title:title,
         content: [url, 'no'], //url,no防止出现滚动条
-        area:["40%","45%"],
+        area:[w,h],
         anim:"6",
         closeBtn:"1",
         shadeClose:true,
-        success:success
+        success:function(arg,index){
+           success(window["layui-layer-iframe" + index],arg,index);
+        }
     });
 }
 Zafkiel.request=function(_url,par,type,success_func,error_func,isJsonString,async){  //发送请求 默认get  后台接受参数为map时要传json字符串

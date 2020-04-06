@@ -74,6 +74,7 @@ var menuset=new Vue({
             {
                 this.currentItem=arg;
                 var d={};
+                d.menuid=arg.id;
                 d.url=arg.url;
                 d.name=arg.name;
                 d.isvalid=arg.isvalid;
@@ -94,7 +95,8 @@ var menuFrom=new Vue({
             name:'',
             isvalid:0,
             icon:'',
-            type:''
+            type:'',
+            menuid:""
         }
     },
     methods:{
@@ -139,7 +141,11 @@ var menuFrom=new Vue({
         },
         relatrole:function()
         {
-            Zafkiel.loadPage("/admin/my-html/role_menu_set.html","m_r","关联角色");
+            var menuid=this._data.m.menuid;
+            Zafkiel.loadPage("/admin/my-html/role_menu_set.html","m_r","关联角色",function(arg){
+                var from=arg._transfer;
+                from.initData(menuid);
+            });
         }
     },
     created:function(){

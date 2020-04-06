@@ -22,6 +22,7 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.subject.Subject;
 import org.apache.xmlbeans.impl.xb.xsdschema.Public;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -48,21 +49,24 @@ public class DataController {
     @Autowired
     TencentAuth tencentAuth;
 
-    //新增角色-目录关联
+    //角色-目录关联变动
     @PostMapping("/setMenuRoleRela")
-    public boolean setMenuRoleRela(@RequestBody Map<String,String> par){
-        if(par.get("menuid")==null || par.get("roleid")==null)
+    @Transactional
+    public boolean setMenuRoleRela(@RequestBody LinkedList<Map<String,String>> par){
+        if(par==null && par.size()<=0)
         {
             return false;
         }
-        String menuid=par.get("menuid").toString();
-        String roleid=par.get("roleid").toString();
-
-        return false;
+        menu.deleMenuRoleRelaByMenuid(par.get(0).get("menuid").toString());
+        for(Map<String,String> map:par) {
+                map.put("id",UUID.randomUUID().toString().replaceAll("-",""));
+                menu.setMenuRoleRela(map);
+        }
+        return true;
     }
     //获取目录绑定的角色
     @RequestMapping("/getRoleByMenu")
-    public LinkedList<Map> getRoleByMenu(String menuid){
+    public LinkedList<Map> getRoleByMenu(@RequestParam("menuid") String menuid){
         return menu.getRoleByMenuid(menuid);
     }
     @RequestMapping(value="/null")

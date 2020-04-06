@@ -34,7 +34,7 @@
 
     <div class="menu_from float-from-30-40 vue-box" style="display:none;">
         <i v-on:click="_close()" class="close_i el-icon-close"></i>
-        <div class="c-panel" style="padding: 5% 20% 0;">
+        <div class="c-panel" style="padding: 5% 20% 0;box-shadow: 0 0 #ccc;">
             <div class="from-head c-title">编辑节点</div>
             <el-form ref="form">
                 <div class="c-item">
@@ -62,7 +62,7 @@
                 </div>
 
                 <br>
-                <el-row>
+                <el-row style="text-align: center;">
                     <el-button type="primary" icon="el-icon-plus" size="mini" @click="submit">确定</el-button>
                     <el-button type="primary" style="padding: 7px 15px;" @click="relatrole" plain>关联角色</el-button>
                 </el-row>

@@ -19,4 +19,5 @@ public interface IndexMenuMapper {
     LinkedList<Map> getRoleByMenuid(String id);
     boolean setMenuRoleRela(Map map);
     boolean deleMenuRoleRela(String id);
+    boolean deleMenuRoleRelaByMenuid(String menuid);
 }
