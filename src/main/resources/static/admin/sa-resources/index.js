@@ -536,23 +536,17 @@ var sa_admin = new Vue({
 	},
 	created:function(){
 
-        $.ajax({
-            url:"/data/getMenu",
-            type:"get",
-            dataType:"json",
-            success:function(arg)
-            {
-            	for(var i=0;i<arg.length;i++)
-				{
-					arg[i].childList=JSON.parse(arg[i].childlist);
-				}
-                window.menuList=arg;
-                sa_admin.setMenuList(arg);
-                sa_admin.logo_url= Zafkiel.getUserInfo().icon;
-				sa_admin._data.title=Zafkiel.getUserInfo().name;
-            }
-        })
-
+		var arg=JSON.parse( Zafkiel.request("/data/getMenu",{roleid:""}) );
+		for(var i=0;i<arg.length;i++)
+		{
+			arg[i].childList=JSON.parse(arg[i].childlist);
+		}
+		window.menuList=arg;
+		this.setMenuList(arg);
+		var a=window.setTimeout(function(){
+			sa_admin.logo_url= Zafkiel.getUserInfo().icon;
+			sa_admin._data.title=Zafkiel.getUserInfo().name;
+		},500);
 		// 打印日志 
 		setTimeout(function() {
 			if(this.is_log) {

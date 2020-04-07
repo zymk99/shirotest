@@ -96,7 +96,7 @@ public class DataController {
     }
     //获取菜单
     @RequestMapping(value="/getMenu",produces = "text/plain;charset=utf-8")
-    public String getMenu()
+    public String getMenu(@RequestParam("roleid") String roleid)
     {
 //        Subject sj=SecurityUtils.getSubject();
 //        sj.isPermitted("print");

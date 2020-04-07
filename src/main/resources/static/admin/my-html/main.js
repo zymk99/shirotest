@@ -2,19 +2,13 @@ var menuset=new Vue({
     el:".menuset",
     data: {
         menudata: new function () {
-            $.ajax({
-                url:"/data/getMenu",
-                type:"get",
-                dataType:"json",
-                success:function(arg)
-                {
-                    for(var i=0;i<arg.length;i++)
-                    {
-                        arg[i].childList=JSON.parse(arg[i].childlist);
-                    }
-                    menuset.menudata=arg;
-                }
-            })
+
+            var arg=JSON.parse( Zafkiel.request("/data/getMenu",{roleid:""}) );
+            for(var i=0;i<arg.length;i++)
+            {
+                arg[i].childList=JSON.parse(arg[i].childlist);
+            }
+            return arg;
         },
         currentItem:null
     },
