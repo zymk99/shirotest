@@ -12,6 +12,7 @@ import java.util.Map;
 @Mapper
 public interface IndexMenuMapper {
     public IndexMenu[] getMenuByAdmin();
+    public IndexMenu[] getMenuByRole(String roleid);
     boolean insertMenu(IndexMenu im);
     boolean deleItemById(String id);
     boolean updateItemById(IndexMenu im);

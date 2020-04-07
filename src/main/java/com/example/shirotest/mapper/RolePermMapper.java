@@ -12,4 +12,6 @@ import java.util.Map;
 public interface RolePermMapper {
     @MapKey("id")
     LinkedList<Map> getRolePerByUserid(String id);
+    @MapKey("id")
+    Map getRoleByUserid(String id);
 }

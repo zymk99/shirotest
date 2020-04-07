@@ -9,6 +9,29 @@
             on t1.id=t2.pmenuid
         )
     </select>
+    <select id="getMenuByRole" parameterType="String" resultType="com.example.shirotest.dao.IndexMenu">
+        select t1.*,t2.childlist,t2.pmenuid from (
+            (select * from nzzindexmenu where isvalid=0 and pmenuid ='') as t1
+            RIGHT JOIN
+            (
+							select distinct on (flagid) flagid,pmenuid,childList  from (
+								select menu.pmenuid,row_to_json(menu.*)as childList,menu.id as flagid from nzzrolemenumap as rm
+								LEFT JOIN  nzzindexmenu as menu
+								on menu.id=rm.menuid
+								 where menu.isvalid=0 and menu.pmenuid !='' and rm.roleid=#{roleid}
+								union all
+								select pmenuid,row_to_json(nzzindexmenu) as childList,id as flagid from nzzindexmenu
+								where pmenuid in
+								(select menu.id from nzzrolemenumap as rm
+								LEFT JOIN  nzzindexmenu as menu
+								on menu.id=rm.menuid
+								 where menu.isvalid=0 and (menu.pmenuid ='' or menu.pmenuid is null) and rm.roleid=#{roleid}
+								)
+							)tt
+						) as t2
+            on t1.id=t2.pmenuid
+        )
+    </select>
     <select id="getRoleByMenuid" parameterType="String" resultType="java.util.Map">
         select a.id as key,a.cnname as label,b.flag from nzzroletable  a
         left join (select *,'1' as flag from nzzrolemenumap where menuid=#{id} ) b

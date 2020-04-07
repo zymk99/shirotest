@@ -6,6 +6,7 @@ import com.example.shirotest.Utils.TencentAuth;
 import com.example.shirotest.dao.IndexMenu;
 import com.example.shirotest.dao.TUser;
 import com.example.shirotest.mapper.IndexMenuMapper;
+import com.example.shirotest.mapper.RolePermMapper;
 import com.example.shirotest.mapper.UserMapper;
 import com.example.shirotest.mapper.UtilsMapper;
 import com.example.shirotest.server.word.ExportWord;
@@ -48,7 +49,8 @@ public class DataController {
     MinioUtils minio;
     @Autowired
     TencentAuth tencentAuth;
-
+    @Autowired
+    RolePermMapper roleper;
     //角色-目录关联变动
     @PostMapping("/setMenuRoleRela")
     @Transactional
@@ -75,13 +77,22 @@ public class DataController {
         return null;
     }
     //获取用户信息
+    Map userInfoMap =null;
     @RequestMapping(value="/getUserInfo",produces = "text/plain;charset=utf-8")
     public String getUserInfo(){
-        Subject sub=SecurityUtils.getSubject();
-        TUser tu=(TUser)sub.getPrincipal();
-        tu.setPasswd("*");
-        String json =CurrUtils.ClassToJsonstring(tu);
-        return json;
+        if(userInfoMap==null)
+        {
+            Subject sub=SecurityUtils.getSubject();
+            TUser tu=(TUser)sub.getPrincipal();
+            Map tmpMap=roleper.getRoleByUserid(tu.getId());
+            if(tmpMap.size()>0)
+            {
+                userInfoMap=(Map)tmpMap.get(tmpMap.keySet().toArray()[0]);
+            }
+        }
+        JSONObject jsob=JSONObject.fromObject(userInfoMap);
+        return jsob.toString();
+        //return CurrUtils.ClassToJsonstring(userInfoMap);
     }
     //获取首页
     @RequestMapping("/getHomePage")
@@ -100,7 +111,13 @@ public class DataController {
     {
 //        Subject sj=SecurityUtils.getSubject();
 //        sj.isPermitted("print");
-        IndexMenu[] me=menu.getMenuByAdmin();
+        IndexMenu[] me=null;
+        if(roleid.equals("19a40a2702b04fc1816dab9db9488400"))
+        {
+            me=menu.getMenuByAdmin();
+        }else{
+            me=menu.getMenuByRole(roleid);
+        }
         Map menuMap=new HashMap();
         for(IndexMenu m:me)
         {
