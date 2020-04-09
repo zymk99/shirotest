@@ -536,7 +536,7 @@ var sa_admin = new Vue({
 	},
 	created:function(){
 
-		var arg=JSON.parse( Zafkiel.request("/data/getMenu",{roleid:"06e4657ba8b349d5833b3cb21ea77a09"}) );
+		var arg=JSON.parse( Zafkiel.request("/data/getMenu",{roleid:Zafkiel.getUserInfo().roleid}) );
 		for(var i=0;i<arg.length;i++)
 		{
 			arg[i].childList=JSON.parse(arg[i].childlist);

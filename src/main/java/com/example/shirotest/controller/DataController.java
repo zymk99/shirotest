@@ -51,7 +51,7 @@ public class DataController {
     TencentAuth tencentAuth;
     @Autowired
     RolePermMapper roleper;
-    //角色-目录关联变动
+    //角色-目录关联变动   事务
     @PostMapping("/setMenuRoleRela")
     @Transactional
     public boolean setMenuRoleRela(@RequestBody LinkedList<Map<String,String>> par){
@@ -194,6 +194,7 @@ public class DataController {
         Subject currentUser = SecurityUtils.getSubject();
         //注销
         currentUser.logout();
+        userInfoMap=null;
         if (!currentUser.isAuthenticated()) {
             // 把用户名和密码封装为 UsernamePasswordToken 对象
             UsernamePasswordToken token = new UsernamePasswordToken(name, passwd);
