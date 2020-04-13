@@ -11,29 +11,10 @@
         </div>
     </div>
     <script src="https://webapi.amap.com/maps?v=1.4.15&key=c1df3aee9b6e3a985a5afa2ac556f6ed"></script>
+    <script src="https://webapi.amap.com/loca?v=1.3.0&key=c1df3aee9b6e3a985a5afa2ac556f6ed&dev=1"></script>
     <script src="/js/jquery.min.js"></script>
     <script src="https://unpkg.com/vue@2.6.10/dist/vue.js"></script>
-    <script type="text/javascript">
-        const _mapinit=function(){
-            const map = new AMap.Map('container', {
-                mapStyle: 'amap://styles/1de318cbb8d12c02303a22c550b9ccc9',
-                viewMode: '3D',
-                pitch: 15,
-                resizeEnable: true,
-                center: [116.397428, 39.90923],
-                zoom: 12,
-            });
-        }
-
-        const nzzmap=new Vue({
-            el:'#_container',
-            data:{},
-            created:function(){
-                setTimeout(_mapinit,'500');
-            }
-        });
-
-    </script>
+    <script src="/admin/my-html/tencentmap.js"></script>
 </body>
 </html>
 
