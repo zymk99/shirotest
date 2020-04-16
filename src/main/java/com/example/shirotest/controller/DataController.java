@@ -188,6 +188,15 @@ public class DataController {
         return "123456";
     }
 
+    @RequestMapping("/cancellation")    //注销
+    public String cancellation(){
+        Subject currentUser = SecurityUtils.getSubject();
+        if(currentUser!=null)
+        {
+            currentUser.logout();
+        }
+        return "{}";
+    }
     @PostMapping("/login" )
     public String postLog(String name,String passwd)
     {

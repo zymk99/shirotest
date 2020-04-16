@@ -70,6 +70,7 @@ sp.dropList = [		// 头像点击处可操作的选项
 			//sp.$message('点击了退出登录，你可以参照文档重写此函数');
 			// location="login.html";
 			layer.confirm('退出登录？', function(res) {
+				Zafkiel.request("/data/cancellation");
 				layer.alert('注销成功', function() {
 					location.href = "login.html";
 				})
