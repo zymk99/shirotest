@@ -7,7 +7,7 @@
     let url='';
     let downloadList=[];
     let zip = new JSZip();
-    debugger
+
     for(let i=1;i<=16;i++)
     {
         downloadList.push(String(i)+".png");
