@@ -1,9 +1,10 @@
 package com.example.shirotest.Utils;
 
 import net.coobird.thumbnailator.Thumbnails;
+import org.apache.commons.codec.binary.Base64;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
-import sun.misc.BASE64Encoder;
+//import sun.misc.BASE64Encoder;
 
 import javax.imageio.ImageIO;
 import javax.imageio.stream.ImageOutputStream;
@@ -33,8 +34,9 @@ public class ImageUtils {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        BASE64Encoder encoder = new BASE64Encoder();
-        String v= encoder.encode(out.toByteArray());
+//        BASE64Encoder encoder = new BASE64Encoder();
+//        String v= encoder.encode(out.toByteArray());
+        String v= Base64.encodeBase64String(out.toByteArray());
         return v;
     }
 
