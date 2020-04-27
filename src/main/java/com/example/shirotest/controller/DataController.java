@@ -2,6 +2,7 @@ package com.example.shirotest.controller;
 
 import com.example.shirotest.Utils.CurrUtils;
 import com.example.shirotest.Utils.MinioUtils;
+import com.example.shirotest.Utils.RedisUtils;
 import com.example.shirotest.Utils.TencentAuth;
 import com.example.shirotest.dao.IndexMenu;
 import com.example.shirotest.dao.TUser;
@@ -23,6 +24,7 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.subject.Subject;
 import org.apache.xmlbeans.impl.xb.xsdschema.Public;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -51,6 +53,15 @@ public class DataController {
     TencentAuth tencentAuth;
     @Autowired
     RolePermMapper roleper;
+
+    @Autowired
+    private RedisUtils redis;
+    //测试用
+    @RequestMapping("/test")
+    public void test(){
+        Map ttt=redis.getHash("test");
+        int aa=1;
+    }
     //角色-目录关联变动   事务
     @PostMapping("/setMenuRoleRela")
     @Transactional

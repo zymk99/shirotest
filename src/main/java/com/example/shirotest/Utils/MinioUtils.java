@@ -1,6 +1,5 @@
 package com.example.shirotest.Utils;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import io.minio.MinioClient;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileItemFactory;
