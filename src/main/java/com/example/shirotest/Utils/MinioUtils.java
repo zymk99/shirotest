@@ -60,6 +60,22 @@ public class MinioUtils {
         }
     }
 
+    public String upAndGitByFile(String bucketName, MultipartFile file, String type ){
+        String fileName = file.getOriginalFilename();;
+        if( upload(bucketName,null,file,type) ){
+            return getUrl(bucketName,fileName);
+        }
+        return null;
+    }
+    public String upAndGitByMap(String bucketName, Map filemap  ){
+        String fileName = filemap.get("fileName")!=null?filemap.get("fileName").toString():"";
+        if( upload(bucketName,filemap,null,null) ){
+            return getUrl(bucketName,fileName);
+        }
+        return null;
+    }
+
+
 
     //下载
     public String download(HttpServletResponse response){

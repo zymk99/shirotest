@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="watmain">
+    <water :rownum=5></water>
+</div>
+<script src="https://unpkg.com/vue"></script>
+<script src="https://unpkg.com/http-vue-loader"></script>
+<script >
+    Vue.use(httpVueLoader);
+    debugger
+        let water = new Vue({
+            el: '.watmain',
+            data: {},
+            components: {
+                'water': 'url:/admin/dom/Waterfall/index.vue'
+            }
+        })
+</script>
+</body>
+</html>

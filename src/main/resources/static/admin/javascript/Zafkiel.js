@@ -1,5 +1,5 @@
 //sweetalert.min.js  jquery.min.js   layer.js
-
+0
 var Zafkiel={}
 //弹窗打开页面
 Zafkiel.loadPage=function(url,id,title,success,w,h){
