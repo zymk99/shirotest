@@ -6,10 +6,7 @@ import com.example.shirotest.Utils.RedisUtils;
 import com.example.shirotest.Utils.TencentAuth;
 import com.example.shirotest.dao.IndexMenu;
 import com.example.shirotest.dao.TUser;
-import com.example.shirotest.mapper.IndexMenuMapper;
-import com.example.shirotest.mapper.RolePermMapper;
-import com.example.shirotest.mapper.UserMapper;
-import com.example.shirotest.mapper.UtilsMapper;
+import com.example.shirotest.mapper.*;
 import com.example.shirotest.server.word.ExportWord;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -56,11 +53,13 @@ public class DataController {
 
     @Autowired
     private RedisUtils redis;
+    @Autowired
+    PictureModuleMapper pmm;
     //测试用
     @RequestMapping("/test")
     public void test(){
-        Map ttt=redis.getHash("test");
-        int aa=1;
+        LinkedList<Map> ttt= pmm.getAllData();
+        int aa=10;
     }
     //角色-目录关联变动   事务
     @PostMapping("/setMenuRoleRela")
