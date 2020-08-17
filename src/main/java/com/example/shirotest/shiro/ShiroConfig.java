@@ -58,6 +58,7 @@ public class ShiroConfig {
         sessionManager.setSessionValidationSchedulerEnabled(true);
         sessionManager.setSessionIdCookieEnabled(true);
         return sessionManager;
+//        return new AdminWebSessionManager();
     }
     @Bean("securityManager")
     public DefaultWebSecurityManager securityManager(UserRealm real, SessionManager sessionManager) {
