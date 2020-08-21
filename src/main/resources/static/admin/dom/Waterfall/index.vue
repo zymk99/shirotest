@@ -1,17 +1,21 @@
 <template>
     <div >
-        <div v-for="item in myrownum">{{item}}</div>
+        <ul class="water_ul">
+            <li  v-for="item in mylistdata" :style="myrownum">{{item}}</li>
+        </ul>
     </div>
 </template>
 
 <script>
     module.exports={
         props:{
-            rownum:Number
+            rownum:Number,
+            listdata:Number
         },
         data(){             //自定义组件的data是个方法
             return{
-                myrownum:this.rownum
+                myrownum:"width:"+(100/this.rownum)+"%;",
+                mylistdata:this.listdata
             }
         },
         created(){
@@ -45,3 +49,12 @@
         }
     }
 </script>
+
+<style >
+    .water_ul li{
+        border:1px #000 solid;
+        list-style:none;
+        float:left;
+        margin: .1rem;
+    }
+</style>
