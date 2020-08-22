@@ -18,7 +18,8 @@
                 valuelist:new function(){
                     let list=[];
                     for(let i=0;i<10;i++){
-                        list.push({height:100});
+                        let h=parseInt(Math.random()*100)+150;
+                        list.push({height:h});
                     }
                     return list;
                 }

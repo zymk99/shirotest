@@ -1,7 +1,8 @@
+<!--       自定义瀑布流     -->
 <template>
     <div >
         <ul class="water_ul">
-            <li  v-for="item in mylistdata" :style="myrownum">{{item.height}}</li>
+            <li  v-for="item in mylistdata" :style="itemwidth" >{{item.height}}</li>
         </ul>
         <input type="button" v-on:click="add()" value="add"/>
     </div>
@@ -15,8 +16,13 @@
         },
         data(){             //自定义组件的data是个方法
             return{
-                myrownum:"width:"+(100/this.rownum-2)+"%;",
-                mylistdata:this.listdata
+                spacing:10,        //间距
+                lastRow:[],     //上一行数据的位置
+                itemwidth:"width:"+(100/this.rownum-2)+"%;",
+                itemwidthpx:0,                  //实际宽度
+                myrownum:this.rownum,
+                mylistdata:this.listdata,
+                addnumber:this.listdata.length
             }
         },
         created(){
@@ -24,10 +30,51 @@
         },
         mounted(){                    //组件装配后
             this.AdditionalData();
+            this.InitData();
+            this.setItemHeight();
         },
         methods:{
+            //初始化数据
+            InitData(){
+                let list=[];
+                for(let i=0;i<this.rownum;i++){
+                    list.push([10,i]);
+                }
+                this._data.lastRow=list;
+            },
+            //设置刚加入数据的位置
+            setItemHeight(){
+                if(this.$el.getElementsByTagName("ul") ){
+                    let lastrow=this._data.lastRow;
+                    let mydata=this._data.mylistdata
+                    let number=this._data.addnumber;  //刚添加进来的数据数
+                    let Items=this.$el.getElementsByTagName("ul")[0].children;
+                    if(Items.length>0 && Items.length>=number){
+                        if(this._data.itemwidthpx==0){
+                            this._data.itemwidthpx=Items[0].clientWidth;
+                        }
+                        let widthpx=this._data.itemwidthpx
+                        //debugger
+                        for(let index=Items.length-number;index<Items.length;index++){
+                            let pos=lastrow.shift();
+                            Items[index].style.height=mydata[index].height+"px";
+                            Items[index].style.top=pos[0]+this._data.spacing+"px";
+                            Items[index].style.left=(widthpx+this._data.spacing)*pos[1]+"px";
+                            //记录
+                            lastrow.push([parseInt(Items[index].style.height)+parseInt(Items[index].style.top),pos[1]]);
+                            lastrow.sort((a,b)=>{return a[0]-b[0];});
+                        }
+                    }
+                    this._data.addnumber=this._data.myrownum;
+                }
+            },
             add(){
-                this._data.mylistdata++;
+                debugger
+                for(let i=0;i<this._data.myrownum;i++){
+                    let h=parseInt(Math.random()*100)+150;
+                    this._data.mylistdata.push({height:h});
+                }
+                this.setItemHeight()
             },
             //是否触底
             TouchBottom(){
@@ -44,21 +91,21 @@
             },
             //追加数据
             AdditionalData(){
-                //无法动态刷新循环
-                // while(this.TouchBottom()){
-                //     debugger
-                //     this._data.myrownum++;
-                // }
             }
         }
     }
 </script>
 
 <style >
+    .water_ul{
+        position: absolute;
+        width: 100%;
+    }
     .water_ul li{
         border:1px #000 solid;
         list-style:none;
         float:left;
         margin: .1rem;
+        position: absolute;
     }
 </style>
