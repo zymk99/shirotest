@@ -16,7 +16,7 @@
         },
         data(){             //自定义组件的data是个方法
             return{
-                spacing:10,        //间距
+                spacing:15,        //间距
                 lastRow:[],     //上一行数据的位置
                 itemwidth:"width:"+(100/this.rownum-2)+"%;",
                 itemwidthpx:0,                  //实际宽度
@@ -26,12 +26,13 @@
             }
         },
         created(){
-
         },
         mounted(){                    //组件装配后
             this.AdditionalData();
             this.InitData();
             this.setItemHeight();
+            window.onscroll=this.TouchBottom;
+
         },
         methods:{
             //初始化数据
@@ -69,12 +70,11 @@
                 }
             },
             add(){
-                debugger
                 for(let i=0;i<this._data.myrownum;i++){
-                    let h=parseInt(Math.random()*100)+150;
+                    let h=parseInt(Math.random()*150)+250;
                     this._data.mylistdata.push({height:h});
                 }
-                this.setItemHeight()
+                window.setTimeout(this.setItemHeight,100);
             },
             //是否触底
             TouchBottom(){
@@ -85,9 +85,8 @@
                 let scrollHeight = document.documentElement.scrollHeight||document.body.scrollHeight;
                 //滚动条到底部的条件
                 if(scrollTop+windowHeight==scrollHeight){
-                    return true;
+                    this.add();
                 }
-                return false;
             },
             //追加数据
             AdditionalData(){
