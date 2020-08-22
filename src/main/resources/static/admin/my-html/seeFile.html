@@ -6,7 +6,7 @@
 </head>
 <body>
 <div class="watmain">
-    <water :rownum=5 :listdata=10></water>
+    <water :rownum=5 :listdata="valuelist"></water>
 </div>
 <script src="https://unpkg.com/vue"></script>
 <script src="https://unpkg.com/http-vue-loader"></script>
@@ -14,7 +14,15 @@
     Vue.use(httpVueLoader);
         let water = new Vue({
             el: '.watmain',
-            data: {},
+            data: {
+                valuelist:new function(){
+                    let list=[];
+                    for(let i=0;i<10;i++){
+                        list.push({height:100});
+                    }
+                    return list;
+                }
+            },
             components: {
                 'water': 'url:/admin/dom/Waterfall/index.vue'
             }

@@ -1,8 +1,9 @@
 <template>
     <div >
         <ul class="water_ul">
-            <li  v-for="item in mylistdata" :style="myrownum">{{item}}</li>
+            <li  v-for="item in mylistdata" :style="myrownum">{{item.height}}</li>
         </ul>
+        <input type="button" v-on:click="add()" value="add"/>
     </div>
 </template>
 
@@ -10,11 +11,11 @@
     module.exports={
         props:{
             rownum:Number,
-            listdata:Number
+            listdata:Array
         },
         data(){             //自定义组件的data是个方法
             return{
-                myrownum:"width:"+(100/this.rownum)+"%;",
+                myrownum:"width:"+(100/this.rownum-2)+"%;",
                 mylistdata:this.listdata
             }
         },
@@ -25,6 +26,9 @@
             this.AdditionalData();
         },
         methods:{
+            add(){
+                this._data.mylistdata++;
+            },
             //是否触底
             TouchBottom(){
                 let scrollTop = document.documentElement.scrollTop||document.body.scrollTop;
