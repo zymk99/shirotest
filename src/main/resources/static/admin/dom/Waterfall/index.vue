@@ -4,7 +4,6 @@
         <ul class="water_ul">
             <li  v-for="item in mylistdata" :style="itemwidth" >{{item.height}}</li>
         </ul>
-        <input type="button" v-on:click="add()" value="add"/>
     </div>
 </template>
 
@@ -64,6 +63,7 @@
                             //记录
                             lastrow.push([parseInt(Items[index].style.height)+parseInt(Items[index].style.top),pos[1]]);
                             lastrow.sort((a,b)=>{return a[0]-b[0];});
+                            mydata[index].el=Items[index];
                         }
                     }
                     this._data.addnumber=this._data.myrownum;
@@ -85,6 +85,7 @@
                 let scrollHeight = document.documentElement.scrollHeight||document.body.scrollHeight;
                 //滚动条到底部的条件
                 if(scrollTop+windowHeight==scrollHeight){
+                    debugger
                     this.add();
                 }
             },
