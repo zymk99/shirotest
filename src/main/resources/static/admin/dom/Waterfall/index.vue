@@ -107,7 +107,7 @@
                             let num=this._data.myrownum*4;
                             //计算开始展示的Index
                             //let index= parseInt((windowHeight*windowHeight/scrollHeight+scrollTop)/windowHeight*this._data.mylistdata.length)-num;
-                            let index=parseInt( (windowHeight+scrollTop)/scrollHeight*this._data.mylistdata.length )-num;
+                            let index=parseInt( (windowHeight+scrollTop)/scrollHeight*this._data.mylistdata.length )-num+this._data.myrownum;
                             index=(index>=0? index : 0 );
                             let ul=this.$el.getElementsByTagName("ul")[0];
                             if(ul){
