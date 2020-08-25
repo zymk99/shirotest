@@ -59,7 +59,6 @@
                             this._data.itemwidthpx=Items[0].clientWidth;
                         }
                         let widthpx=this._data.itemwidthpx
-                        //debugger
                         let c=0;
                         for(let index=Items.length-number;index<Items.length;index++){
                             let pos=lastrow.shift();
