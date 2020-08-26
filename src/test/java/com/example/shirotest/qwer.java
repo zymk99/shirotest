@@ -45,6 +45,8 @@ class IOTest{
         File a2=new File("C:\\work\\filetest"+File.separator+a1.getName());
         try{
             FileUtils.copyFile(a2,a1);
+            //File[] files = file.listFiles();
+            //.isDirectory()
             //a1.renameTo(a2);
         }catch(Exception IO){
             log.debug(IO.getMessage());
