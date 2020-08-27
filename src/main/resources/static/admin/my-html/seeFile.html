@@ -5,12 +5,31 @@
     <title>Title</title>
 </head>
 <body>
+<div class="echar" style="height:100px;"></div>
 <div class="watmain">
     <water :rownum=5 :listdata="valuelist"></water>
 </div>
 <script src="https://unpkg.com/vue"></script>
 <script src="https://unpkg.com/http-vue-loader"></script>
+<script src="https://cdn.bootcss.com/echarts/3.7.1/echarts.min.js"></script>
 <script >
+    let myChart = echarts.init(document.getElementsByClassName('echar')[0]);
+    option = {
+        xAxis: {
+            type: 'category',
+            data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+        },
+        yAxis: {
+            type: 'value'
+        },
+        series: [{
+            data: [820, 932, 901, 934, 1290, 1330, 1320],
+            type: 'line'
+        }]
+    };
+
+
+    myChart.setOption(option);
     Vue.use(httpVueLoader);
         let water = new Vue({
             el: '.watmain',
