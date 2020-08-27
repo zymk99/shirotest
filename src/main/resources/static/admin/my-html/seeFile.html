@@ -13,6 +13,7 @@
 <script src="https://unpkg.com/http-vue-loader"></script>
 <script src="https://cdn.bootcss.com/echarts/3.7.1/echarts.min.js"></script>
 <script >
+    /***************echarts**************/
     let myChart = echarts.init(document.getElementsByClassName('echar')[0]);
     option = {
         xAxis: {
@@ -27,9 +28,9 @@
             type: 'line'
         }]
     };
-
-
     myChart.setOption(option);
+    /***************echarts**************/
+
     Vue.use(httpVueLoader);
         let water = new Vue({
             el: '.watmain',
