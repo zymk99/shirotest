@@ -1,6 +1,9 @@
 package com.example.shirotest.controller;
 
-import com.example.shirotest.Utils.*;
+import com.example.shirotest.Utils.CurrUtils;
+import com.example.shirotest.Utils.MinioUtils;
+import com.example.shirotest.Utils.RedisUtils;
+import com.example.shirotest.Utils.TencentAuth;
 import com.example.shirotest.dao.IndexMenu;
 import com.example.shirotest.dao.TUser;
 import com.example.shirotest.mapper.*;
@@ -57,11 +60,6 @@ public class DataController {
     public void test(){
         LinkedList<Map> ttt= pmm.getAllData();
         int aa=10;
-    }
-    @PostMapping("/downImg")
-    public String DownImg() throws Exception {
-        downImp.download("https://www.ccavbox.top/static/upload/book/2394/9479/205520.jpg","1.jpg","C:\\other\\555");
-        return "{'flag':false}";
     }
     //角色-目录关联变动   事务
     @PostMapping("/setMenuRoleRela")
