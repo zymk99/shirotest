@@ -2,7 +2,6 @@
 <template>
     <div >
         <ul class="water_ul">
-
         </ul>
     </div>
 </template>
