@@ -2,7 +2,10 @@
 <template>
     <div >
         <ul class="water_ul" @click="ul_click">
-            <li  v-for="(item,index) in mylistdata" :style="itemwidth" itemtype="item" :itemindex="index">{{index}}</li>
+            <li  v-for="(item,index) in mylistdata" :style="itemwidth" itemtype="item" :itemindex="index">
+                <img class="ul_img" :src="item.src"/>
+                <span class="font_bolder">{{item.title}}</span>
+            </li>
         </ul>
     </div>
 </template>
@@ -140,10 +143,20 @@
         width: 100%;
     }
     .water_ul li{
+        text-align: center;
         border:1px #000 solid;
         list-style:none;
         float:left;
         margin: .1rem;
         position: absolute;
+    }
+    .font_bolder{
+        font-family: serif;
+        font-weight: bolder;
+    }
+    .water_ul .ul_img{
+        height: 80%;
+        width: 95%;
+        margin: 2%;
     }
 </style>
