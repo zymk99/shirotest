@@ -63,7 +63,19 @@ public class DataController {
     }
     //获取瀑布流图片数据
     @PostMapping("/getWaterfallData")
-    public LinkedList<Map<String,String>> getWaterfallData(){
+    public LinkedList<Map<String,String>> getWaterfallData(@RequestBody Map<String,String> par){
+        if(par.get("pageSize")!=null){
+            LinkedList<Map<String,String>> value=new LinkedList<Map<String,String>>();
+            int size=Integer.parseInt(par.get("pageSize"));
+            for(int i=0;i<size;i++){
+                Map<String,String> tmp=new HashMap<String,String>();
+                tmp.put("height",String.valueOf((int)(Math.random()*180)+300));
+                tmp.put("src","http://203.195.251.136:8080/30673a32212294d09550a6d305d520b0e3d50b2a41b3c-SOL0jh.jpg");
+                tmp.put("title","12345");
+                value.add(tmp);
+            }
+            return value;
+        }
         return null;
     }
     //角色-目录关联变动   事务
