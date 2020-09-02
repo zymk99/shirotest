@@ -26,7 +26,7 @@
                 itemwidthpx:0,                  //实际宽度
                 myrownum:this.rownum,
                 mylistdata:this.listdata,
-                addnumber:this.listdata.length,
+                addnumber:this.listdata.length,     //上一次加入数据的数目
                 addDataFlag:false
             }
         },
@@ -42,10 +42,10 @@
         },
         methods:{
             ul_click(item){
-                debugger
-                let c_i=item.path[0];
-                if(c_i && c_i.getAttribute("itemtype")=="item"){
-                    this.$emit('waterfall_itemclick',item);
+                let c_1=item.path[0];
+                let c_2=item.path[1];
+                if(c_1.getAttribute("itemtype")=="item" || c_2.getAttribute("itemtype")=="item" ){
+                    this.$emit('waterfall_itemclick',c_1.getAttribute("itemtype")=="item" ? c_1:c_2);
                 }
             },
             //初始化数据
@@ -90,9 +90,17 @@
                 }
             },
             add(){
-                for(let i=0;i<this._data.myrownum;i++){
-                    let h=parseInt(Math.random()*150)+250;
-                    this._data.mylistdata.push({height:h});
+                // for(let i=0;i<this._data.myrownum;i++){
+                //     let h=parseInt(Math.random()*150)+250;
+                //     this._data.mylistdata.push({height:h});
+                // }
+                let p={}
+                p.pageSize=10;
+                p.pageNum=1;
+                let list=Zafkiel.request("/data/getWaterfallData",p,"post",null,null,true);
+                this._data.addnumber=list.length;
+                for(let i=0;i<list.length;i++){
+                    this._data.mylistdata.push(list[i]);
                 }
                 this._data.addDataFlag=true;
                 window.setTimeout(this.setItemHeight,100);
