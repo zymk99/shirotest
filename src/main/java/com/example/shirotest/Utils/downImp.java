@@ -1,48 +1,56 @@
 package com.example.shirotest.Utils;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
+import javax.imageio.ImageIO;
+import javax.net.ssl.*;
+import java.awt.image.BufferedImage;
+import java.io.*;
 import java.net.URL;
-import java.net.URLConnection;
+import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
+
 
 public class downImp {
+    public static void main(String[] args){
+        downImp.downloadPicture("https://www.ccavbox.top/static/upload/book/2394/9479/205520.jpg","C:\\other\\555");
+    }
+    private static void downloadPicture(String urll,String path) {
+        try {
+            BufferedImage img = ImageIO.read(new URL("https://www.ccavbox.top/static/upload/book/2394/9479/205520.jpg").openStream());
+            ImageIO.write(img, "jpg", new File("C:\\other\\image.jpg"));
+        }catch (Exception e){
+            System.out.println(e);
+        }
+    }
 
-    public static void download(String urlString, String filename,String savePath) {
-                OutputStream os=null;
-                InputStream is=null;
-                try {
-                    // 构造URL
-                    URL url = new URL(urlString);
-                    // 打开连接
-                    URLConnection con = url.openConnection();
-                    //设置请求超时为5s
-                    con.setConnectTimeout(5 * 1000);
-                    // 输入流
-                    is = con.getInputStream();
+    static TrustManager[] trustAllCerts = new TrustManager[] { new X509TrustManager() {
+        @Override
+        public void checkClientTrusted(X509Certificate[] chain, String authType) throws CertificateException {
+            // TODO Auto-generated method stub
+        }
 
-                    // 1K的数据缓冲
-                    byte[] bs = new byte[1024];
-                    // 读取到的数据长度
-                    int len;
-                    // 输出的文件流
-                    File sf = new File(savePath);
-                    if (!sf.exists()) {
-                        sf.mkdirs();
-                    }
-                    os = new FileOutputStream(sf.getPath() + "\\" + filename);
-                    // 开始读取
-                    while ((len = is.read(bs)) != -1) {
-                        os.write(bs, 0, len);
-                    }
-                    os.close();
-                    is.close();
-                }catch (Exception e){
-                    // 完毕，关闭所有链接
-                    System.out.println(e);
-                }
+        @Override
+        public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException {
+            // TODO Auto-generated method stub
+        }
 
+        @Override
+        public X509Certificate[] getAcceptedIssuers() {
+            // TODO Auto-generated method stub
+            return null;
+        }
+    } };
 
-            }
+    public class NullHostNameVerifier implements HostnameVerifier {
+        /*
+         * (non-Javadoc)
+         *
+         * @see javax.net.ssl.HostnameVerifier#verify(java.lang.String,
+         * javax.net.ssl.SSLSession)
+         */
+        @Override
+        public boolean verify(String arg0, SSLSession arg1) {
+            // TODO Auto-generated method stub
+            return true;
+        }
+    }
 }
