@@ -1,8 +1,8 @@
 <!--       自定义瀑布流     -->
 <template>
     <div >
-        <ul class="water_ul">
-            <li  v-for="item in mylistdata" :style="itemwidth" >{{item.height}}</li>
+        <ul class="water_ul" @click="ul_click">
+            <li  v-for="(item,index) in mylistdata" :style="itemwidth" itemtype="item" :itemindex="index">{{index}}</li>
         </ul>
     </div>
 </template>
@@ -38,6 +38,13 @@
 
         },
         methods:{
+            ul_click(item){
+                debugger
+                let c_i=item.path[0];
+                if(c_i && c_i.getAttribute("itemtype")=="item"){
+                    this.$emit('waterfall_itemclick',item);
+                }
+            },
             //初始化数据
             InitData(){
                 let list=[];

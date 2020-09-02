@@ -7,7 +7,7 @@
 <body>
 <div class="echar" style="height:100px;"></div>
 <div class="watmain">
-    <water :rownum=5 :listdata="valuelist"></water>
+    <water :rownum=5 :listdata="valuelist" @waterfall_emit="click_ul(arguments)"></water>
 </div>
 <script src="https://unpkg.com/vue"></script>
 <script src="https://unpkg.com/http-vue-loader"></script>
@@ -39,13 +39,22 @@
                     let list=[];
                     for(let i=0;i<20;i++){
                         let h=parseInt(Math.random()*150)+250;
-                        list.push({height:h});
+                        let d={};
+                        d.height=h;
+                        d.src="http://203.195.251.136:8080/30673a32212294d09550a6d305d520b0e3d50b2a41b3c-SOL0jh.jpg";
+                        d.title="12345";
+                        list.push(d);
                     }
                     return list;
                 }
             },
             components: {
                 'water': 'url:/admin/dom/Waterfall/index.vue'
+            },
+            methods:{
+                click_ul(item){
+                    debugger
+                }
             }
         })
 </script>
