@@ -27,7 +27,8 @@
                 myrownum:this.rownum,
                 mylistdata:this.listdata,
                 addnumber:this.listdata.length,     //上一次加入数据的数目
-                addDataFlag:false
+                addDataFlag:false,
+                itemAddLock:false              //保证每次添加后都能设置样式  避免连续添加漏掉样式
             }
         },
         created(){
@@ -88,6 +89,7 @@
                     this._data.addnumber=this._data.myrownum;
                     this._data.addDataFlag=false;
                 }
+                this._data.itemAddLock=false;
             },
             add(){
                 // for(let i=0;i<this._data.myrownum;i++){
@@ -114,8 +116,12 @@
                 let scrollHeight = document.documentElement.scrollHeight||document.body.scrollHeight;
                 let top=scrollTop+windowHeight;
                 //滚动条到底部的条件
-                if(top==scrollHeight){
-                    this.add();
+                if( (top+10)>=scrollHeight){
+                    if(!this._data.itemAddLock)
+                    {
+                        this._data.itemAddLock=true;
+                        this.add();
+                    }
                 }else{
                     if(Math.abs(top-this._data.lastScroll)>this._data.scrollDlt){
                         /************懒加载*************/

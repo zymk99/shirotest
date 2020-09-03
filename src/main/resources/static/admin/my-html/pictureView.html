@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+        .pic_view{
+            background: rgba(0,0,0,0.8);
+        }
+        .pic_ul{
+            list-style: none;
+            filter: brightness(1);
+        }
+        .pic_ul li{
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="pic_view">
+        <ul class="pic_ul">
+            <li v-for="item in plist" >
+                <img :src="item.src">
+            </li>
+        </ul>
+    </div>
+
+    <script src="https://unpkg.com/vue"></script>
+    <script src="https://unpkg.com/http-vue-loader"></script>
+    <script>
+        let picView=new Vue({
+            el:".pic_view",
+            data:{
+                plist:new function(){
+                    let v=[];
+                    for(let i=0;i<10;i++){
+                        v.push({src:"http://203.195.251.136:8080/30673a32212294d09550a6d305d520b0e3d50b2a41b3c-SOL0jh.jpg"});
+                    }
+                    return v;
+                }
+            }
+        })
+    </script>
+</body>
+</html>
