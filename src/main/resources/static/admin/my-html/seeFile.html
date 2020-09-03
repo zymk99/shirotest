@@ -7,11 +7,13 @@
 <body>
 <div class="echar" style="height:100px;"></div>
 <div class="watmain">
-    <water :rownum=5 :listdata="valuelist" @waterfall_emit="click_ul(arguments)"></water>
+    <water :rownum=5 :listdata="valuelist" @waterfall_itemclick="click_ul(arguments)"></water>
 </div>
 <script src="https://unpkg.com/vue"></script>
 <script src="https://unpkg.com/http-vue-loader"></script>
 <script src="https://cdn.bootcss.com/echarts/3.7.1/echarts.min.js"></script>
+<script src="/js/jquery.min.js"></script>
+<script src="/admin/javascript/Zafkiel.js"></script>
 <script >
     /***************echarts**************/
     let myChart = echarts.init(document.getElementsByClassName('echar')[0]);
@@ -29,21 +31,27 @@
         }]
     };
     myChart.setOption(option);
-    /****************************echarts****************************/
+    /***************echarts**************/
+    import VueRouter from 'vue-router'
+    Vue.use(VueRouter)
     Vue.use(httpVueLoader);
         let water = new Vue({
             el: '.watmain',
             data: {
                 valuelist:new function(){
-                    let list=[];
-                    for(let i=0;i<20;i++){
-                        let h=parseInt(Math.random()*150)+250;
-                        let d={};
-                        d.height=h;
-                        d.src="http://203.195.251.136:8080/30673a32212294d09550a6d305d520b0e3d50b2a41b3c-SOL0jh.jpg";
-                        d.title="12345";
-                        list.push(d);
-                    }
+                    let p={}
+                    p.pageSize=10;
+                    p.pageNum=1;
+                    let list=Zafkiel.request("/data/getWaterfallData",p,"post",null,null,true);
+                    // let list=[];
+                    // for(let i=0;i<20;i++){
+                    //     let h=parseInt(Math.random()*150)+250;
+                    //     let d={};
+                    //     d.height=h;
+                    //     d.src="http://203.195.251.136:8080/30673a32212294d09550a6d305d520b0e3d50b2a41b3c-SOL0jh.jpg";
+                    //     d.title="12345";
+                    //     list.push(d);
+                    // }
                     return list;
                 }
             },
@@ -52,7 +60,7 @@
             },
             methods:{
                 click_ul(item){
-                    debugger
+                    this.$router.push({name: "/admin/my-html/pictureView.html", params: {id: "123456"}})
                 }
             }
         })
