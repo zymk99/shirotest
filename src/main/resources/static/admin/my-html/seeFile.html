@@ -19,17 +19,7 @@
     /***************echarts*************/
     let myChart = echarts.init(document.getElementsByClassName('echar')[0]);
     option = {
-        xAxis: {
-            type: 'category',
-            data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-        },
-        yAxis: {
-            type: 'value'
-        },
-        series: [{
-            data: [800, 900, 900, 930, 1290, 1300, 1300],
-            type: 'line'
-        }]
+
     };
     myChart.setOption(option);
     /***************echarts**************/
