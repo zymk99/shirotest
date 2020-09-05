@@ -11,6 +11,7 @@
 </div>
 <script src="https://unpkg.com/vue"></script>
 <script src="https://unpkg.com/http-vue-loader"></script>
+<script src="https://unpkg.com/vue-router"></script>
 <script src="https://cdn.bootcss.com/echarts/3.7.1/echarts.min.js"></script>
 <script src="/js/jquery.min.js"></script>
 <script src="/admin/javascript/Zafkiel.js"></script>
@@ -32,8 +33,7 @@
     };
     myChart.setOption(option);
     /***************echarts**************/
-    //import VueRouter from 'vue-router'
-    //Vue.use(VueRouter)
+    Vue.use(VueRouter)
     Vue.use(httpVueLoader);
         let water = new Vue({
             el: '.watmain',
@@ -60,7 +60,8 @@
             },
             methods:{
                 click_ul(item){
-                    //this.$router.push({name: "/admin/my-html/pictureView.html", params: {id: "123456"}})
+                    debugger
+                    this.$router.push({name: "/admin/my-html/pictureView.html", params: {id: "123456"}})
                 }
             }
         })
