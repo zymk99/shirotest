@@ -1,6 +1,7 @@
 <!--       自定义瀑布流     -->
 <template>
     <div >
+
         <ul class="water_ul" @click="ul_click">
             <li  v-for="(item,index) in mylistdata" :style="itemwidth" itemtype="item" :itemindex="index">
                 <img class="ul_img" :src="item.src"/>
