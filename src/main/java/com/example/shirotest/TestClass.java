@@ -23,55 +23,37 @@ public class TestClass {
         aa.sort((x,y)->{
             return Integer.parseInt(y.toString())-Integer.parseInt(x.toString());
         });
-        int[] xx={50,47,68,33,35,84,25,49,91,75};
-        minTime(xx,1);
+        List<List<Integer>> aaa=combinationSum3(3,9);
+
+        int xx=10;
+
     }
 
-    public static int minTime(int[] time, int m) {
-        int xx=dep(time,m);
-        return xx;
+    public static List<List<Integer>> combinationSum3(int k, int n) {
+        List<List<Integer>> lists=new ArrayList<List<Integer>>();
+        List<Integer> list=new ArrayList<>();
+        for(int i=1;i<10;i++){
+            combinationSum4(k,n,list,i,lists);
+        }
+        return lists;
     }
 
-    public static int dep(int[] time, int m){
-        if(time.length<=m){
-            return 0;
-        }
-        if(time.length==m+1){
-            Arrays.sort(time);
-            return time[0];
-        }
-        List list=new ArrayList<int[]>();
-        for(int i=0;i<time.length-1;i++){
-            String tmp=String.valueOf(time[i]+time[i+1])+"-"+String.valueOf(i);
-            list.add(tmp);
-        }
-        Collections.sort(list,(a,b)->{
-            return Integer.parseInt(a.toString().split("-")[0])-Integer.parseInt(b.toString().split("-")[0]);
-        });
-        int min=Integer.parseInt(list.get(0).toString().split("-")[0]);
-        int minIndex=Integer.parseInt(list.get(0).toString().split("-")[1]);
-        int[] tmptime=Arrays.copyOfRange(time,0,minIndex);
-        List tl=new ArrayList();
-        if(tmptime.length>0){
-            for(int i:tmptime){
-                tl.add(i);
-            }
-        }
-        tl.add(min);
-        if(minIndex+2<=time.length){
-            int[] tmp=Arrays.copyOfRange(time,minIndex+2,time.length);
-            if(tmp.length>0){
-                for(int i:tmp){
-                    tl.add(i);
+    public static List<List<Integer>> combinationSum4(int k, int n,List<Integer> list,int index,List<List<Integer>> lists) {
+        if(k>=1){
+            list.add(index);
+            if(n==index && k==1){
+                lists.add( (ArrayList)((ArrayList)list).clone() );
+                list.remove(list.size()-1);
+                return lists;
+            }else if(n>index){
+                for(int i=index+1;i<10;i++){
+                    lists=combinationSum4(k-1,n-index,list,i,lists);
+                    if(n<i)break;
                 }
             }
+            list.remove(list.size()-1);
         }
-        int[] ta=(int[]) Array.newInstance(int.class, tl.toArray().length);
-        int c=0;
-        for(Object x:tl.toArray()){
-            ta[c++]=(int)x;
-        }
-        return dep(ta,m);
+        return lists;
     }
 
 }
