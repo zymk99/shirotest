@@ -23,37 +23,54 @@ public class TestClass {
         aa.sort((x,y)->{
             return Integer.parseInt(y.toString())-Integer.parseInt(x.toString());
         });
-        List<List<Integer>> aaa=combinationSum3(3,9);
-
+        List<Integer> aaa=splitIntoFibonacci("214748364721474836422147483641");
         int xx=10;
 
     }
-
-    public static List<List<Integer>> combinationSum3(int k, int n) {
-        List<List<Integer>> lists=new ArrayList<List<Integer>>();
+    public static List<Integer> splitIntoFibonacci(String S) {
         List<Integer> list=new ArrayList<>();
-        for(int i=1;i<10;i++){
-            combinationSum4(k,n,list,i,lists);
-        }
-        return lists;
-    }
-
-    public static List<List<Integer>> combinationSum4(int k, int n,List<Integer> list,int index,List<List<Integer>> lists) {
-        if(k>=1){
-            list.add(index);
-            if(n==index && k==1){
-                lists.add( (ArrayList)((ArrayList)list).clone() );
-                list.remove(list.size()-1);
-                return lists;
-            }else if(n>index){
-                for(int i=index+1;i<10;i++){
-                    lists=combinationSum4(k-1,n-index,list,i,lists);
-                    if(n<i)break;
+        List<Integer> objlist=new ArrayList<>();
+        int l= S.length();
+        if(l>=3){
+            for(int i=1;i<l-1&&i<=9;i++){
+                String s1=S.substring(0,i);
+                if(s1.length()>1 && Integer.parseInt(s1)!=0 && s1.indexOf('0')==0){
+                    continue;
+                }
+                for(int j=i+1;j<l&&j<=i+9;j++){
+                    String s2=S.substring(i,j);
+                    if(s2.length()>1 && Integer.parseInt(s2)!=0 &&s2.indexOf('0')==0){
+                        continue;
+                    }
+                    list=new ArrayList<>();
+                    list.add(Integer.parseInt(s1));
+                    list.add(Integer.parseInt(s2));
+                    objlist=db(Integer.parseInt(s1),Integer.parseInt(s2),S.substring(j,l),list,objlist);
+                    if(objlist.size()>0){
+                        return objlist;
+                    }
                 }
             }
-            list.remove(list.size()-1);
         }
-        return lists;
+        return objlist;
+    }
+
+    public static List<Integer> db(int a,int b,String s,List<Integer> list,List<Integer> objlist){
+        if(s.length()==0){
+            objlist= (ArrayList)((ArrayList)list).clone();
+            return objlist;
+        }
+        for(int i=1;i<s.length()+1 && i<=9;i++){
+            if(i>1 && s.substring(0,i).indexOf('0')==0){
+                continue;
+            }
+            if(a+b==Integer.parseInt(s.substring(0,i))){
+                list.add(Integer.parseInt(s.substring(0,i)));
+                objlist=db(b,Integer.parseInt(s.substring(0,i)),s.substring(i,s.length()),list,objlist);
+                list.remove(list.size()-1);
+            }
+        }
+        return objlist;
     }
 
 }
