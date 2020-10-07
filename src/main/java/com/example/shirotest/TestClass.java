@@ -2,6 +2,7 @@ package com.example.shirotest;
 
 
 import javafx.beans.binding.IntegerBinding;
+import net.sf.json.util.JSONUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
@@ -23,50 +24,42 @@ public class TestClass {
         aa.sort((x,y)->{
             return Integer.parseInt(y.toString())-Integer.parseInt(x.toString());
         });
-        int aaa=minimumOperations("yry");
+        List<String> list=new ArrayList<>();
+        list.add("cats");
+        list.add("dog");
+        list.add("sand");
+        list.add("and");
+        boolean aaa=wordBreak("catsandog",list);
         int xx=10;
-        int[][] i={{1,2}};
     }
-    public static int minimumOperations(String leaves) {
-        int x=0;
-        if(!leaves.startsWith("r")){
-            x++;
+    public static boolean wordBreak(String s, List<String> wordDict) {
+        if(wordDict.size()==0){
+            return false;
         }
-        if(!leaves.endsWith("r")){
-            x++;
-        }
-        x+=db(leaves.substring(1,leaves.length()-1),x);
-        return x;
-    }
-
-    public static int db(String s,int num){
-        if(s.length()==0)return 0;
-        if(s.length()==1 || s.length()==2){
-            if(s.indexOf("y")>=0){
-                return 0;
-            }else
-            {
-                return 1;
-            }
-        }
-        int all=0;
-        for(char c : s.toCharArray()){
-            if(c=='r')
-                all++;
-        }
-        int x1=0,x2=0,x3=0;
-        if(!s.startsWith("r")){
-            x1++;
-        }
-        if(!s.endsWith("r")){
-            x2++;
-        }
-        x3=x1+x2;
-        x1+=db(s.substring(1,s.length()),num+x1);
-        x2+=db(s.substring(0,s.length()-1),num+x2);
-        x3+=db(s.substring(1,s.length()-1),num+x1+x2);
-        int val=Math.min(all,Math.min(x1,Math.min(x2,x3)));
+        boolean val=db(s,wordDict);
         return val;
+    }
+    public static boolean db(String s,List<String> list){
+        HashMap map=new HashMap<String,Integer>();
+        list.stream().forEach(item->{
+            map.put(item,item.length());
+        });
+        Boolean[] bs=new Boolean[s.length()+1];
+        bs[0]=true;
+        int i=1;
+        for(i=1;i<bs.length;i++){
+            boolean bol=false;
+            Iterator it=map.keySet().iterator();
+            while(it.hasNext()){
+                String v=it.next().toString();
+                if(i-v.length()>=0 && s.substring(i-v.length(),i).equals(v) && bs[i-v.length()]==true){
+                    bol=true;
+                    break;
+                }
+            }
+            bs[i]=bol;
+        }
+        return bs[bs.length-1];
     }
 
 
