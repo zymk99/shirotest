@@ -24,20 +24,41 @@ public class TestClass {
         aa.sort((x,y)->{
             return Integer.parseInt(y.toString())-Integer.parseInt(x.toString());
         });
-        int aaa=numTilePossibilities("A");
+        List<String> list=new ArrayList<String>();
+        list.add("ac");
+        list.add("ab");
+        list.add("aaa");
+        String aaa=replaceWords(list,"it is abnormal that this solution is accepted");
         int xx=10;
     }
-    public static int numTilePossibilities(String tiles) {
-        char[] cs=tiles.toCharArray();
-        HashMap map=new HashMap();
-        for(char c:cs){
-            if(map.get(c)!=null){
-                map.put(c, (int)map.get(c)+1);
-            }else{
-                map.put(c, 1);
+    public static String replaceWords(List<String> dictionary, String sentence) {
+        if(dictionary.size()==0){
+            return sentence;
+        }else if(sentence.length()==0){
+            return sentence;
+        }
+        Collections.sort(dictionary,(item1,item2)->{
+            return item1.length()-item2.length();
+        });
+        String[] ss=sentence.split(" ");
+        for(int i=0;i<ss.length;i++){
+            if(ss[i].length()>0){
+                Iterator it=dictionary.iterator();
+                while (it.hasNext()){
+                    String tmp=(String)it.next();
+                    if(ss[i].length()<tmp.length())continue;
+                    if(ss[i].startsWith(tmp)){
+                        ss[i]=tmp;
+                        break;
+                    }
+                }
             }
         }
-        int v=db(map)-1;
+        String v="";
+        for(String t:ss){
+            v += t+" ";
+        }
+        v=v.substring(0,v.length()-1);
         return v;
     }
     public static int db(HashMap map){
