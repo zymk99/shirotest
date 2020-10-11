@@ -25,41 +25,46 @@ public class TestClass {
         aa.sort((x,y)->{
             return Integer.parseInt(y.toString())-Integer.parseInt(x.toString());
         });
-        char[] c={'C','A','A','B','B','B','c','c','c','D','D','E'};
-        int aaa=leastInterval(c,2);
+        int[] c={1,4,4,-1,2,2,-1,10,-1,6,8,-1,-1,-1,-1,1,3};
+        int aaa=leastInterval(c);
         int xx=10;
     }
-    public static int leastInterval(char[] tasks, int n) {
-        HashMap map=new HashMap();
-        for(char c :tasks){
-            map.put(c, map.get(c)==null?1 : Integer.parseInt(map.get(c).toString())+1 );
-        }
-        ArrayList list=new ArrayList();
-        Iterator it=map.keySet().iterator();
-        while(it.hasNext()){
-            char c=(char)it.next();
-            list.add(String.valueOf(c)+"-"+map.get(c).toString());
-        }
-        Collections.sort(list,(a1,a2)->{
-            return Integer.valueOf(a2.toString().split("-")[1])-Integer.valueOf(a1.toString().split("-")[1]);
-        });
-        char[] cs=new char[1000002];
-        Iterator iter=list.iterator();
-        while(iter.hasNext()){
-            String tmps=iter.next().toString();
-            int x=Integer.valueOf(tmps.split("-")[1]);
+    public static int leastInterval(int[] s) {
+        class Poi{
+            Poi left=null;
+            Poi right=null;
+            int value;
             int index=0;
-            while(cs[index++]!='\0');
-            index--;
-            for(;x>0;x--,index=index+n+1){
-                cs[index]=tmps.split("-")[0].toCharArray()[0];
+            Poi(int x){
+                value=x;
+            }
+            Poi next;
+        }
+        Poi H=new Poi(s[0]);
+        Poi node=H;
+        Poi R=H;
+        for(int i:s){
+            if(i==1)continue;
+            if(node==null)break;
+            if(node.index==0 ){
+                if(i>=0){
+                    Poi tmp=new Poi(i);
+                    R.next=tmp;
+                    R=tmp;
+                    node.left=tmp;
+                }
+                node.index++;
+            }else{
+                if(i>=0){
+                    Poi tmp=new Poi(i);
+                    R.next=tmp;
+                    R=tmp;
+                    node.right=tmp;
+                }
+                node=node.next;
             }
         }
-        int v=1000000;
-        for(;v>=0;v--){
-            if(cs[v]!='\0')break;
-        }
-        return v+1;
+        return 1;
     }
     public static int db(HashMap map){
         int num=1;
