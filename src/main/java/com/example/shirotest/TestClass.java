@@ -25,7 +25,7 @@ public class TestClass {
         aa.sort((x,y)->{
             return Integer.parseInt(y.toString())-Integer.parseInt(x.toString());
         });
-        char[] c={'A','A','A','B','B','B','c','c','c','D','D','E'};
+        char[] c={'C','A','A','B','B','B','c','c','c','D','D','E'};
         int aaa=leastInterval(c,2);
         int xx=10;
     }
