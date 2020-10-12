@@ -1,10 +1,6 @@
 package com.example.shirotest;
 
 
-import javafx.beans.binding.IntegerBinding;
-import net.sf.json.util.JSONUtils;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 
 import java.lang.reflect.Array;
