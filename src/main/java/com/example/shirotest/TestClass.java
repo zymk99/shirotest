@@ -22,59 +22,37 @@ public class TestClass {
             return Integer.parseInt(y.toString())-Integer.parseInt(x.toString());
         });
         int[] c={1,4,4,-1,2,2,-1,18,-1,6,8,-1,-1,-1,-1,1,3};
-        int aaa=leastInterval(c);
+        int aaa=scoreOfParentheses("(())");
         int xx=10;
     }
-    public static int leastInterval(int[] s) {
-        class Poi{
-            Poi left=null;
-            Poi right=null;
-            int value;
-            int index=0;
-            Poi(int x){
-                value=x;
-            }
-            Poi next;
-        }
-        Poi H=new Poi(s[0]);
-        Poi node=H;
-        Poi R=H;
-        for(int i:s){
-            if(i==1)continue;
-            if(node==null)break;
-            if(node.index==0 ){
-                if(i>=0){
-                    Poi tmp=new Poi(i);
-                    R.next=tmp;
-                    R=tmp;
-                    node.left=tmp;
-                }
-                node.index++;
-            }else{
-                if(i>=0){
-                    Poi tmp=new Poi(i);
-                    R.next=tmp;
-                    R=tmp;
-                    node.right=tmp;
-                }
-                node=node.next;
-            }
-        }
-        return 1;
+    public static int scoreOfParentheses(String S) {
+        int xx=db(S);
+        return xx;
     }
-    public static int db(HashMap map){
-        int num=1;
-        Iterator it=map.keySet().iterator();
-        while(it.hasNext()){
-            char c=(char)it.next();
-            int x=(int)map.get(c);
-            if((int)map.get(c) >0){
-                map.put(c,x-1);
-                num=num+db(map);
-                map.put(c,x);
+    public static int db(String s){
+        if(s.equals("()")){
+            return 1;
+        }else if(s.isEmpty() || s.equals("")){
+            return 0;
+        }
+        int v=0,c=0,index=0;
+        char[] cs=s.toCharArray();
+        for(int i=0;i<cs.length;i++){
+            if(cs[i]=='('){
+                c++;
+            }else{
+                c--;
+            }
+            if(c==0){
+                if(i!=index+1){
+                    v+= ( 2*db(s.substring(index+1,i))  );
+                }else{
+                    v++;
+                }
+                index=i+1;
             }
         }
-        return num;
+        return v;
     }
 
 
