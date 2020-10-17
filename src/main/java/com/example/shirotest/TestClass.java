@@ -2,11 +2,7 @@ package com.example.shirotest;
 
 
 import org.apache.shiro.subject.Subject;
-
-import java.lang.reflect.Array;
 import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 
 public class TestClass {
@@ -22,9 +18,9 @@ public class TestClass {
             return Integer.parseInt(y.toString())-Integer.parseInt(x.toString());
         });
         int[] c={1,4,4,-1,2,2,-1,18,-1,6,8,-1,-1,-1,-1,1,3};
-        int aaa=scoreOfParentheses("(())");
         int xx=10;
     }
+
     public static int scoreOfParentheses(String S) {
         int xx=db(S);
         return xx;
