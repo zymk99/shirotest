@@ -18,50 +18,41 @@ public class TestClass {
             return Integer.parseInt(y.toString())-Integer.parseInt(x.toString());
         });
         int[] c={1,0,0,0,0};
-        int aaa=longestSubarray(c);
+        int aaa=nthUglyNumber(1000000000,2,217983653,336916467);
         int xx=10;
     }
 
-    public static int longestSubarray(int[] nums) {
-        int zeroN=0,oneN=0;
-        for(int i=0;i<nums.length;i++){
-            int tmp=nums[i]==0 ? zeroN++ : oneN++;
-        }
-        if(zeroN==nums.length)return 0;
-        if(oneN==nums.length)return nums.length-1;
-
-        int len=nums.length;
-        int[] tmp=new int[len+5];
-        tmp[0]=-2;
-        int n=0,j=1,max=0;
-        for(int x:nums){
-            if(x==0){
-                if(max<n){
-                    max=n;
-                }
-                tmp[j++]=n;
-                if(n!=0){
-                    tmp[j++]=0;
-                    n=0;
-                }
-            }else{
-                n++;
-            }
-        }
-        if(max<n){
-            max=n;
-        }
-        tmp[j++]=n;
-        tmp[j]=-1;
-        for(int i=0;i<tmp.length ;i++){
-            if(tmp[i]==-1){
+    public static int nthUglyNumber(int n, int a, int b, int c) {
+        byte[] list=new byte[1+2*(int)Math.pow(10,9)];
+        boolean[] Flag={false,false,false};
+        for(int i=1;i<n+1;i++){
+            if(Flag[0] && Flag[1] && Flag[2]){
                 break;
             }
-            if(tmp[i]==0 && tmp[i-1]+tmp[i+1]>max){
-                max=tmp[i-1]+tmp[i+1];
+            for(int j=0;j<3;j++){
+                if(!Flag[j]){
+                    try{
+                        int t=i*a;
+                        if(t< (1+2*(int)Math.pow(10,9)) ){
+                            list[t]=1;
+                        }
+                    }catch (Exception e){
+                        Flag[j]=true;
+                    }
+                }
             }
         }
-        return max;
+        int tmp=0;
+        for(int i=0;i<list.length;i++){
+            if(list[i]==1){
+                tmp++;
+            }
+            if(tmp==n){
+                tmp=i;
+                break;
+            }
+        }
+        return tmp;
     }
     public static int db(String s){
         if(s.equals("()")){
