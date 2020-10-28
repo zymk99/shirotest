@@ -15,7 +15,8 @@
     module.exports={
         props:{
             rownum:Number,
-            listdata:Array
+            listdata:Array,
+            adddatafunc:Function
         },
         data(){             //自定义组件的data是个方法
             return{
@@ -97,10 +98,7 @@
                 //     let h=parseInt(Math.random()*150)+250;
                 //     this._data.mylistdata.push({height:h});
                 // }
-                let p={}
-                p.pageSize=10;
-                p.pageNum=1;
-                let list=Zafkiel.request("/data/getWaterfallData",p,"post",null,null,true);
+                let list= this.adddatafunc(1,2);
                 this._data.addnumber=list.length;
                 for(let i=0;i<list.length;i++){
                     this._data.mylistdata.push(list[i]);
