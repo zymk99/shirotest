@@ -1,5 +1,6 @@
 package com.example.shirotest.Utils;
 
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
@@ -22,6 +23,7 @@ import java.util.Map;
 public class CurrUtils {
     //Class转换为JSON字符串
     public static String ClassToJsonstring(Object obj){
+        //JSONArray.fromObject(obj).toString()
         Field[] fields = obj.getClass().getDeclaredFields();
         Map classMap=new HashMap<String,Object>();
         for(int i = 0 , len = fields.length; i < len; i++) {

@@ -42,6 +42,7 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/data/downImg", "anon");
         filterChainDefinitionMap.put("/admin/my-html/buildzip.js", "anon");
         filterChainDefinitionMap.put("/data/createWord", "anon");
+        filterChainDefinitionMap.put("/filepic/getall", "anon");
 
         // 退出系统的过滤器
         filterChainDefinitionMap.put("/logout", "logout");
