@@ -4,7 +4,9 @@ import org.springframework.stereotype.Component;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Component
 public class FilePic {
@@ -19,7 +21,11 @@ public class FilePic {
                 for(File tmp:files)
                 {
                     if(tmp.isDirectory()){
-                        fileList.add(tomcat+tmp.getName());
+                        Map m=new HashMap();
+                        m.put("height",String.valueOf((int)(Math.random()*180)+300));
+                        m.put("src",tomcat+tmp.getName()+"/001.jpg");
+                        m.put("title",tmp.getName());
+                        fileList.add(m);
                     }
                 }
             }

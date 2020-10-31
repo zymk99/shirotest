@@ -99,12 +99,14 @@
                 //     this._data.mylistdata.push({height:h});
                 // }
                 let list= this.adddatafunc(1,2);
-                this._data.addnumber=list.length;
-                for(let i=0;i<list.length;i++){
-                    this._data.mylistdata.push(list[i]);
+                if(list){
+                    this._data.addnumber=list.length;
+                    for(let i=0;i<list.length;i++){
+                        this._data.mylistdata.push(list[i]);
+                    }
+                    this._data.addDataFlag=true;
+                    window.setTimeout(this.setItemHeight,100);
                 }
-                this._data.addDataFlag=true;
-                window.setTimeout(this.setItemHeight,100);
             },
             //是否触底
             TouchBottom(){
