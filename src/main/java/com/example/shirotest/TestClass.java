@@ -35,7 +35,7 @@ public class TestClass {
                     {0,0,0,0,0,0,0,0,0,0,0,0,0,1,0},
                     {0,0,0,0,0,0,0,0,0,0,0,1,0,0,1}};
         int q=findCircleNum(c);
-        int xx=10;
+        int xx=9;
     }
 
     public static int findCircleNum(int[][] M)  {
