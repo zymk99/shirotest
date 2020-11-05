@@ -19,43 +19,65 @@ public class TestClass {
         aa.sort((x,y)->{
             return Integer.parseInt(y.toString())-Integer.parseInt(x.toString());
         });
-        int[] c={1,1,0,0,1,0,0,1,0,1,0,1,1,1,0,1,1,0,1,1,0,0,1,1,0,1,0,1,1,0,1,1,1,1,1,0,1,0,0,0,0,0,0,0,1,0,0,1,1,1,0,0,0,0,0,1,1,1,0,0,1,1,1,1,1,0,0,0,1,1,1,1,1,1,0,1,1,0,0,0,1,1,1,1,0,0,1,1,1,0,0,0,1,0,1,0,1,1,1,0,1,1,0,1,1,1,0,1,1,1,0,1,0,1,0,0,0,1,1,0,0,0,0,1,1,0,0,1,0,0,1,0,1,0,0,0,0,0,1,1,1,1,1,0,1,1,0,0,0,0,0,0,1,1,1,0,1,1,0,1,1,1,0,1,0,1,0,0,1,0,0,1,0,0,1,1,0,1,0,0,1,1,0,1,0,0,0,1,0,1,1,1,1,1,0,0,0,1,0,0,1,0,1,1,1,1,0,1,1,0,0,0,0,1,0,1,0,1,1,1,1,1,0,0,0,0,0,1,0,0,0,1,0,1,0,0,0,0,0,1,1,1,0,0,1,1,1,0,1,1,0,1,1,1,0,1,0,0,1,0,1,0,0,1,0,1,1,1,1,1,1,1,1,0,1,0,1,1,1,0,1,1,0,1,0,0,0,1,0,1,0,0,0,0,1,0,0,0,1,0,1,1,1,0,1,0,0,1,0,1,0,0,0,1,0,1,0,1,1,0,0,1,1,0,0,1,0,1,1,1,1,0,1,1,1,0,0,0,1,0,0,1,1,0,0,1,0,0,0,0,0,0,1,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,0,0,0,1,1,0,1,1,1,1,0,0,0,1,0,0,0,1,1,0,1,0,1,0,0,0,0,1,1,0,0,1,1,0,0,1,1,1,0,0,0,0,1,0,1,1,1,1,1,1,1,1,1,1,1,0,1,0,1,1,0,0,1,0,0,0,1,0,0,0,0,1,1,1,0,1,1,0,0,1,0,0,1,0,0,1,0,0,1,1,0,0,1,1,0,0,0,1,1,0,1,0,0,0,0,0,1,0,0,0,1,0,0,0,1,1,1,0,1,1,0,1,1,0,0,0,1,0,0,0,0,1,0,0,0,1,0,0,0,0,0,1,0,1,1,0,1,0,1,0,1,0,0,0,0,1,1,0,0,0,1,1,0,1,1,0,1,1,0,0,0,0,1,1,0,0,1,1,0,0,0,0,0,0,0,1,0,1,1,1,0,0,0,1,1,0,1,0,0,1,0,0,0,1,1,0,0,0,0,1,1,0,0,1,1,0,1,0,0,0,1,1,0,1,0,0,0,1,1,1,1,1};
-        int aaa=longestArithSeqLength(c);
+        int[][] c={ {1,0,0,0,1,0,0,0,0,0,0,0,0,0,0},
+                    {0,1,0,0,0,1,0,0,0,0,0,0,0,0,0},
+                    {0,0,1,0,0,0,0,0,0,0,0,0,0,0,0},
+                    {0,0,0,1,0,0,0,0,0,0,0,0,0,0,0},
+                    {1,0,0,0,1,0,0,0,0,0,0,0,1,0,0},
+                    {0,1,0,0,0,1,0,0,0,0,0,0,1,0,0},
+                    {0,0,0,0,0,0,1,0,0,0,0,1,0,0,0},
+                    {0,0,0,0,0,0,0,1,0,0,0,1,1,0,0},
+                    {0,0,0,0,0,0,0,0,1,0,0,0,0,0,0},
+                    {0,0,0,0,0,0,0,0,0,1,0,0,0,0,0},
+                    {0,0,0,0,0,0,0,0,0,0,1,1,0,0,0},
+                    {0,0,0,0,0,0,1,1,0,0,1,1,0,0,1},
+                    {0,0,0,0,1,1,0,1,0,0,0,0,1,0,0},
+                    {0,0,0,0,0,0,0,0,0,0,0,0,0,1,0},
+                    {0,0,0,0,0,0,0,0,0,0,0,1,0,0,1}};
+        int q=findCircleNum(c);
         int xx=10;
     }
 
-    public static int longestArithSeqLength(int[] A) {
-        HashMap equal=new HashMap();
-        for(int a:A){
-            int t=equal.get(a)==null?0:(int)equal.get(a);
-
-        }
-        HashMap map=new HashMap<String,HashMap>();
-        for(int i=1;i<A.length;i++){
-            for(int j=i-1;j>=0;j--){
-                int d=A[i]-A[j];
-                if(d==0){
-                    continue;
+    public static int findCircleNum(int[][] M)  {
+        ArrayList list=new ArrayList();
+        for(int i=0;i<M.length;i++){
+            for(int j=i;j<M.length;j++){
+                if(M[i][j]==1){
+                    Set map=new HashSet();
+                    Iterator it=list.iterator();
+                    while(it.hasNext()){
+                        Set m=(HashSet)it.next();
+                        if(m.contains(i)){
+                            map=m;
+                            list.remove(m);
+                            break;
+                        }
+                    }
+                    map.add(j);
+                    list.add(map);
                 }
-                HashMap tmp= map.get(d)==null ? new HashMap() : (HashMap) map.get(d);  //{num,length}
-                int length= tmp.get(A[j])==null? 2: (int)tmp.get(A[j])+1;
-                tmp.remove(A[j]);
-                int last=tmp.get(A[i])==null? length :
-                        (Math.max((int)tmp.get(A[i]),length));
-                tmp.put(A[i],last);
-                map.put(d,tmp);
             }
         }
-        HashMap max=new HashMap();
-        max.put("max",0);
-        map.values().stream().forEach(item->{
-            ((HashMap)item).values().stream().forEach(it->{
-                if((int)max.get("max")<(int)it){
-                    max.put("max",(int)it);
+        int max=list.size();
+        for(int i=0;i<list.size()&& list.size()>0;i++){
+            Set m=(HashSet)list.remove(0);
+            ArrayList tmpList=new ArrayList();
+            list.stream().forEach(item->{
+                Set t=(HashSet)item;
+                Set tmp=new HashSet();
+                tmp.addAll(m);
+                tmp.retainAll(t);
+                if(tmp.size()>0){
+                    tmpList.add(t);
                 }
             });
-        });
-        return (int)max.get("max");
+            list.removeAll(tmpList);
+            tmpList.stream().forEach(item->{
+                m.addAll((HashSet)item);
+            });
+            list.add(m);
+        }
+        return list.size();
     }
     public static int db(int[] nums, int target,int lift){
         return 1;

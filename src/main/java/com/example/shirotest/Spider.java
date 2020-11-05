@@ -8,7 +8,7 @@ import java.net.URL;
 
 public class Spider {
     public static void main(String[] a){
-        downImages("",28,".jpg");
+        downImages("",22,".jpg");
     }
     static String[] UA={"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; en) Opera 9.50",
     "Mozilla/5.0 (X11; U; Linux x86_64; zh-CN; rv:1.9.2.10) Gecko/20100922 Ubuntu/10.10 (maverick) Firefox/3.6.10",
@@ -48,8 +48,8 @@ public class Spider {
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 System.out.println("UA+"+UA[i%UA.length]);
                 connection.setRequestProperty("User-Agent",UA[i%UA.length]);
-                //connection.setRequestProperty("User-Agent","Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/38.0.2125.122 UBrowser/4.0.3214.0 Safari/537.36");
-                connection.setRequestProperty("ip","203.195.251.136");
+                connection.setRequestProperty("User-Agent","Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/38.0.2125.122 UBrowser/4.0.3214.0 Safari/537.36");
+                //connection.setRequestProperty("ip","203.195.251.136");
                 InputStream is = connection.getInputStream();
                 // 创建文件，并设置默认文件名
                 File file = new File(filePath+fileName);
