@@ -10,26 +10,11 @@ import java.util.*;
 public class TestClass {
     public static void main(String[] a)
     {
-//        String A[]={"voibobzhfx",
-//                    "qpabpzscga",
-//                    "bjobaztasc",
-//                    "lnbcakfmnq",
-//                    "tjsikfdsix",
-//                    "dloiskwypl",
-//                    "eaeqmujszw",
-//                    "utfrgwyijs",
-//                    "rxgyhhladh",
-//                    "rmryzonepz"};
         String     A[]={  "bwwdyeyfhc",
                           "bchpphbtkh",
                           "hmpudwfkpw",
                           "lqeoyqkqwe",
-                          "riobghmpaa",
-                          "stbheblgao",
-                          "snlaewujlc",
-                          "tqlzolljas",
-                          "twdkexzvfx",
-                          "wacnnhjdis"};
+                          "riobghmpaa"};
         int xx=minDeletionSize(A);
         int qwer=9;
     }
