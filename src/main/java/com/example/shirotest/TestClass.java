@@ -13,8 +13,7 @@ public class TestClass {
         String     A[]={  "bwwdyeyfhc",
                           "bchpphbtkh",
                           "hmpudwfkpw",
-                          "lqeoyqkqwe",
-                          "riobghmpaa"};
+                          "lqeoyqkqwe"};
         int xx=minDeletionSize(A);
         int qwer=9;
     }
