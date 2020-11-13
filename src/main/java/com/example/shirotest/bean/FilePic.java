@@ -1,8 +1,9 @@
 package com.example.shirotest.bean;
 
 import org.springframework.stereotype.Component;
+import sun.misc.BASE64Encoder;
 
-import java.io.File;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -11,7 +12,7 @@ import java.util.Map;
 @Component
 public class FilePic {
     String tomcat="http://localhost:8080/picture/";
-    String filePath="D:\\Tomcat\\apache-tomcat-7.0.106\\webapps\\ROOT\\picture";
+    String filePath="D:\\Tomcat\\apache-tomcat-7.0.106\\webapps\\ROOT\\picture\\";
     List fileList=new ArrayList();
     public FilePic(){
         File folder =new File(filePath);
@@ -30,6 +31,23 @@ public class FilePic {
                 }
             }
         }
+    }
+    public String getPic(){
+        try {
+//            BufferedInputStream bf=new BufferedInputStream(new FileInputStream(filePath+"1\\001.jpg"));
+//            byte[] bs=new byte[bf.available()];
+//            bf.read(bs);
+            InputStream in = new FileInputStream(filePath+"1\\001.jpg");
+            byte[] bs= new byte[in.available()];
+            in.read(bs);
+            in.close();
+            BASE64Encoder encoder = new BASE64Encoder();
+            String base64Str = encoder.encode(bs);
+            return base64Str;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
     //参数以1为起点
     public List getAllIndex(int begin,int end){
