@@ -10,28 +10,33 @@ import java.util.*;
 public class TestClass {
     public static void main(String[] a)
     {
-        String     A[]={  "bwwdyeyfhc",
-                          "bchpphbtkh",
-                          "hmpudwfkpw",
-                          "lqeoyqkqwe"};
-        int xx=minDeletionSize(A);
+        int  A[][]={{7,0}, {4,4}, {7,1}, {5,0}, {6,1}, {5,2}};
+        int[][] xx=reconstructQueue(A);
         int qwer=9;
     }
 
     static int[] equal;
-    public static int minDeletionSize(String[] A) {
-        equal=new int[A[0].length()];
-        Set sss=db(0,A,null);
-        int val=0;
-        for(int t:equal){
-            if(t==0){
-                break;
-            }
-            if(t==1){
-                val++;
-            }
+    public static int[][] reconstructQueue(int[][] people) {
+        ArrayList<int[]> list=new ArrayList<>();
+        for(int i=0;i<people.length;i++){
+            int[] t={people[i][0],people[i][1]};
+            list.add(t);
         }
-        return val;
+        list.sort((item1,item2)->{
+            int[] t1=(int[])item1;
+            int[] t2=(int[])item2;
+            if(t1[0]==t2[0]){
+                return t1[1]-t2[1];
+            }
+            return t2[0]-t1[0];
+        });
+        ArrayList tmp=new ArrayList();
+        list.stream().forEach(item->{
+            int[] t=(int[])item;
+            tmp.add(t[1],t);
+        });
+        int[][] v=new int[people.length][2];
+        return null;
     }
     public static Set db(int begin, String[] list,ArrayList AL){
         if(list==null){
