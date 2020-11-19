@@ -8,7 +8,7 @@ import java.net.URL;
 
 public class Spider {
     public static void main(String[] a){
-        downImages("",42,".png");
+        downImages("",31,".png");//png  jpg
     }
     static String[] UA={"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; en) Opera 9.50",
     "Mozilla/5.0 (X11; U; Linux x86_64; zh-CN; rv:1.9.2.10) Gecko/20100922 Ubuntu/10.10 (maverick) Firefox/3.6.10",
@@ -39,7 +39,7 @@ public class Spider {
             files.mkdirs();
         }
         try {
-            for(int i=3;i<=num;i++){
+            for(int i=20;i<=num;i++){
                 System.out.println(""+i);
                 String imageUrl=Url+i+type;
                 fileName= i+121<10? "00"+(i+121) : (i+121<100?"0"+(i+121) : ""+(i+121));
