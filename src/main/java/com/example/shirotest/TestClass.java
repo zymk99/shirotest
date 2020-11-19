@@ -17,25 +17,48 @@ public class TestClass {
 
     static int[] equal;
     public static int[][] reconstructQueue(int[][] people) {
-        ArrayList<int[]> list=new ArrayList<>();
-        for(int i=0;i<people.length;i++){
-            int[] t={people[i][0],people[i][1]};
-            list.add(t);
-        }
-        list.sort((item1,item2)->{
-            int[] t1=(int[])item1;
-            int[] t2=(int[])item2;
-            if(t1[0]==t2[0]){
-                return t1[1]-t2[1];
+        ArrayList list=new ArrayList();
+        //先替换最大值执行一遍   再替换最小值执行一遍
+        for(int flag=0;flag<2;flag++){
+            Map next=new HashMap();
+            Map last=new HashMap();
+            if(flag==0){    //替换最大化
+                next.put(1,7);
+                next.put(9,8);
+                next.put(5,9);
+                last.put(9,5);
             }
-            return t2[0]-t1[0];
-        });
-        ArrayList tmp=new ArrayList();
-        list.stream().forEach(item->{
-            int[] t=(int[])item;
-            tmp.add(t[1],t);
-        });
-        int[][] v=new int[people.length][2];
+            if(flag==1){   //替换最小化
+                next.put(1,7);
+                next.put(9,8);
+                next.put(5,6);
+                last.put(9,3);
+            }
+            String s=String.valueOf(1995);
+            for(int i=0;i<s.length();i++){
+                for(int j=0;j<s.length();j++){
+                    if(i==j){
+                        continue;
+                    }
+                    if( next.get((int)s.toCharArray()[i]-48) !=null && last.get((int)s.toCharArray()[j]-48)!=null){
+                        int x=(int)next.get((int)s.toCharArray()[i]-48);
+                        int y=(int)last.get((int)s.toCharArray()[j]-48);
+                        int a=i,b=j;
+                        if(a>b){
+                            int tmp=a;a=b;b=tmp;
+                            tmp=x;x=y;y=tmp;
+                        }
+                        list.add( s.substring(0,a)+x+s.substring(a+1,b)+y+s.substring(b+1,s.length()) );
+                    }
+                }
+            }
+        }
+        //自减自加的情况
+        list.add("1695");
+        list.add("1965");
+        list.add("1095");
+        list.add("1905");
+        Collections.sort(list);
         return null;
     }
     public static Set db(int begin, String[] list,ArrayList AL){
