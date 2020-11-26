@@ -10,56 +10,30 @@ import java.util.*;
 public class TestClass {
     public static void main(String[] a)
     {
-        int  A[][]={{7,0}, {4,4}, {7,1}, {5,0}, {6,1}, {5,2}};
-        int[][] xx=reconstructQueue(A);
+        int aa=compareVersion("1.0.1","1.0.0001.0.0.0");
         int qwer=9;
     }
 
     static int[] equal;
-    public static int[][] reconstructQueue(int[][] people) {
-        ArrayList list=new ArrayList();
-        //先替换最大值执行一遍   再替换最小值执行一遍
-        for(int flag=0;flag<2;flag++){
-            Map next=new HashMap();
-            Map last=new HashMap();
-            if(flag==0){    //替换最大化
-                next.put(1,7);
-                next.put(9,8);
-                next.put(5,9);
-                last.put(9,5);
-            }
-            if(flag==1){   //替换最小化
-                next.put(1,7);
-                next.put(9,8);
-                next.put(5,6);
-                last.put(9,3);
-            }
-            String s=String.valueOf(1995);
-            for(int i=0;i<s.length();i++){
-                for(int j=0;j<s.length();j++){
-                    if(i==j){
-                        continue;
-                    }
-                    if( next.get((int)s.toCharArray()[i]-48) !=null && last.get((int)s.toCharArray()[j]-48)!=null){
-                        int x=(int)next.get((int)s.toCharArray()[i]-48);
-                        int y=(int)last.get((int)s.toCharArray()[j]-48);
-                        int a=i,b=j;
-                        if(a>b){
-                            int tmp=a;a=b;b=tmp;
-                            tmp=x;x=y;y=tmp;
-                        }
-                        list.add( s.substring(0,a)+x+s.substring(a+1,b)+y+s.substring(b+1,s.length()) );
-                    }
-                }
+    public static int compareVersion(String version1, String version2) {
+        String[] s1=version1.split("\\.");
+        String[] s2=version2.split("\\.");
+        int size=s1.length>s2.length? s2.length:s1.length;
+        int flag=s1.length>s2.length? 1:-1;
+        String[] s=s1.length>s2.length? s1:s2;
+        int l=0;
+        for(;l<size;l++){
+            int dlt=Integer.valueOf(s1[l])-Integer.valueOf(s2[l]);
+            if(dlt!=0){
+                return (dlt>0?1:-1);
             }
         }
-        //自减自加的情况
-        list.add("1695");
-        list.add("1965");
-        list.add("1095");
-        list.add("1905");
-        Collections.sort(list);
-        return null;
+        for(;l<s.length;l++){
+            if(Integer.valueOf(s[l])>0){
+                return flag;
+            }
+        }
+        return 0;
     }
     public static Set db(int begin, String[] list,ArrayList AL){
         if(list==null){
