@@ -10,30 +10,32 @@ import java.util.*;
 public class TestClass {
     public static void main(String[] a)
     {
-        int aa=compareVersion("1.0.1","1.0.0001.0.0.0");
+        int[] A={ -1, -1}, B={-1,1},C= {-1, 1},D= { 1, -1};
+        int aa=fourSumCount(A, B, C, D);
         int qwer=9;
     }
 
     static int[] equal;
-    public static int compareVersion(String version1, String version2) {
-        String[] s1=version1.split("\\.");
-        String[] s2=version2.split("\\.");
-        int size=s1.length>s2.length? s2.length:s1.length;
-        int flag=s1.length>s2.length? 1:-1;
-        String[] s=s1.length>s2.length? s1:s2;
-        int l=0;
-        for(;l<size;l++){
-            int dlt=Integer.valueOf(s1[l])-Integer.valueOf(s2[l]);
-            if(dlt!=0){
-                return (dlt>0?1:-1);
+    public static int fourSumCount(int[] A, int[] B, int[] C, int[] D) {
+        int len=A.length;
+        HashMap s=new HashMap();
+        for(int i=0;i<len;i++){
+            for(int j=0;j<len;j++){
+                int t=C[i]+D[j];
+                s.put(t,s.get(t)==null?1:(int)s.get(t)+1);
             }
         }
-        for(;l<s.length;l++){
-            if(Integer.valueOf(s[l])>0){
-                return flag;
+        int num=0;
+        for(int i=0;i<len;i++){
+            for(int j=0;j<len;j++){
+                int t=A[i]+B[j];
+                if(s.get(-t)!=null){
+                    num+=(int)s.get(-t);
+                }
             }
         }
-        return 0;
+
+        return num;
     }
     public static Set db(int begin, String[] list,ArrayList AL){
         if(list==null){

@@ -39,7 +39,7 @@ public class Spider {
             files.mkdirs();
         }
         try {
-            for(int i=49;i<=num;i++){
+            for(int i=115;i<=num;i++){
                 System.out.println(""+i);
                 String imageUrl=Url+i+type;
                 fileName= i+121<10? "00"+(i+121) : (i+121<100?"0"+(i+121) : ""+(i+121));
