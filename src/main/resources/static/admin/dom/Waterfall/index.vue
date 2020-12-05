@@ -20,6 +20,7 @@
         },
         data(){             //自定义组件的data是个方法
             return{
+                pageN:1,             //页数
                 spacing:15,        //间距
                 scrollDlt:10,     //滚动条事件触发间隔   px
                 lastScroll:0,       //上一次滚动条位置
@@ -98,7 +99,8 @@
                 //     let h=parseInt(Math.random()*150)+250;
                 //     this._data.mylistdata.push({height:h});
                 // }
-                let list= this.adddatafunc(1,2);
+                this._data.pageN++;
+                let list= this.adddatafunc(this._data.pageN,this._data.myrownum*2);
                 if(list){
                     this._data.addnumber=list.length;
                     for(let i=0;i<list.length;i++){

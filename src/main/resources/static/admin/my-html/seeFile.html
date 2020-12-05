@@ -21,37 +21,35 @@
         let water = new Vue({
             el: '.watmain',
             data: {
-                valuelist:new function(){
-                    let p={}
-                    p.pageSize=10;
-                    p.pageNum=1;
-                    let list=Zafkiel.request("/data/getWaterfallData",p,"post",null,null,true);
-
-                    // for(let i=0;i<15;i++){
-                    //     let h=parseInt(Math.random()*199)+250;
-                    //     let d={};
-                    //     d.height=h;
-                    //     d.src="http://203.195.251.136:8080/30673a32212294d09550a6d305d520b0e3d50b2a41b3c-SOL0jh.jpg";
-                    //     d.title="26";
-                    //     list.push(d);
-                    // }
-                    return list;
-                },
                 adddatafunc:function(a,b){   //追加数据
                     let p={}
-                    p.pageSize=10;
-                    p.pageNum=1;
-                    let list=Zafkiel.request("/filepic/getall",null,"get",null,null,true);
-                    debugger
+                    p.pageSize=b;
+                    p.pageNum=a;
+                    let list=Zafkiel.request("/filepic/getall",p,"post",null,null,true);
+                    //转为blob
+                    for(t in list){
+                        let bytes = window.atob(list[t].src);
+                        let ab = new ArrayBuffer(bytes.length);
+                        let ia = new Uint8Array(ab);
+                        for (var i = 0; i < bytes.length; i++) {
+                            ia[i] = bytes.charCodeAt(i);
+                        }
+                        list[t].src=URL.createObjectURL(new Blob([ab]));
+                    }
                     return list;
+                },
+                valuelist:new function(){
+                    return null;
                 }
+            },
+            created(){
+                this._data.valuelist=this._data.adddatafunc(1,10);
             },
             components: {
                 'water': 'url:/admin/dom/Waterfall/index.vue'
             },
             methods:{
                 click_ul(item){
-                    debugger
                     this.$router.push({name: "/admin/my-html/pictureView.html", params: {id: "123456"}})
                 }
             }
