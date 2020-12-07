@@ -56,7 +56,7 @@
             InitData(){
                 let list=[];
                 for(let i=0;i<this.rownum;i++){
-                    list.push([10,i]);
+                    list.push([18,i]);
                 }
                 this._data.lastRow=list;
             },
@@ -100,7 +100,7 @@
                 //     this._data.mylistdata.push({height:h});
                 // }
                 this._data.pageN++;
-                let list= this.adddatafunc(this._data.pageN,this._data.myrownum*2);
+                let list= this.adddatafunc(this._data.pageN,this._data.myrownum*3);
                 if(list){
                     this._data.addnumber=list.length;
                     for(let i=0;i<list.length;i++){
@@ -119,7 +119,7 @@
                 let scrollHeight = document.documentElement.scrollHeight||document.body.scrollHeight;
                 let top=scrollTop+windowHeight;
                 //滚动条到底部的条件
-                if( (top+10)>=scrollHeight){
+                if( (top+30)>=scrollHeight){
                     if(!this._data.itemAddLock)
                     {
                         this._data.itemAddLock=true;

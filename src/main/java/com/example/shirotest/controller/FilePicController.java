@@ -31,4 +31,10 @@ public class FilePicController {
     public String test(){
        return null;
     }
+    @RequestMapping(value = "/getPicByIndex",produces = "text/plain;charset=utf-8")
+    public String getPicByIndex(@RequestBody Map m){
+        int index=Integer.valueOf(m.get("index").toString());
+        List list=FPic.getPicByIndex(index);
+        return JSONArray.fromObject(list).toString();
+    }
 }

@@ -23,7 +23,7 @@ public class FilePic {
                 {
                     if(tmp.isDirectory()){
                         Map m=new HashMap();
-                        m.put("height",String.valueOf((int)(Math.random()*180)+300));
+                        m.put("height",String.valueOf((int)(Math.random()*180)+280));
                         m.put("src",filePath+tmp.getName());
                         m.put("title",tmp.getName());
                         fileList.add(m);
@@ -33,12 +33,17 @@ public class FilePic {
         }
     }
     //图片的base64
-    public String getPic(String path){
+    public String getPic(String path,File file){
         try {
 //            BufferedInputStream bf=new BufferedInputStream(new FileInputStream(filePath+"1\\001.jpg"));
 //            byte[] bs=new byte[bf.available()];
 //            bf.read(bs);
-            InputStream in = new FileInputStream(path);
+            InputStream in=null;
+            if(file!=null){
+                in = new FileInputStream(file);
+            } else{
+                in = new FileInputStream(path);
+            }
             byte[] bs= new byte[in.available()];
             in.read(bs);
             in.close();
@@ -62,10 +67,31 @@ public class FilePic {
             //获取封面
             String p=m.get("src").toString();
             File[] files =(new File(p)).listFiles();
-            String base=getPic(p+"\\"+files[0].getName());
+            String base=getPic(p+"\\"+files[0].getName(),null);
             m.put("src",base);
+            m.put("index",i);
             tmp.add(m);
         }
         return tmp;
+    }
+    //获取目标下的图片
+    public List getPicByIndex(int index){
+        ArrayList value=new ArrayList();
+        Map m=(Map)fileList.get(index);
+        String src=m.get("src").toString();
+        File folder =new File(src);
+        if(folder.exists()){
+            File[] files =folder.listFiles();
+            if(files!=null){
+                for(File tmp:files)
+                {
+                    if(!tmp.isDirectory()){
+                        String base=getPic(null,tmp);
+                        value.add(base);
+                    }
+                }
+            }
+        }
+        return value;
     }
 }

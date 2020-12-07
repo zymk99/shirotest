@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div class="browse_main">
+        <browse :piclist="piclist"></browse>
+    </div>
+    <script src="https://unpkg.com/vue"></script>
+    <script src="https://unpkg.com/http-vue-loader"></script>
+    <script src="/js/jquery.min.js"></script>
+    <script src="/admin/javascript/Zafkiel.js"></script>
+    <script>
+        Vue.use(httpVueLoader);
+        let bore=new Vue({
+            el:".browse_main",
+            data:{
+                piclist:new function(){
+                    let query = window.location.search.substring(1);
+                    let vars = query.split("&");
+                    let index=0;
+                    for(i in vars){
+                        if(vars[i].startsWith("index=")){
+                            index=vars[i].split("index=")[1];
+                            break;
+                        }
+                    }
+
+                    let list=[];
+                    let v={};
+                    v.index=index;
+                    let val=Zafkiel.request("/filepic/getPicByIndex",v,"post",null,null,true);
+                    for(i in val){
+                        let bytes = window.atob(val[i]);
+                        let ab = new ArrayBuffer(bytes.length);
+                        let ia = new Uint8Array(ab);
+                        for (var i = 0; i < bytes.length; i++) {
+                            ia[i] = bytes.charCodeAt(i);
+                        }
+                        val[i]=URL.createObjectURL(new Blob([ab]));
+                        list.push(val[i]);
+                    }
+                    return list;
+                }
+            },
+            components:{
+                "browse":"url:/admin/dom/picSee/index.vue"
+            },
+            created(){
+
+            },
+            methods:{
+            }
+        })
+    </script>
+</body>
+</html>

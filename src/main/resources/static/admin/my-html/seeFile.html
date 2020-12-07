@@ -7,7 +7,7 @@
 <body>
 <div class="echar" style="height:100px;"></div>
 <div class="watmain">
-    <water :rownum=5 :listdata="valuelist" :adddatafunc="adddatafunc" @waterfall_itemclick="click_ul(arguments)"></water>
+    <water :rownum=6 :listdata="valuelist" :adddatafunc="adddatafunc" @waterfall_itemclick="click_ul(arguments)"></water>
 </div>
 <script src="https://unpkg.com/vue"></script>
 <script src="https://unpkg.com/http-vue-loader"></script>
@@ -43,14 +43,16 @@
                 }
             },
             created(){
-                this._data.valuelist=this._data.adddatafunc(1,10);
+                this._data.valuelist=this._data.adddatafunc(1,18);
             },
             components: {
                 'water': 'url:/admin/dom/Waterfall/index.vue'
             },
             methods:{
                 click_ul(item){
-                    this.$router.push({name: "/admin/my-html/pictureView.html", params: {id: "123456"}})
+                    let index=item[0].getAttribute("itemindex");
+                    window.open("/admin/my-html/picturebrowse.html?index="+index,"blank");
+                    // this.$router.push({name: "/admin/my-html/pictureView.html", params: {id: "123456"}})
                 }
             }
         })
