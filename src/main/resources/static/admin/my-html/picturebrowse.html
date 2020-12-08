@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
-<body>
+<body style="margin: 0; background: #999;">
     <div class="browse_main">
-        <browse :piclist="piclist"></browse>
+        <browse :inde="inde"></browse>
     </div>
     <script src="https://unpkg.com/vue"></script>
     <script src="https://unpkg.com/http-vue-loader"></script>
@@ -17,39 +17,22 @@
         let bore=new Vue({
             el:".browse_main",
             data:{
-                piclist:new function(){
-                    let query = window.location.search.substring(1);
-                    let vars = query.split("&");
-                    let index=0;
-                    for(i in vars){
-                        if(vars[i].startsWith("index=")){
-                            index=vars[i].split("index=")[1];
-                            break;
-                        }
-                    }
-
-                    let list=[];
-                    let v={};
-                    v.index=index;
-                    let val=Zafkiel.request("/filepic/getPicByIndex",v,"post",null,null,true);
-                    for(i in val){
-                        let bytes = window.atob(val[i]);
-                        let ab = new ArrayBuffer(bytes.length);
-                        let ia = new Uint8Array(ab);
-                        for (var i = 0; i < bytes.length; i++) {
-                            ia[i] = bytes.charCodeAt(i);
-                        }
-                        val[i]=URL.createObjectURL(new Blob([ab]));
-                        list.push(val[i]);
-                    }
-                    return list;
-                }
+                inde:0
             },
             components:{
                 "browse":"url:/admin/dom/picSee/index.vue"
             },
             created(){
-
+                let query = window.location.search.substring(1);
+                let vars = query.split("&");
+                let index=0;
+                for(let i in vars){
+                    if(vars[i].startsWith("index=")){
+                        index=vars[i].split("index=")[1];
+                        break;
+                    }
+                }
+                this._data.inde=index;
             },
             methods:{
             }

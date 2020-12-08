@@ -4,15 +4,13 @@
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
-<body>
-<div class="echar" style="height:100px;"></div>
+<body style="overflow-x: hidden;">
 <div class="watmain">
-    <water :rownum=6 :listdata="valuelist" :adddatafunc="adddatafunc" @waterfall_itemclick="click_ul(arguments)"></water>
+    <water :rownum=5 :listdata="valuelist" :adddatafunc="adddatafunc" @waterfall_itemclick="click_ul(arguments)"></water>
 </div>
 <script src="https://unpkg.com/vue"></script>
 <script src="https://unpkg.com/http-vue-loader"></script>
 <script src="https://unpkg.com/vue-router"></script>
-<script src="https://cdn.bootcss.com/echarts/3.7.1/echarts.min.js"></script>
 <script src="/js/jquery.min.js"></script>
 <script src="/admin/javascript/Zafkiel.js"></script>
 <script >
@@ -43,7 +41,7 @@
                 }
             },
             created(){
-                this._data.valuelist=this._data.adddatafunc(1,18);
+                this._data.valuelist=this._data.adddatafunc(1,15);
             },
             components: {
                 'water': 'url:/admin/dom/Waterfall/index.vue'

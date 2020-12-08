@@ -1,6 +1,10 @@
 <!--       自定义瀑布流     -->
 <template>
-    <div >
+    <div style="position: absolute;
+            width: 100%;
+            position: absolute;
+            padding-left: 10%;
+            background: #666;">
 
         <ul class="water_ul" @click="ul_click">
             <li  v-for="(item,index) in mylistdata" :style="itemwidth" itemtype="item" :itemindex="index">
@@ -56,7 +60,7 @@
             InitData(){
                 let list=[];
                 for(let i=0;i<this.rownum;i++){
-                    list.push([18,i]);
+                    list.push([3*this._data.myrownum,i]);
                 }
                 this._data.lastRow=list;
             },
@@ -157,7 +161,7 @@
 <style >
     .water_ul{
         position: absolute;
-        width: 100%;
+        width: 70%;
     }
     .water_ul li{
         text-align: center;
@@ -166,6 +170,9 @@
         float:left;
         margin: .1rem;
         position: absolute;
+        border-radius: 10px;
+        background: #999;
+        color: #f1f1f1;
     }
     .font_bolder{
         font-family: serif;

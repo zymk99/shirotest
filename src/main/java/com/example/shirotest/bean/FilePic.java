@@ -23,7 +23,8 @@ public class FilePic {
                 {
                     if(tmp.isDirectory()){
                         Map m=new HashMap();
-                        m.put("height",String.valueOf((int)(Math.random()*180)+280));
+                        //m.put("height",String.valueOf((int)(Math.random()*180)+280));
+                        m.put("height",370);
                         m.put("src",filePath+tmp.getName());
                         m.put("title",tmp.getName());
                         fileList.add(m);
