@@ -10,32 +10,35 @@ import java.util.*;
 public class TestClass {
     public static void main(String[] a)
     {
-        int[] A={ -1, -1}, B={-1,1},C= {-1, 1},D= { 1, -1};
-        int aa=fourSumCount(A, B, C, D);
+        int[] A={ 3,1,1,1,5,1,2,1};
+        int aa=minSumOfLengths(A,3);
         int qwer=9;
     }
 
     static int[] equal;
-    public static int fourSumCount(int[] A, int[] B, int[] C, int[] D) {
-        int len=A.length;
-        HashMap s=new HashMap();
-        for(int i=0;i<len;i++){
-            for(int j=0;j<len;j++){
-                int t=C[i]+D[j];
-                s.put(t,s.get(t)==null?1:(int)s.get(t)+1);
+    public static int minSumOfLengths(int[] arr, int target) {
+        int a[][]=new int[arr.length+1][2];
+        a[0][0]=999999;
+        a[0][1]=999999;
+        for(int i=1;i<arr.length+1;i++){
+            int c=0,num=0,j=0;
+            while(i-c>0 && num<target){
+                num+=arr[i-(c++)-1];
             }
-        }
-        int num=0;
-        for(int i=0;i<len;i++){
-            for(int j=0;j<len;j++){
-                int t=A[i]+B[j];
-                if(s.get(-t)!=null){
-                    num+=(int)s.get(-t);
+            a[i][0]=a[i-1][0];
+            a[i][1]=a[i-1][1];
+            if(num==target){
+                if(a[i-c][0]>c){
+                    a[i][0]=c;
+                    a[i][1]=a[i-c][0];
+                }else if(a[i-c][1]>c){
+                    a[i][0]=a[i-c][0];
+                    a[i][1]=c;
                 }
             }
         }
-
-        return num;
+        int x= (a[arr.length][0]!=999999 && a[arr.length][1]!=999999)? a[arr.length][0]+a[arr.length][1] :-1 ;
+        return x;
     }
     public static Set db(int begin, String[] list,ArrayList AL){
         if(list==null){
