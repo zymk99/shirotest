@@ -14,13 +14,13 @@ import java.util.*;
 
 public class color2 extends JFrame {
 
-    int abs = 80, delta = 3;
+    int abs = 80, delta = 1;
     //int abs = 50, delta = 20;
     //int abs = 30, delta = 20;//normal
     //int abs = 30, delta = 50;
 
     int removeBlackPixel = 100;//移除少于此数量的单独的黑点
-    int dontProcessColorIfNumLessThan=50;//移除少于此数量的单独的色块
+    int dontProcessColorIfNumLessThan=10;//移除少于此数量的单独的色块
 
     double  speed = 11.53;//描绘速度
 
@@ -354,7 +354,7 @@ public class color2 extends JFrame {
                         Queue<Integer> q = new LinkedList<>();
                         q.add(x * 10000 + y);
                         Color color = new Color(data[x][y][10]);
-
+                        //算出一类颜色
                         Color color2 =pro2(data, q, color);
 
                         if(colorful){
@@ -376,7 +376,17 @@ public class color2 extends JFrame {
                     }
                 }
             }
+            int rgb=(new Color(255, 255, 255)).getRGB();
+            for (int y = 1; y < img.getHeight() - 1; y++) {
+                for (int x = 1; x < img.getWidth() - 1; x++) {
+                    if(img.getRGB(x,y)==rgb){
+                        img.setRGB(x,y,data[x][y][10]);
+                    }
+                }
+            }
+            update();
             //描边
+            /*
             for (int y = 1; y < img.getHeight() - 1; y++) {
                 for (int x = 1; x < img.getWidth() - 1; x++) {
                     if (removeBlackLast&&data[x][y][1] == 1||data[x][y][1] == 4) {
@@ -435,7 +445,7 @@ public class color2 extends JFrame {
                     }
                 }
             }
-
+            */
 
             try {
                 ImageIO.write(img, "JPEG", new FileOutputStream(System.getProperty("user.dir") + "/out/out"+(int)(Math.random()*10000)+".jpg"));
