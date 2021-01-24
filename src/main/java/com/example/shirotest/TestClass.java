@@ -10,36 +10,61 @@ import java.util.*;
 public class TestClass {
     public static void main(String[] a)
     {
-        int[] A={ 3,1,1,1,5,1,2,1};
-        int aa=minSumOfLengths(A,3);
+        int[] A={ 1,3};
+        int[] B={ 2};
+        double aa=findMedianSortedArrays(A,B);
         int qwer=9;
     }
 
     static int[] equal;
-    public static int minSumOfLengths(int[] arr, int target) {
-        int a[][]=new int[arr.length+1][2];
-        a[0][0]=999999;
-        a[0][1]=999999;
-        for(int i=1;i<arr.length+1;i++){
-            int c=0,num=0,j=0;
-            while(i-c>0 && num<target){
-                num+=arr[i-(c++)-1];
-            }
-            a[i][0]=a[i-1][0];
-            a[i][1]=a[i-1][1];
-            if(num==target){
-                if(a[i-c][0]>c){
-                    a[i][0]=c;
-                    a[i][1]=a[i-c][0];
-                }else if(a[i-c][1]>c){
-                    a[i][0]=a[i-c][0];
-                    a[i][1]=c;
-                }
-            }
+    public static double findMedianSortedArrays(int[] nums1, int[] nums2) {
+        int s1=nums1.length,s2=nums2.length,x1=0,x2=0;
+        if(s1+s2<2){
+            if(s1>0){
+                return nums1[0];
+            }else if(s2>0){
+                return nums2[0];
+            }else return 0;
         }
-        int x= (a[arr.length][0]!=999999 && a[arr.length][1]!=999999)? a[arr.length][0]+a[arr.length][1] :-1 ;
-        return x;
+        int size=(s1+s2+1)/2,i=1,v1=0,v2=0;
+        while(i<size){
+                if( x2<s2 && x1<s1 &&nums1[x1]>nums2[x2]){
+                    x2++;
+                }else if(x1<s1){
+                    x1++;
+                }else {
+                    x2++;
+                }
+                i++;
+        }
+        if( x2<s2 && x1<s1 &&nums1[x1]>nums2[x2]){
+            v1=nums2[x2];
+            x2++;
+        }else if(x1<s1){
+            v1=nums1[x1];
+            x1++;
+        }else {
+            v1=nums2[x2];
+            x2++;
+        }
+        if( x2<s2 && x1<s1 &&nums1[x1]>nums2[x2]){
+            v2=nums2[x2];
+            x2++;
+        }else if(x1<s1){
+            v2=nums1[x1];
+            x1++;
+        }else {
+            v2=nums2[x2];
+            x2++;
+        }
+        if( (s1+s2)%2==0){
+            return (v1+v2)/2.0;
+        }else {
+            return v1;
+        }
     }
+
+
     public static Set db(int begin, String[] list,ArrayList AL){
         if(list==null){
             list=new String[AL.size()];
