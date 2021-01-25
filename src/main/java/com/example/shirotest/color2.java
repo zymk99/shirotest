@@ -10,6 +10,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.CollationElementIterator;
 import java.util.*;
 
 public class color2 extends JFrame {
@@ -241,13 +242,119 @@ public class color2 extends JFrame {
                     e.printStackTrace();
                 }
                 if (process) {
-                    processImg();
+                    processMC();
+                    //processImg();
                     process = false;
                 }
                 // System.out.println(time);
             }
         }
 
+        //比较两个颜色的相似度
+        private double colorPar(int c1,int c2){                //50
+            Color C1=new Color(c1);
+            Color C2=new Color(c2);
+            double r=(C1.getRed()-C2.getRed())/255.0;
+            double g=(C1.getGreen()-C2.getGreen())/255.0;
+            double b=(C1.getBlue()-C2.getBlue())/255.0;
+            double dlt=Math.sqrt(r*r+g*g+b*b);
+            return dlt;
+        }
+        //生成像素图片
+        int pix=300,dlt=0;//单列像素块数,间隔
+        double thr=50.0;  //图片相似度  越小越相似
+        private  void processMC(){
+//            Color color = new Color(255, 255, 255);
+//            for (int x = 1; x < img.getWidth() - 1; x++) {
+//                for (int y = 1; y < img.getHeight() - 1; y++) {
+//                    img.setRGB(x, y, color.getRGB());
+//                    panel.repaint();
+//                }
+//            }
+
+            int[] r={0xbcc2c3,0xcd5901,0x992b90,
+                    0x207db5,0xdca115,0x569a16,0xc25b81,0x313438,0x727269,0x136c7c,0x5b1c8e,0x292b83,
+                    0x58371d,0x435422,0x821f1f,0x080a0f,0xd1d3d4,0xd28831,0xbc5cb6,0x49b2d0,0xd3b635,
+                    0x76ae25,0xcb7f9b,0x4e5557,0x8e8e88,0x238c94,0x7e35ac,0x3d4095,0x6c492e,0x55672c,
+                    0x972f2e,0x101319};
+            LinkedList<Integer> matList =new LinkedList<Integer>();
+            HashMap matMap=new HashMap();
+            for(int i=0;i<r.length;i++){
+                matList.add( (new Color(r[i])).getRGB() );
+                matMap.put((new Color(r[i])).getRGB(),r[i]);
+            }
+            Collections.sort(matList);
+            int row= img.getWidth()/pix, col=img.getHeight()/pix;
+            for(int i=0;i<pix;i++){
+                for(int j=0;j<pix;j++){
+                    //得到当前色块颜色
+                    HashMap tmpmap=new HashMap();
+                    int last=img.getRGB(i*row+dlt, j*col+dlt);
+                    int num=1;
+                    for(int x=i*row+dlt;x<(i+1)*row;x++){
+                        for(int y=j*col+dlt+1;y<(j+1)*col;y++){
+                            int rgb= img.getRGB(x,y);
+                            if(colorPar(last,rgb)<thr){
+                                num++;
+                            }else{
+                                //判断是否已存在
+                                Iterator it=tmpmap.keySet().iterator();
+                                while(it.hasNext()){
+                                    int key=(int)it.next();
+                                    if(key == last){
+                                        num+=(int)tmpmap.get(key);
+                                        break;
+                                    }
+                                }
+                                tmpmap.put(last,num);
+                                last=rgb;
+                                num=1;
+                            }
+                        }
+                    }
+                    //判断是否已存在
+                    Iterator it0=tmpmap.keySet().iterator();
+                    while(it0.hasNext()){
+                        int key=(int)it0.next();
+                        if(key == last){
+                            num+=(int)tmpmap.get(key);
+                            break;
+                        }
+                    }
+                    tmpmap.put(last,num);
+                    //取出最多的色块
+                    Iterator mapt=tmpmap.keySet().iterator();
+                    int k=0,max=0;
+                    while(mapt.hasNext()){
+                        int key=(int)mapt.next();
+                        int val=(int)tmpmap.get(key);
+                        if(val>max){
+                            k=key;
+                        }
+                    }
+                    //比对
+                    Iterator it= matList.iterator();
+                    double min=999999;
+                    int colo=0;
+                    while(it.hasNext()){
+                        int x=(int)it.next();
+                        double d=colorPar(k,x);
+                        if(d<min){
+                            min=d;
+                            colo=x;
+                        }
+                    }
+                    //上色
+                    for(int x=i*row+dlt;x<(i+1)*row;x++){
+                        for(int y=j*col+dlt;y<(j+1)*col;y++){
+                            img.setRGB(x, y, colo);   //k
+                            panel.repaint();
+                        }
+                    }
+                }
+            }
+        }
+        //转换图片
         private void processImg() {
             int data[][][] = new int[img.getWidth()][img.getHeight()][11];
             for (int x = 1; x < img.getWidth() - 1; x++) {
