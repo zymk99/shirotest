@@ -261,7 +261,7 @@ public class color2 extends JFrame {
             return dlt;
         }
         //生成像素图片
-        int pix=300,dlt=0;//单列像素块数,间隔
+        int pix=250,dlt=0;//单列像素块数,间隔
         double thr=50.0;  //图片相似度  越小越相似
         private  void processMC(){
 //            Color color = new Color(255, 255, 255);
@@ -275,7 +275,7 @@ public class color2 extends JFrame {
             int[] r={0xbcc2c3,0xcd5901,0x992b90,
                     0x207db5,0xdca115,0x569a16,0xc25b81,0x313438,0x727269,0x136c7c,0x5b1c8e,0x292b83,
                     0x58371d,0x435422,0x821f1f,0x080a0f,0xd1d3d4,0xd28831,0xbc5cb6,0x49b2d0,0xd3b635,
-                    0x76ae25,0xcb7f9b,0x4e5557,0x8e8e88,0x238c94,0x7e35ac,0x3d4095,0x6c492e,0x55672c,
+                    0x76ae25/*,0xcb7f9b*/,0x4e5557,0x8e8e88,0x238c94,0x7e35ac,0x3d4095,0x6c492e,0x55672c,
                     0x972f2e,0x101319};
             LinkedList<Integer> matList =new LinkedList<Integer>();
             HashMap matMap=new HashMap();
@@ -284,8 +284,11 @@ public class color2 extends JFrame {
                 matMap.put((new Color(r[i])).getRGB(),r[i]);
             }
             Collections.sort(matList);
-            int row= img.getWidth()/pix, col=img.getHeight()/pix;
-            for(int i=0;i<pix;i++){
+            int col=img.getHeight()/pix, row=col;  //row= img.getWidth()/pix
+            int dev=20;      //左侧距离
+            int devL=80,devR=20,devT=0,devB=80;      //左侧偏移量  右侧偏移量
+            int matrix[][] =new int[pix][pix];
+            for(int i=dev;i<pix+dev;i++){
                 for(int j=0;j<pix;j++){
                     //得到当前色块颜色
                     HashMap tmpmap=new HashMap();
@@ -345,14 +348,53 @@ public class color2 extends JFrame {
                         }
                     }
                     //上色
+                    matrix[j][i-dev]=colo;
                     for(int x=i*row+dlt;x<(i+1)*row;x++){
                         for(int y=j*col+dlt;y<(j+1)*col;y++){
                             img.setRGB(x, y, colo);   //k
-                            panel.repaint();
                         }
                     }
+                    panel.repaint();
                 }
             }
+
+            //二次绘制
+            Color color = new Color(255, 255, 255);
+            for (int x = 1; x < img.getWidth() - 1; x++) {
+                for (int y = 1; y < img.getHeight() - 1; y++) {
+                    img.setRGB(x, y, color.getRGB());
+                }
+            }
+            panel.repaint();
+            int lastC=0,num=0;
+            int N=0;//总数
+            for(int i=devL;i<pix-devR;i++) {
+                for (int j = devT; j < pix-devB; j++) {
+                    N++;
+                    if(lastC!=matrix[j][i]){
+                        int c=1;
+                        for(;c<r.length+1;c++){
+                            if((new Color(r[c-1])).getRGB()==lastC)break;
+                        }
+                        System.out.print("颜色位置 "+c+" :"+num+"块  ");
+                        lastC=matrix[j][i];
+                        num=1;
+                    }else{
+                        num++;
+                    }
+                    for(int x=i*row+dlt;x<(i+1)*row;x++){
+                        for(int y=j*col+dlt;y<(j+1)*col;y++){
+                            img.setRGB(x, y, matrix[j][i]);
+                        }
+                    }
+                    panel.repaint();
+                }
+                lastC=0;num=0;
+                System.out.println(" ");
+            }
+            System.out.println(" ");
+            System.out.println(N);
+            int aaa=10;
         }
         //转换图片
         private void processImg() {
