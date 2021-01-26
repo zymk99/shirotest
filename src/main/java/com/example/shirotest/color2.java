@@ -272,11 +272,16 @@ public class color2 extends JFrame {
 //                }
 //            }
 
-            int[] r={0xbcc2c3,0xcd5901,0x992b90,
-                    0x207db5,0xdca115,0x569a16,0xc25b81,0x313438,0x727269,0x136c7c,0x5b1c8e,0x292b83,
-                    0x58371d,0x435422,0x821f1f,0x080a0f,0xd1d3d4,0xd28831,0xbc5cb6,0x49b2d0,0xd3b635,
-                    0x76ae25/*,0xcb7f9b*/,0x4e5557,0x8e8e88,0x238c94,0x7e35ac,0x3d4095,0x6c492e,0x55672c,
-                    0x972f2e,0x101319};
+//            int[] r={0xbcc2c3,0xcd5901,0x992b90,
+//                    0x207db5,0xdca115,0x569a16,0xc25b81,0x313438,0x727269,0x136c7c,0x5b1c8e,0x292b83,
+//                    0x58371d,0x435422,0x821f1f,0x080a0f,0xd1d3d4,0xd28831,0xbc5cb6,0x49b2d0,0xd3b635,
+//                    0x76ae25/*,0xcb7f9b*/,0x4e5557,0x8e8e88,0x238c94,0x7e35ac,0x3d4095,0x6c492e,0x55672c,
+//                    0x972f2e,0x101319};
+            int[] r={0xe9e1cc,0xaaada2,0x5d6164,0x2a2f32,0x513333,
+                    0xd83033,0x693d30,0xf1d596,0xf16c23,0xffd40a,
+                    0x0d753b,0x1b4fb3,0x94b915,0xffa0ca,0x233249,
+                    0x308ad3,0x492681,0xf3c9a3,0x92663c,0x2e3e33,
+                    0xc23d85,0xff5d7f};
             LinkedList<Integer> matList =new LinkedList<Integer>();
             HashMap matMap=new HashMap();
             for(int i=0;i<r.length;i++){
@@ -286,7 +291,7 @@ public class color2 extends JFrame {
             Collections.sort(matList);
             int col=img.getHeight()/pix, row=col;  //row= img.getWidth()/pix
             int dev=20;      //左侧距离
-            int devL=80,devR=20,devT=0,devB=80;      //左侧偏移量  右侧偏移量
+            int devL=65,devR=90,devT=10,devB=140;      //左侧偏移量  右侧偏移量
             int matrix[][] =new int[pix][pix];
             for(int i=dev;i<pix+dev;i++){
                 for(int j=0;j<pix;j++){
@@ -368,6 +373,7 @@ public class color2 extends JFrame {
             panel.repaint();
             int lastC=0,num=0;
             int N=0;//总数
+            HashMap NumMap=new HashMap();      //各颜色总数
             for(int i=devL;i<pix-devR;i++) {
                 for (int j = devT; j < pix-devB; j++) {
                     N++;
@@ -376,6 +382,8 @@ public class color2 extends JFrame {
                         for(;c<r.length+1;c++){
                             if((new Color(r[c-1])).getRGB()==lastC)break;
                         }
+                        int t= NumMap.get(c)==null ? num : num +Integer.valueOf(NumMap.get(c).toString());
+                        NumMap.put(c,t);
                         System.out.print("颜色位置 "+c+" :"+num+"块  ");
                         lastC=matrix[j][i];
                         num=1;
@@ -389,10 +397,26 @@ public class color2 extends JFrame {
                     }
                     panel.repaint();
                 }
+                //每列的最后一组
+                int c=1;
+                for(;c<r.length+1;c++){
+                    if((new Color(r[c-1])).getRGB()==lastC)break;
+                }
+                int t= NumMap.get(c)==null ? num : num +Integer.valueOf(NumMap.get(c).toString());
+                NumMap.put(c,t);
+                System.out.print("颜色位置 "+c+" :"+num+"块  ");
+
                 lastC=0;num=0;
                 System.out.println(" ");
             }
             System.out.println(" ");
+            Iterator it=NumMap.keySet().iterator();
+            while (it.hasNext()){
+                int x=(int)it.next();
+                System.out.print("颜色位置 "+x+" :"+(int)NumMap.get(x)+"块  ");
+            }
+            System.out.println(" ");
+
             System.out.println(N);
             int aaa=10;
         }
