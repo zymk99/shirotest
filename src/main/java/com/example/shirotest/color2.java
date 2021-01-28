@@ -68,6 +68,12 @@ public class color2 extends JFrame {
 
     int smooth = 0;
 
+    JTextField t1;
+    JTextField t11;
+    JTextField t2;
+    JTextField t3;
+    JTextField t4;
+    JTextField t5;
 
     public color2() {
         initComponent();
@@ -123,7 +129,7 @@ public class color2 extends JFrame {
         lab2.setBounds(380, 260, 300, 70);
         lab2.setFont(new Font("", Font.BOLD, 15));
 
-        this.setTitle("生成奇奇怪怪的图片吧");
+        this.setTitle("dddddddddd");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(1640, 1000);
         setLayout(null);
@@ -138,9 +144,34 @@ public class color2 extends JFrame {
         tabbedPane.setBounds(1000, 200, 600, 600);
 
         op.setBounds(20, 250, 560, 310);
-        Tb.setBounds(140, 360, 150, 40);
-        Tb.setSelectedIndex(1);
-        panel1st.add(Tb);
+//        Tb.setBounds(140, 360, 150, 40);
+//        Tb.setSelectedIndex(1);
+//        panel1st.add(Tb);
+        JLabel l1=new JLabel("   左偏移量：");l1.setBounds(30, 20,130,20);
+        JLabel l11=new JLabel("   横向分片数：");l11.setBounds(170, 20,130,20);
+        JLabel l2=new JLabel("   上间距：");l2.setBounds(30, 50,90,20);
+        JLabel l3=new JLabel("   下间距：");l3.setBounds(170, 50,90,20);
+        JLabel l4=new JLabel("   左间距：");l4.setBounds(30, 100,90,20);
+        JLabel l5=new JLabel("   右间距：");l5.setBounds(170, 100,90,20);
+        t1=new JTextField(10);t1.setBounds(100, 20,50,20);
+        t11=new JTextField(10);t11.setBounds(260, 20,50,20);
+        t2=new JTextField(10);t2.setBounds(100, 50,50,20);
+        t3=new JTextField(10);t3.setBounds(250, 50,50,20);
+        t4=new JTextField(10);t4.setBounds(100, 100,50,20);
+        t5=new JTextField(10);t5.setBounds(250, 100,50,20);
+
+        panel1st.add( l1 );
+        panel1st.add( l11 );
+        panel1st.add( l2 );
+        panel1st.add( l3);
+        panel1st.add( l4 );
+        panel1st.add( l5 );
+        panel1st.add( t1 );
+        panel1st.add( t11 );
+        panel1st.add( t2 );
+        panel1st.add( t3 );
+        panel1st.add( t4 );
+        panel1st.add( t5 );
 
 
 
@@ -192,14 +223,15 @@ public class color2 extends JFrame {
 
         this.add(tabbedPane);
         this.add(Cal);
-        this.add(Cal1);
+        //this.add(Cal1);
         this.add(load);
     }
 
     private void Change() {
-        BufferedImage img3 = img1;
-        img1 = img;
-        img = img3;
+//        BufferedImage img3 = img1;
+//        img1 = img;
+//        img = img3;
+        img = img1;
         panel.repaint();
         panel1.repaint();
     }
@@ -282,6 +314,12 @@ public class color2 extends JFrame {
                     0x0d753b,0x1b4fb3,0x94b915,0xffa0ca,0x233249,
                     0x308ad3,0x492681,0xf3c9a3,0x92663c,0x2e3e33,
                     0xc23d85,0xff5d7f};
+            //重置
+            if(img==null)return ;
+            Graphics g = img.getGraphics();
+            g.drawImage(img1, 0, 0, null);
+            g.dispose();
+
             LinkedList<Integer> matList =new LinkedList<Integer>();
             HashMap matMap=new HashMap();
             for(int i=0;i<r.length;i++){
@@ -289,9 +327,20 @@ public class color2 extends JFrame {
                 matMap.put((new Color(r[i])).getRGB(),r[i]);
             }
             Collections.sort(matList);
-            int col=img.getHeight()/pix, row=col;  //row= img.getWidth()/pix
             int dev=20;      //左侧距离
-            int devL=65,devR=90,devT=10,devB=140;      //左侧偏移量  右侧偏移量
+            int devT=10,devB=140,devL=65,devR=90;      //偏移量
+            //读取参数
+            dev= t1.getText().length()>0? Integer.parseInt(t1.getText()) : dev;
+            pix= t11.getText().length()>0? Integer.parseInt(t11.getText()) : pix;
+            devT= t2.getText().length()>0? Integer.parseInt(t2.getText()) : devT;
+            devB= t3.getText().length()>0? Integer.parseInt(t3.getText()) : devB;
+            devL= t4.getText().length()>0? Integer.parseInt(t4.getText()) : devL;
+            devR= t5.getText().length()>0? Integer.parseInt(t5.getText()) : devR;
+
+            int col=img.getHeight()/pix, row=col;  //row= img.getWidth()/pix
+
+//            int dev=0;
+//            int devL=0,devR=0,devT=0,devB=0;
             int matrix[][] =new int[pix][pix];
             for(int i=dev;i<pix+dev;i++){
                 for(int j=0;j<pix;j++){
@@ -396,6 +445,7 @@ public class color2 extends JFrame {
                         }
                     }
                     panel.repaint();
+                    panel1.repaint();
                 }
                 //每列的最后一组
                 int c=1;
