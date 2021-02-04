@@ -10,131 +10,123 @@ import java.util.*;
 public class TestClass {
     public static void main(String[] a)
     {
-        int[] A={ 1,3};
-        int[] B={ 2};
-        double aa=findMedianSortedArrays(A,B);
+        int[][] A={ {0,0,0,0,2,0,8,0,3},
+                {0,0,1,0,0,0,0,0,0},
+                {0,0,7,6,0,0,0,0,0},
+                {0,0,0,0,0,0,0,1,0},
+                {0,8,0,0,3,0,2,0,0},
+                {0,0,0,0,0,0,0,0,0},
+                {0,0,5,7,0,0,0,0,0},
+                {0,0,0,1,0,9,6,0,0},
+                {0,2,0,0,0,0,0,0,8}};
+//        int[][] A={ {0,0,0,0,0,0,0,0,0},
+//                {0,0,0,0,0,0,0,0,0},
+//                {0,0,0,0,0,0,0,0,0},
+//                {0,0,0,0,0,0,0,0,0},
+//                {0,0,0,0,0,0,0,0,0},
+//                {0,0,0,0,0,0,0,0,0},
+//                {0,0,0,0,0,0,0,0,0},
+//                {0,0,0,0,0,0,0,0,0},
+//                {0,0,0,0,0,0,0,0,0}};
+        Sudoku(A);
         int qwer=9;
     }
 
-    static int[] equal;
-    public static double findMedianSortedArrays(int[] nums1, int[] nums2) {
-        int s1=nums1.length,s2=nums2.length,x1=0,x2=0;
-        if(s1+s2<2){
-            if(s1>0){
-                return nums1[0];
-            }else if(s2>0){
-                return nums2[0];
-            }else return 0;
-        }
-        int size=(s1+s2+1)/2,i=1,v1=0,v2=0;
-        while(i<size){
-                if( x2<s2 && x1<s1 &&nums1[x1]>nums2[x2]){
-                    x2++;
-                }else if(x1<s1){
-                    x1++;
-                }else {
-                    x2++;
+    public static void findMedianSortedArrays(int[] nums1, int[] nums2) { }
+
+
+
+    //解数独
+    static int[][] map,row,col;
+    static int[][][] cell;
+    static boolean flag=true;
+    public static int[][] Sudoku(int[][] A){
+        flag=true;
+        map=new int[9][9];
+        row=new int[9][9];
+        col=new int[9][9];
+        cell=new int[3][3][9];
+        for(int i=0;i<9;i++){
+            for(int j=0;j<9;j++){
+                int t=A[i][j];
+                map[i][j]=t;
+                if(t!=0){
+                    row[i][t-1]=1;
+                    col[j][t-1]=1;
+                    cell[i/3][j/3][t-1]=1;
                 }
-                i++;
+            }
         }
-        if( x2<s2 && x1<s1 &&nums1[x1]>nums2[x2]){
-            v1=nums2[x2];
-            x2++;
-        }else if(x1<s1){
-            v1=nums1[x1];
-            x1++;
-        }else {
-            v1=nums2[x2];
-            x2++;
-        }
-        if( x2<s2 && x1<s1 &&nums1[x1]>nums2[x2]){
-            v2=nums2[x2];
-            x2++;
-        }else if(x1<s1){
-            v2=nums1[x1];
-            x1++;
-        }else {
-            v2=nums2[x2];
-            x2++;
-        }
-        if( (s1+s2)%2==0){
-            return (v1+v2)/2.0;
-        }else {
-            return v1;
-        }
+        SudokuDB(0,0);
+        return map;
     }
-
-
-    public static Set db(int begin, String[] list,ArrayList AL){
-        if(list==null){
-            list=new String[AL.size()];
-            int i=0;
-            Iterator it=AL.iterator();
-            while (it.hasNext()){
-                list[i++]=(String)it.next();
-            }
+    public static void SudokuDB(int I,int J){
+        int aaa;
+        if(map[0][0]==5){
+            aaa=10;
         }
-        if(list.length==0){
-            return null;
+        if(map[0][1]==6){
+            aaa=10;
         }
-        Set value=new HashSet();
-        ArrayList<List> array=new ArrayList();
-        ArrayList tmp=new ArrayList();
-        int lastJ=-1;
-        char[][] ch=new char[list.length][list[0].length()];
-        for(int i=0;i<list.length;i++){
-            ch[i]=list[i].toCharArray();
+        if(map[0][2]==4){
+            aaa=10;
         }
-        boolean flag=true;
-        int i=begin;
-        for(;i<list[0].length();i++){
-            if(i==5){
-                int aaa=10;
-            }
-            array=new ArrayList();
-            tmp=new ArrayList();
-            for(int j=1;j<list.length;j++){
-                flag=true;
-                if(ch[j][i]-ch[j-1][i]<0){
-                    equal[i]=1;//有逆序；
-                    value.add(i);
-                    flag=false;
-                    break;
-                }else if(ch[j][i]-ch[j-1][i]==0){
-                    if(lastJ+1!=j){
-                        if(tmp.size()>0){
-                            array.add((ArrayList)tmp.clone());
-                            tmp=new ArrayList();
-                        }
-                        tmp.add(list[j-1]);
-                        tmp.add(list[j]);
-                    }else{
-                        tmp.add(list[j]);
+        if(map[0][3]==9){
+            aaa=10;
+        }
+        if(map[0][4]==2){
+            aaa=10;
+        }
+        if(map[0][5]==1){
+            aaa=10;
+        }
+        if(map[0][6]==8){
+            aaa=10;
+        }
+        if(map[0][7]== 7){
+            aaa=10;
+        }
+        if(map[I][J]!=0){
+            judge(I,J);
+        } else{
+            for(int i=0;i<9&&flag;i++){
+                if(I==0 && J==0){
+                    int aaaa=10;
+                }
+                if( row[I][i]==0 && col[J][i]==0 && cell[I/3][J/3][i]==0){
+                    row[I][i]=1;
+                    col[J][i]=1;
+                    cell[I/3][J/3][i]=1;
+                    map[I][J]=i+1;
+                    judge(I,J);
+                    if(I==0 && J==4){
+                        aaa=10;
                     }
-                    lastJ=j;
-                }
-            }
-            if(tmp.size()>0){
-                array.add((ArrayList)tmp.clone());
-            }
-            if(!flag){
-                continue;
-            }else if(array.size()>0){
-                equal[i]=2; //有相等
-                break;
-            }
-        }
-        if(array.size()>0){
-            Iterator iter=array.iterator();
-            while(iter.hasNext()){
-                Set s=db(i+1,null,(ArrayList) iter.next());
-                if(s!=null && s.size()!=0){
-                    value.addAll(s);
+                    row[I][i]=0;
+                    col[J][i]=0;
+                    cell[I/3][J/3][i]=0;
+                    map[I][J]=0;
                 }
             }
         }
-        return value;
     }
+    public static void judge(int I,int J){            //递归还是输出
 
+        if(I==8 && J==8){
+            for(int x=0;x<9;x++){
+                for(int y=0;y<9;y++){
+                    System.out.print(map[x][y]+" ");
+                }
+                System.out.println();
+            }
+            flag=false;
+        }else{
+            if(J==8){
+                SudokuDB(I+1,0);
+            }else{
+                SudokuDB(I,J+1);
+            }
+        }
+    }
 
 }
