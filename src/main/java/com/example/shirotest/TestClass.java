@@ -3,6 +3,7 @@ package com.example.shirotest;
 
 import org.apache.shiro.subject.Subject;
 
+import java.io.*;
 import java.lang.reflect.Method;
 import java.util.*;
 
@@ -28,13 +29,38 @@ public class TestClass {
 //                {0,0,0,0,0,0,0,0,0},
 //                {0,0,0,0,0,0,0,0,0},
 //                {0,0,0,0,0,0,0,0,0}};
-        Sudoku(A);
+        try{
+            InputStream in=new FileInputStream(new File("D://123.jpg"));
+            OutputStream out=new FileOutputStream(new File("D://456.jpg"));
+            byte[] bs=new byte[1024];
+            int x;
+            while( (x=in.read(bs))>0 ){
+                out.write(bs,0,x);
+            }
+            in.close();
+            out.close();
+        }catch (Exception e ){
+
+        }
         int qwer=9;
     }
 
     public static void findMedianSortedArrays(int[] nums1, int[] nums2) { }
 
-
+    //快排
+    public static void kp(int[] list ,int a,int b){
+        if(a>=b)return ;
+        int t=list[a],x=a,y=b;
+        while(a<b){
+            while(a<b && list[b]>=t)b--;
+            list[a]=list[b];
+            while(a<b && list[a]<=t)a++;
+            list[b]=list[a];
+        }
+        list[a]=t;
+        kp(list,x,a-1);
+        kp(list,a+1,y);
+    }
 
     //解数独
     static int[][] map,row,col;
