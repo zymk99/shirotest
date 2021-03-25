@@ -30,6 +30,7 @@ public class TestClass {
 //                {0,0,0,0,0,0,0,0,0},
 //                {0,0,0,0,0,0,0,0,0}};
         try{
+            int xx=aaa(5);
             InputStream in=new FileInputStream(new File("D://123.jpg"));
             OutputStream out=new FileOutputStream(new File("D://456.jpg"));
             byte[] bs=new byte[1024];
@@ -45,6 +46,12 @@ public class TestClass {
         int qwer=9;
     }
 
+    public static int aaa(int x){
+        if(x<0)return 0;
+        if(x==0)return 1;
+        return aaa(x-1)+aaa(x-2)+aaa(x-3);
+
+    }
     public static void findMedianSortedArrays(int[] nums1, int[] nums2) { }
 
     //快排
