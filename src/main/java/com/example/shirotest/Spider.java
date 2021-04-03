@@ -5,10 +5,9 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-
 public class Spider {
     public static void main(String[] a){
-        downImages("",41,".jpg");//png  jpg
+        downImages("",157,".jpg");//png  jpg
     }
     static String[] UA={"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; en) Opera 9.50",
     "Mozilla/5.0 (X11; U; Linux x86_64; zh-CN; rv:1.9.2.10) Gecko/20100922 Ubuntu/10.10 (maverick) Firefox/3.6.10",
@@ -39,7 +38,7 @@ public class Spider {
             files.mkdirs();
         }
         try {
-            for(int i=1;i<=num;i++){
+            for(int i=153;i<=num;i++){
                 System.out.println(""+i);
                 String imageUrl=Url+i+type;
                 //fileName= i+90<10? "00"+(i+90) : (i+90<100?"0"+(i+90) : ""+(i+90));
